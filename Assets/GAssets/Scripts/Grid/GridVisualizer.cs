@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridVisualizer : MonoBehaviour
+public class GridVisualizer : MonoBehaviour, IProvidable
 {
     public int gridWidth;
     public int gridHeight;
@@ -8,7 +8,7 @@ public class GridVisualizer : MonoBehaviour
     public float cellHeight;
     public GameObject cellPrefab;  // This should be a prefab with a SpriteRenderer.
 
-    void Start()
+    public void OnInitialize()
     {
         float startX = -(gridWidth * cellWidth) / 2 + cellWidth / 2;
         float startY = -(gridHeight * cellHeight) / 2 + cellHeight / 2;
@@ -22,5 +22,10 @@ public class GridVisualizer : MonoBehaviour
                 cell.transform.parent = this.transform;  // Set the cell's parent to the grid.
             }
         }
+    }
+
+    public void OnUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }

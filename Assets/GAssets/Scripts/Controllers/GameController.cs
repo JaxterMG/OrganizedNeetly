@@ -1,4 +1,5 @@
 using Core.StateMachine;
+using Core.StateMachine.Game;
 using Core.StateMachine.Menu;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Core.Controllers
 
         private void LoadContent()
         {
-            _currentState = new MenuState(this);
+            _currentState = new GameState(this);
             _currentState.LoadContent();
         }
 

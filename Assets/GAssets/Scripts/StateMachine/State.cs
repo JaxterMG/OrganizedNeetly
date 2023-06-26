@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using Core.Controllers;
-using UnityEngine;
 
 namespace Core.StateMachine
 {
