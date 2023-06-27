@@ -13,29 +13,34 @@ namespace Core.Localization
         public static void InitializeTranslations(string filePath)
         {
             //TODO: Узнать язык у системы устройства пользователя
-            CurrentLanguage = "English";
+            CurrentLanguage = "French";
+            TextAsset csvFile = Resources.Load<TextAsset>(filePath);
+
+            if (csvFile == null)
+            {
+                Debug.LogError("Failed to load CSV file: " + filePath);
+                return;
+            }
 
             Translations = new Dictionary<string, Dictionary<string, string>>();
 
-            using (var reader = new StreamReader(filePath))
+            string[] lines = csvFile.text.Split('\n');
+
+            var languages = lines[0].Split(',').Skip(1).ToList();
+
+            for (int i = 1; i < lines.Length; i++)
             {
-                var languages = reader.ReadLine()?.Split(',')?.Skip(1).ToList();
+                var values = lines[i].Split(',');
 
-                while (!reader.EndOfStream)
+                var wordKey = values[0];
+                var wordTranslations = new Dictionary<string, string>();
+
+                for (int j = 1; j < values.Length; j++)
                 {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-
-                    var wordKey = values[0];
-                    var wordTranslations = new Dictionary<string, string>();
-
-                    for (int i = 1; i < values.Length; i++)
-                    {
-                        wordTranslations.Add(languages?[i - 1], values[i]);
-                    }
-
-                    Translations.Add(wordKey, wordTranslations);
+                    wordTranslations.Add(languages[j - 1], values[j]);
                 }
+
+                Translations.Add(wordKey, wordTranslations);
             }
         }
 
