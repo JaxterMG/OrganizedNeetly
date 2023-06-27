@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class LoadingScreen : UIStateBase
+public class MainMenuScreen : UIStateBase
 {
 }

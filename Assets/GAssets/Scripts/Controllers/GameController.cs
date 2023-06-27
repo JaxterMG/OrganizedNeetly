@@ -1,6 +1,5 @@
 using Core.StateMachine;
 using Core.StateMachine.Game;
-using Core.StateMachine.Menu;
 using UnityEngine;
 using Core.Localization;
 using Core.StateMachine.Loading;

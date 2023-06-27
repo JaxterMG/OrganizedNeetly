@@ -23,7 +23,7 @@ public class GameControllerEditor : Editor
 
         if (GUILayout.Button("Set to Menu State"))
         {
-            State state = new MenuState(gameController);
+            State state = new MainMenuState(gameController);
             gameController.ChangeState(state);
         }
 
