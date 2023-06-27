@@ -21,5 +21,10 @@ namespace Core.StateMachine.Menu
         public override void OnExit()
         {
         }
+
+        public override void OnStart()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -20,5 +20,10 @@ namespace Core.StateMachine.Game
         public override void OnExit()
         {
         }
+
+        public override void OnStart()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

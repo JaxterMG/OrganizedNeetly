@@ -9,6 +9,7 @@ namespace Core.StateMachine
         {
             _gameController = gameController;
         }
+        public abstract void OnStart();
         public abstract void Update();
         public abstract void LoadContent();
         public abstract void OnExit();
