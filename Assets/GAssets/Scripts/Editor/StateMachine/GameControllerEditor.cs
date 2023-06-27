@@ -32,5 +32,10 @@ public class GameControllerEditor : Editor
             State state = new LoadingState(gameController);
             gameController.ChangeState(state);
         }
+        if (GUILayout.Button("Set to Shop State"))
+        {
+            State state = new ShopState(gameController);
+            gameController.ChangeState(state);
+        }
     }
 }

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8430181620122153786}
   - component: {fileID: 7236076365563396445}
   - component: {fileID: 7138120145276858952}
+  - component: {fileID: 3755431382153693433}
+  - component: {fileID: 2943591240912193674}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -79,6 +81,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3755431382153693433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930811567212332346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ec043b4820229418bd46780c20ad1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &2943591240912193674
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930811567212332346}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &4247994317216966799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -381,18 +407,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3165255683560846480, guid: 7d7d00bdf37ca644e89b08870fc7947e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3779493838864008105, guid: 7d7d00bdf37ca644e89b08870fc7947e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3779493838864008105, guid: 7d7d00bdf37ca644e89b08870fc7947e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3779493838864008105, guid: 7d7d00bdf37ca644e89b08870fc7947e, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7870882821823681784, guid: 7d7d00bdf37ca644e89b08870fc7947e, type: 3}
