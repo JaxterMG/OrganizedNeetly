@@ -29,9 +29,9 @@ namespace Core.StateMachine.Loading
         {
         }
 
-        public override void OnExit()
+        public override void OnExit(bool isHide = true)
         {
-            _loadingScreen.OnExit();
+            _loadingScreen.OnExit(isHide);
         }
 
         

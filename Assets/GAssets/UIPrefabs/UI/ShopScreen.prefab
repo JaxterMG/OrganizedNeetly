@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1251414372965144053}
   - component: {fileID: 147976764605336532}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -544,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bce04c53c7c2c945a5df08fc94f7e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backButton: {fileID: 147976764605336532}
 --- !u!225 &6793614645924314477
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -700,7 +701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00007929839}
+  m_AnchoredPosition: {x: 0, y: -0.000121831894}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &142137262602027661

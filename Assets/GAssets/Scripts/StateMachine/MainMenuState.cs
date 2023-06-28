@@ -12,7 +12,7 @@ namespace Core.StateMachine.Menu
         }
         public override void LoadContent()
         {
-            _mainMenuScreen.LoadContent();
+            _mainMenuScreen.LoadContent(_gameController);
         }
 
         public override void OnStart()
@@ -25,9 +25,9 @@ namespace Core.StateMachine.Menu
         {
         }
 
-        public override void OnExit()
+        public override void OnExit(bool isHide = true)
         {
-            _mainMenuScreen.OnExit(true);
+            _mainMenuScreen.OnExit(isHide);
         }
     }
 }

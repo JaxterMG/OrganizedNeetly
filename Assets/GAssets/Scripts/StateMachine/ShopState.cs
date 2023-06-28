@@ -12,7 +12,7 @@ namespace Core.StateMachine.Loading
         }
         public override void LoadContent()
         {
-            _shopScreen.LoadContent();
+            _shopScreen.LoadContent(_gameController);
         }
 
         public override void OnStart()
@@ -25,7 +25,7 @@ namespace Core.StateMachine.Loading
         {
         }
 
-        public override void OnExit()
+        public override void OnExit(bool isHide = true)
         {
             _shopScreen.OnExit();
         }

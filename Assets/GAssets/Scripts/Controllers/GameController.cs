@@ -27,10 +27,10 @@ namespace Core.Controllers
         {
             _currentState.Update();
         }
-        public void ChangeState(State state)
+        public void ChangeState(State state, bool isHidePrevious = true)
         {
             _previousState = _currentState;
-            _currentState.OnExit();
+            _currentState.OnExit(isHidePrevious);
             _currentState = state;
             _currentState.LoadContent();
             _currentState.OnStart();

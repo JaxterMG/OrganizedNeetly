@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Core.Controllers;
 
 public abstract class UIStateBase : MonoBehaviour
 {
     protected CanvasGroup _canvasGroup;
     protected float _timeToFade = 0.5f;
-    public virtual void LoadContent()
+    protected GameController _gameController;
+    public virtual void LoadContent(GameController gameController = null)
     {
+        _gameController = gameController;
         _canvasGroup = GetComponent<CanvasGroup>();
     }
     public virtual void OnStart()

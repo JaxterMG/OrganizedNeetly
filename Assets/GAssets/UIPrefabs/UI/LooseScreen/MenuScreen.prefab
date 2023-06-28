@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6095423666107067443}
   - component: {fileID: 6589660724346119393}
   m_Layer: 5
-  m_Name: LooseScreen
+  m_Name: MenuScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

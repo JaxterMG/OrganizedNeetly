@@ -12,6 +12,6 @@ namespace Core.StateMachine
         public abstract void OnStart();
         public abstract void Update();
         public abstract void LoadContent();
-        public abstract void OnExit();
+        public abstract void OnExit(bool isHide = true);
     }
 }

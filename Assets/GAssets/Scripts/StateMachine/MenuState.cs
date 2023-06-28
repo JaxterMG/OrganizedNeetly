@@ -25,9 +25,9 @@ namespace Core.StateMachine.Menu
         {
         }
 
-        public override void OnExit()
+        public override void OnExit(bool isHide = true)
         {
-            _menuScreen.OnExit(true);
+            _menuScreen.OnExit(isHide);
         }
     }
 }
