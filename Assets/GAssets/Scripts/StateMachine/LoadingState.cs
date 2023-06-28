@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Core.Controllers;
+using Core.StateMachine.Menu;
 using UnityEngine;
 
 namespace Core.StateMachine.Loading
@@ -15,9 +17,11 @@ namespace Core.StateMachine.Loading
             _loadingScreen.LoadContent();
         }
 
-        public override void OnStart()
+        public override async void OnStart()
         {
             _loadingScreen.OnStart();
+            await Task.Delay(5000);
+            _gameController.ChangeState(new MainMenuState(_gameController));
         }
 
         
