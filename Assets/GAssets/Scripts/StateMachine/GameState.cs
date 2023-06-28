@@ -38,6 +38,7 @@ namespace Core.StateMachine.Game
 
         public override void OnExit()
         {
+            
         }
 
         public override void OnStart()

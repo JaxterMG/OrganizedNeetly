@@ -36,7 +36,7 @@ RectTransform:
   - {fileID: 8409912352379354225}
   - {fileID: 8758979474821491443}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -380,29 +380,13 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1728179797655368792, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1728179797655368792, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1728179797655368792, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1728179797655368792, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1728179797655368792, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
+    - target: {fileID: 738262705116424327, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
+      propertyPath: m_Size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2442953099125759836, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000011712313
+      value: 0.00006484985
       objectReference: {fileID: 0}
     - target: {fileID: 3384600434992709758, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -422,7 +406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6029017286397695673, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6029017286397695673, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
       propertyPath: m_RootOrder

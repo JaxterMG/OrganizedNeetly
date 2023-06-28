@@ -6,7 +6,7 @@ using DG.Tweening;
 public abstract class UIStateBase : MonoBehaviour
 {
     protected CanvasGroup _canvasGroup;
-    private float _timeToFade = 0.5f;
+    protected float _timeToFade = 0.5f;
     public virtual void LoadContent()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -19,9 +19,10 @@ public abstract class UIStateBase : MonoBehaviour
         _canvasGroup.blocksRaycasts = true;
         _canvasGroup.interactable = true;
     }
-    public virtual void OnExit()
+    public virtual void OnExit(bool isHide = true)
     {
         if(_canvasGroup == null) return;
+        if(!isHide) return;
 
         _canvasGroup.DOFade(0, _timeToFade);
         _canvasGroup.blocksRaycasts = false;

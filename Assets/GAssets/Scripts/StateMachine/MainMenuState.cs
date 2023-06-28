@@ -27,7 +27,7 @@ namespace Core.StateMachine.Menu
 
         public override void OnExit()
         {
-            _mainMenuScreen.OnExit();
+            _mainMenuScreen.OnExit(false);
         }
     }
 }
