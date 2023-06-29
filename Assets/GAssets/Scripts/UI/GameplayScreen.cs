@@ -1,5 +1,3 @@
-
-using Core.StateMachine.Game;
 using Core.StateMachine.Menu;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,19 +5,26 @@ using UnityEngine.UI;
 public class GameplayScreen : UIStateBase
 {
     [SerializeField] Button _pauseButton;
-
+    
+    private MenuState _menuState;
     public override void OnStart()
     {
         base.OnStart();
-        _pauseButton.onClick.AddListener(OnRestartButtonPressed);
+        _pauseButton.onClick.AddListener(OnPauseButtonPressed);
     }
-    private void OnRestartButtonPressed()
+    private void OnPauseButtonPressed()
     {
-        _gameController.ChangeState(new MenuState(_gameController));
+        //_gameController.ChangeState(new MenuState(_gameController));
+        _menuState = new MenuState(_gameController);
+        _gameController.CreateAdditiveState(_menuState, true);
+        _menuState.LoadContent();
+        _menuState.OnStart();
     }
     public override void OnExit(bool isHide = true)
     {
-        _pauseButton.onClick.RemoveListener(OnRestartButtonPressed);
+        _menuState.OnExit();
+        _pauseButton.onClick.RemoveListener(OnPauseButtonPressed);
+
         base.OnExit(isHide);
     }
 }

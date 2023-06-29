@@ -9,7 +9,7 @@ namespace Core.Controllers
     public class GameController : MonoBehaviour
     {
         private State _currentState;
-        private State _previousState;
+        private State _additiveState;
 
         void Awake()
         {
@@ -29,11 +29,18 @@ namespace Core.Controllers
         }
         public void ChangeState(State state, bool isHidePrevious = true)
         {
-            _previousState = _currentState;
             _currentState.OnExit(isHidePrevious);
             _currentState = state;
             _currentState.LoadContent();
             _currentState.OnStart();
+        }
+        public void CreateAdditiveState(State state, bool isHidePrevious = true)
+        {
+            _additiveState?.OnExit(isHidePrevious);
+
+            _additiveState = state;
+            _additiveState.LoadContent();
+            _additiveState.OnStart();
         }
     }
 }
