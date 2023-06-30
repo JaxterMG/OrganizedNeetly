@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1968623232150999738, guid: cc1dd7f7bd2a6ee449c3c7a54c49718f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5199715424475064196, guid: cc1dd7f7bd2a6ee449c3c7a54c49718f, type: 3}
       propertyPath: m_RootOrder
@@ -277,9 +277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152047926}
-  - component: {fileID: 152047925}
   - component: {fileID: 152047927}
-  - component: {fileID: 152047928}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -287,18 +285,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!156049354 &152047925
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152047924}
-  m_Enabled: 1
-  m_CellSize: {x: 0.5, y: 0.5, z: 0.5}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
-  m_CellSwizzle: 0
 --- !u!4 &152047926
 Transform:
   m_ObjectHideFlags: 0
@@ -307,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152047924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,28 +309,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 152047924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb19c4500cd7054a8dc0b808ccec5ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 26834bde008cec24da52ed4aef2c0e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 5
-  gridHeight: 5
-  cellWidth: 0.5
-  cellHeight: 0.5
-  cellPrefab: {fileID: 10532381054090239, guid: 895684c7d24055d42a669bdbd4345c7b, type: 3}
---- !u!114 &152047928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152047924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1d9a7b255e9d04ba18bdca6bc4d447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DragAndDropScript: {fileID: 1778229539}
-  DridVisualizer: {fileID: 152047927}
+  gridCellPrefab: {fileID: 10532381054090239, guid: fbfe15efb4ad95d4c978d31bea3fadd9, type: 3}
+  gridRows: 10
+  gridColumns: 10
+  gapSize: 0.05
+  cellSize: 0.35
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460289686074989240, guid: e339691ca64b5fc42a031a185b1e2553, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -772,7 +744,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1778229538}
-  - component: {fileID: 1778229539}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -795,21 +766,6 @@ Transform:
   m_Father: {fileID: 895212123}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1778229539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778229537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcbb45160d6243a4381a14e6fffc0088, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  draggingElement: {fileID: 0}
-  gridComponent: {fileID: 152047925}
-  gridVisualizer: {fileID: 152047927}
 --- !u!1001 &6628962690084270101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1017,7 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5463517858889115931, guid: d374e83a6a4c7954caec214778d1902d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

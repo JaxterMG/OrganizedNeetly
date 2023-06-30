@@ -1,16 +1,14 @@
 using Core.Controllers;
-using Core.GridElements;
 using Core.StateMachine.Menu;
 using UnityEngine;
 
 namespace Core.StateMachine.Game
 {
+
     public class GameState : State
     {
-        private GridHighlighter _gridHighlighter;
-        private DragAndDrop _dragAndDrop;
-        private GridVisualizer _gridVisualizer;
         private GameplayScreen _gameplayScreen;
+        private Grid _grid;
         public GameState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
 
@@ -19,8 +17,8 @@ namespace Core.StateMachine.Game
 
         public override void Update()
         {
-            _dragAndDrop.OnUpdate();
-            _gridHighlighter.OnUpdate();
+            //     _dragAndDrop.OnUpdate();
+            //     _gridHighlighter.OnUpdate();
         }
 
         public void EndGame()
@@ -29,17 +27,18 @@ namespace Core.StateMachine.Game
 
         public override void LoadContent()
         {
+            _grid = GameObject.FindAnyObjectByType<Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
             _gameplayScreen.LoadContent();
 
-            _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
-            _dragAndDrop.OnInitialize();
+            //     _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
+            //     _dragAndDrop.OnInitialize();
 
-            _gridVisualizer = GameObject.FindAnyObjectByType<GridVisualizer>();
-            _gridVisualizer.OnInitialize();
+            //     _gridVisualizer = GameObject.FindAnyObjectByType<GridVisualizer>();
+            //     _gridVisualizer.OnInitialize();
 
-            _gridHighlighter = GameObject.FindAnyObjectByType<GridHighlighter>();
-            _gridVisualizer.OnInitialize();
+            //     _gridHighlighter = GameObject.FindAnyObjectByType<GridHighlighter>();
+            //     _gridVisualizer.OnInitialize();
 
         }
         private void OnPauseButtonPressed()
@@ -50,13 +49,15 @@ namespace Core.StateMachine.Game
         public override void OnExit(bool isHide = true)
         {
             _gameplayScreen.OnExit();
-
         }
 
         public override void OnStart()
         {
             _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
+            _grid.OnInitialize();
             _gameplayScreen.OnStart();
         }
     }
 }
+
+
