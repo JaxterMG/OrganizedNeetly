@@ -310,6 +310,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 5396944225845014759, guid: da25f6e1296b51649981ff0800e11415, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5396944225845014759, guid: da25f6e1296b51649981ff0800e11415, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5396944225845014759, guid: da25f6e1296b51649981ff0800e11415, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -328,6 +340,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4919917894395659042}
     m_Modifications:
+    - target: {fileID: 2428538063467852193, guid: ff064e285f97cfd4eaf5f7df32f851ff, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428538063467852193, guid: ff064e285f97cfd4eaf5f7df32f851ff, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2428538063467852193, guid: ff064e285f97cfd4eaf5f7df32f851ff, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3661752515353770143, guid: ff064e285f97cfd4eaf5f7df32f851ff, type: 3}
       propertyPath: m_Name
       value: LoadingScreen
@@ -562,6 +586,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6793614645924314477, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6793614645924314477, guid: aa7f4383638f15b4089c0042bea6e1c7, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -668,6 +700,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 6589660724346119393, guid: ef9898c0de2cb514b91f1b15fdfbd203, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589660724346119393, guid: ef9898c0de2cb514b91f1b15fdfbd203, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -686,6 +726,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4919917894395659042}
     m_Modifications:
+    - target: {fileID: 2943591240912193674, guid: 5f9d4f611c114c5489b7f6d1e38b0e84, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943591240912193674, guid: 5f9d4f611c114c5489b7f6d1e38b0e84, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943591240912193674, guid: 5f9d4f611c114c5489b7f6d1e38b0e84, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4930811567212332346, guid: 5f9d4f611c114c5489b7f6d1e38b0e84, type: 3}
       propertyPath: m_Name
       value: Menu
