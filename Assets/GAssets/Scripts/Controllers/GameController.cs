@@ -3,13 +3,14 @@ using Core.StateMachine.Game;
 using UnityEngine;
 using Core.Localization;
 using Core.StateMachine.Loading;
+using System.Collections.Generic;
 
 namespace Core.Controllers
 {
     public class GameController : MonoBehaviour
     {
         private State _currentState;
-        private State _additiveState;
+        private List<State> _additiveStates = new List<State>();
 
         void Awake()
         {
@@ -34,13 +35,17 @@ namespace Core.Controllers
             _currentState.LoadContent();
             _currentState.OnStart();
         }
-        public void CreateAdditiveState(State state, bool isHidePrevious = true)
+        public void CreateAdditiveState(State additiveState)
         {
-            _additiveState?.OnExit(isHidePrevious);
+            _additiveStates.Add(additiveState);
+            additiveState.LoadContent();
+            additiveState.OnStart();
+        }
 
-            _additiveState = state;
-            _additiveState.LoadContent();
-            _additiveState.OnStart();
+        public void ExitAdditiveState(State additiveState, bool isHidePrevious = true)
+        {
+            _additiveStates.Remove(additiveState);
+            additiveState.OnExit(isHidePrevious);
         }
     }
 }

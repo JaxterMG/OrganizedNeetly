@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410e03ad038d3524ebd66956435e9e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseButton: {fileID: 7326892925705208282}
+  PauseButton: {fileID: 7326892925705208282}
 --- !u!1001 &6106817677375118848
 PrefabInstance:
   m_ObjectHideFlags: 0

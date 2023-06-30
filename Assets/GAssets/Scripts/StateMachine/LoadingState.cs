@@ -8,7 +8,7 @@ namespace Core.StateMachine.Loading
     public class LoadingState : State
     {
         private LoadingScreen _loadingScreen;
-        public LoadingState(GameController gameController) : base(gameController)
+        public LoadingState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
             _loadingScreen = GameObject.FindAnyObjectByType<LoadingScreen>();
         }

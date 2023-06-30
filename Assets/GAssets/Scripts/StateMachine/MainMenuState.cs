@@ -1,4 +1,6 @@
 using Core.Controllers;
+using Core.StateMachine.Game;
+using Core.StateMachine.Loading;
 using UnityEngine;
 
 namespace Core.StateMachine.Menu
@@ -6,23 +8,40 @@ namespace Core.StateMachine.Menu
     public class MainMenuState : State
     {
         private MainMenuScreen _mainMenuScreen;
-        public MainMenuState(GameController gameController) : base(gameController)
+        public MainMenuState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
             _mainMenuScreen = GameObject.FindAnyObjectByType<MainMenuScreen>();
         }
         public override void LoadContent()
         {
-            _mainMenuScreen.LoadContent(_gameController);
+            _mainMenuScreen.LoadContent();
         }
 
         public override void OnStart()
         {
+            _mainMenuScreen.PlayButton.onClick.AddListener(OnPlayButtonPressed);
+            _mainMenuScreen.ShopButton.onClick.AddListener(OnShopButtonPressed);
+            _mainMenuScreen.LikeButton.onClick.AddListener(OnLikeButtonPressed);
+
             _mainMenuScreen.OnStart();
         }
 
-        
+
         public override void Update()
         {
+        }
+
+        private void OnPlayButtonPressed()
+        {
+            _gameController.ChangeState(new GameState(_gameController));
+        }
+        private void OnShopButtonPressed()
+        {
+            _gameController.ChangeState(new ShopState(_gameController), false);
+        }
+        private void OnLikeButtonPressed()
+        {
+            //_gameController.ChangeState(new GameState(_gameController));
         }
 
         public override void OnExit(bool isHide = true)

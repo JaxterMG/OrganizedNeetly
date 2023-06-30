@@ -4,7 +4,7 @@ namespace Core.StateMachine.Game
 {
     public class LoseState : State
     {
-        public LoseState(GameController gameController) : base( gameController)
+        public LoseState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
             
         }

@@ -93,9 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ec043b4820229418bd46780c20ad1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playButton: {fileID: 7870644454963467724}
-  _shopButton: {fileID: 2367321681836201132}
-  _likeButton: {fileID: 5136431126196782707}
+  PlayButton: {fileID: 7870644454963467724}
+  ShopButton: {fileID: 2367321681836201132}
+  LikeButton: {fileID: 5136431126196782707}
 --- !u!225 &2943591240912193674
 CanvasGroup:
   m_ObjectHideFlags: 0

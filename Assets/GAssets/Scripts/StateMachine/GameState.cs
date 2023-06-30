@@ -1,5 +1,6 @@
 using Core.Controllers;
 using Core.GridElements;
+using Core.StateMachine.Menu;
 using UnityEngine;
 
 namespace Core.StateMachine.Game
@@ -10,10 +11,10 @@ namespace Core.StateMachine.Game
         private DragAndDrop _dragAndDrop;
         private GridVisualizer _gridVisualizer;
         private GameplayScreen _gameplayScreen;
-        public GameState(GameController gameController) : base(gameController)
+        public GameState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
-            
-        
+
+
         }
 
         public override void Update()
@@ -29,7 +30,7 @@ namespace Core.StateMachine.Game
         public override void LoadContent()
         {
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
-            _gameplayScreen.LoadContent(_gameController);
+            _gameplayScreen.LoadContent();
 
             _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
             _dragAndDrop.OnInitialize();
@@ -39,17 +40,22 @@ namespace Core.StateMachine.Game
 
             _gridHighlighter = GameObject.FindAnyObjectByType<GridHighlighter>();
             _gridVisualizer.OnInitialize();
-            
+
+        }
+        private void OnPauseButtonPressed()
+        {
+            _gameController.CreateAdditiveState(new MenuState(_gameController, true));
         }
 
         public override void OnExit(bool isHide = true)
         {
             _gameplayScreen.OnExit();
-            
+
         }
 
         public override void OnStart()
         {
+            _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
             _gameplayScreen.OnStart();
         }
     }

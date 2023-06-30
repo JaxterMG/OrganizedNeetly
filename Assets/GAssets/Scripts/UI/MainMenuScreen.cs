@@ -6,34 +6,20 @@ using UnityEngine.UI;
 
 public class MainMenuScreen : UIStateBase
 {
-    [SerializeField] Button _playButton;
-    [SerializeField] Button _shopButton;
-    [SerializeField] Button _likeButton;
+    public Button PlayButton;
+    public Button ShopButton;
+    public Button LikeButton;
 
     public override void OnStart()
     {
         base.OnStart();
-        _playButton.onClick.AddListener(OnPlayButtonPressed);
-        _shopButton.onClick.AddListener(OnShopButtonPressed);
-        _likeButton.onClick.AddListener(OnLikeButtonPressed);
     }
-    private void OnPlayButtonPressed()
-    {
-        _gameController.ChangeState(new GameState(_gameController));
-    }
-    private void OnShopButtonPressed()
-    {
-        _gameController.ChangeState(new ShopState(_gameController), false);
-    }
-    private void OnLikeButtonPressed()
-    {
-        //_gameController.ChangeState(new GameState(_gameController));
-    }
+    
     public override void OnExit(bool isHide = true)
     {
-        _playButton.onClick.RemoveListener(OnPlayButtonPressed);
-        _shopButton.onClick.RemoveListener(OnShopButtonPressed);
-        _likeButton.onClick.RemoveListener(OnLikeButtonPressed);
+        PlayButton.onClick.RemoveAllListeners();
+        ShopButton.onClick.RemoveAllListeners();
+        LikeButton.onClick.RemoveAllListeners();
         base.OnExit(isHide);
     }
 }
