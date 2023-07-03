@@ -35,20 +35,19 @@ public class Grid : MonoBehaviour, IProvidable
                 cell.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
 
                 grid[i, j] = cell;
+                cell.transform.SetParent(gridHolder);
             }
         }
-        
-
-
+        gridHolder.position = Vector3.zero;
     }
     Vector3 CalculateGridCenter()
     {
         // Calculate the total width and height of the grid
-        float totalHeight = (gridColumns * cellSize) + ((gridColumns - 1) * gapSize);
-        float totalWidth = (gridRows * cellSize) + ((gridRows - 1) * gapSize);
+        float totalWidth = (gridColumns * cellSize) + ((gridColumns - 1) * gapSize);
+        float totalHeight = (gridRows * cellSize) + ((gridRows - 1) * gapSize);
 
-        // The center point is at half the total width and height
-        Vector3 center = new Vector3(totalWidth / 2f, totalHeight / 2f, 0);
+        // The center point is at half the total width and height, accounting for the pivot in the center of the cells
+        Vector3 center = new Vector3(totalWidth / 2f - cellSize / 2f, totalHeight / 2f - cellSize / 2f, 0);
 
         return center;
     }
