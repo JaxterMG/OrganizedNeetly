@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 26834bde008cec24da52ed4aef2c0e41
+guid: e987e20a4492f83448ed9c70b7a889d1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - gridCellPrefab: {fileID: 10532381054090239, guid: fbfe15efb4ad95d4c978d31bea3fadd9, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
