@@ -1,3 +1,5 @@
+
+using System.Net;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,18 +7,23 @@ using UnityEngine.EventSystems;
 public class FigureDragHandler : MonoBehaviour
 {
     [SerializeField] private FiguresHolder _figuresHolder;
+    public Dictionary<Vector2, Cell> FigureData = new Dictionary<Vector2, Cell>();
     public List<Vector2> Shape;
-
     private Vector3 offset;
     private Camera mainCamera;
     private bool isDragging;
 
-    // Grid reference
     public Grid gridManager;
+
+    [SerializeField] LayerMask _gridMask;
 
     private void Start()
     {
         mainCamera = Camera.main;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            FigureData.TryAdd(Shape[i], transform.GetChild(i).GetComponent<Cell>());
+        }
     }
     public void Initialize(List<Vector2> shape)
     {
@@ -40,11 +47,13 @@ public class FigureDragHandler : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
+        GridCell closestHit =  FindClosestCellToFigure();
+        Debug.Log($"Closest hit {closestHit?.transform.position}");
 
-        if (!gridManager.TryPlaceFigure(this))
-        {
-            _figuresHolder.AddFigure(this.transform);
-        }
+        if (gridManager.TryPlaceFigure(this, closestHit)) return;
+
+        _figuresHolder.AddFigure(this.transform);
+    
     }
 
     private void Update()
@@ -53,5 +62,26 @@ public class FigureDragHandler : MonoBehaviour
         {
             transform.position = GetMouseWorldPos() + offset;
         }
+    }
+    private GridCell FindClosestCellToFigure()
+    {
+        float shortestMagnitude = 999;
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(0.35f, 0.35f), 0, Vector2.zero, 1, _gridMask);
+
+        if(hits.Length == 0) return null;
+
+        RaycastHit2D closestHit = hits[0];
+        foreach (var hit in hits)
+        {
+            var magnitude = (hit.point - new Vector2(transform.position.x, transform.position.y)).magnitude;
+            Debug.Log($"Magnitude {magnitude}");
+
+            if(magnitude < shortestMagnitude)
+            {
+                shortestMagnitude = magnitude;
+                closestHit = hit;
+            }
+        }
+        return  closestHit.transform.GetComponent<GridCell>();
     }
 }

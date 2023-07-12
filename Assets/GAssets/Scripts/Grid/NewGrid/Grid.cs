@@ -1,14 +1,17 @@
+using System.Net.Http.Headers;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour, IProvidable
 {
-    public Cell gridCellPrefab;  // Prefab for the grid cell
+    public GridCell gridCellPrefab;  // Prefab for the grid cell
     public int gridRows = 10;  // Number of rows
     public int gridColumns = 10;  // Number of columns
     public float gapSize = 0.1f; // Size of the gap between cells
     public float cellSize = 1f;
-    private Cell[,] grid;  // The grid represented as a 2D array
+    private GridCell[,] grid;  // The grid represented as a 2D array
 
+    private Dictionary<Vector2, GridCell> _gridCellsPositions = new Dictionary<Vector2, GridCell>();
 
     public void OnInitialize()
     {
@@ -19,22 +22,26 @@ public class Grid : MonoBehaviour, IProvidable
     {
         Transform gridHolder = new GameObject("GridHolder").transform;
         gridHolder.position = CalculateGridCenter();
-        grid = new Cell[gridRows, gridColumns];
+        grid = new GridCell[gridRows, gridColumns];
 
-        for (int i = 0; i < gridRows; i++)
+        for (int y = 0; y < gridRows; y++)
         {
-            for (int j = 0; j < gridColumns; j++)
+            for (int x = 0; x < gridColumns; x++)
             {
                 // Calculate the position for this cell
-                Vector3 cellPosition = new Vector3((j * (cellSize + gapSize)), (i * (cellSize + gapSize)), 0);
+                Vector3 cellPosition = new Vector3((x * (cellSize + gapSize)), (y * (cellSize + gapSize)), 0);
 
                 // Instantiate the cell prefab at this position
-                Cell cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
+                GridCell cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
+
+                cell.GridPos = new Vector2(x, y);
+
+                _gridCellsPositions.TryAdd(cell.GridPos, cell);
 
                 // Set the cell's size
                 cell.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
 
-                grid[i, j] = cell;
+                grid[x, y] = cell;
                 cell.transform.SetParent(gridHolder);
             }
         }
@@ -52,68 +59,28 @@ public class Grid : MonoBehaviour, IProvidable
         return center;
     }
 
-    public bool TryPlaceFigure(FigureDragHandler figureDragHandler)
+    public bool TryPlaceFigure(FigureDragHandler figureDragHandler, GridCell closestCell)
     {
-        // Calculate the grid coordinates for the figure based on its pivot (parent's position)
-        Vector3 figurePosition = figureDragHandler.transform.position;
-        Vector2Int gridPivotPosition = WorldToGrid(figurePosition);
+        if(!closestCell) return false;
+        
+        figureDragHandler.transform.position = closestCell.transform.position;
 
-        // Get all cells in the figure
-        Cell[] figureCells = figureDragHandler.GetComponentsInChildren<Cell>();
+        if (!_gridCellsPositions.TryGetValue(closestCell.GridPos, out var startGridCell)) return false;
 
-        // Iterate over each cell in the figure
-        foreach (var cell in figureCells)
+        foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            // Calculate the relative position of each cell to the pivot in terms of grid cells
-            Vector3 relativePosition = cell.transform.position - figurePosition;
-            Vector2Int relativeGridPosition = WorldToGrid(relativePosition);
-
-            // Calculate the absolute position of the cell in the grid
-            Vector2Int gridPosition = gridPivotPosition + relativeGridPosition;
-
-            // Check if the calculated position is outside the grid
-            if (!IsWithinGrid(gridPosition))
-                return false;
-
-            // Check if the cell in the grid is empty
-            if (grid[gridPosition.x, gridPosition.y] != null)
-                return false;
+            if (!_gridCellsPositions.TryGetValue(closestCell.GridPos + pos, out var gridCell)) return false;
+            if (gridCell.Cell != null) return false;
         }
 
-        // If none of the checks failed, place the figure on the grid
-        foreach (var cell in figureCells)
+        foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            Vector3 relativePosition = cell.transform.position - figurePosition;
-            Vector2Int relativeGridPosition = WorldToGrid(relativePosition);
-
-            Vector2Int gridPosition = gridPivotPosition + relativeGridPosition;
-            grid[gridPosition.x, gridPosition.y] = cell;
-            cell.transform.position = GridToWorld(gridPosition);  // Adjust cell position to the center of the grid cell
+            _gridCellsPositions.TryGetValue(closestCell.GridPos + pos, out var gridCell);
+            gridCell.Cell = figureDragHandler.FigureData[pos];
         }
-
         return true;
     }
 
-    private Vector2Int WorldToGrid(Vector3 worldPosition)
-    {
-        int x = Mathf.RoundToInt(worldPosition.x / (cellSize + gapSize));
-        int y = Mathf.RoundToInt(worldPosition.y / (cellSize + gapSize));
-        return new Vector2Int(x, y);
-    }
-
-    // Converts grid coordinates to world position
-    private Vector3 GridToWorld(Vector2Int gridPosition)
-    {
-        float x = gridPosition.x * (cellSize + gapSize);
-        float y = gridPosition.y * (cellSize + gapSize);
-        return new Vector3(x, y, 0f);
-    }
-
-    private bool IsWithinGrid(Vector2Int gridPosition)
-    {
-        return gridPosition.x >= 0 && gridPosition.x < gridRows &&
-               gridPosition.y >= 0 && gridPosition.y < gridColumns;
-    }
 
     public void OnUpdate()
     {
