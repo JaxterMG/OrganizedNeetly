@@ -14,11 +14,13 @@ public class FigureDragHandler : MonoBehaviour
     private bool isDragging;
 
     public Grid gridManager;
+    private Collider2D _collider;
 
     [SerializeField] LayerMask _gridMask;
 
     private void Start()
     {
+        _collider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -50,7 +52,12 @@ public class FigureDragHandler : MonoBehaviour
         GridCell closestHit =  FindClosestCellToFigure();
         Debug.Log($"Closest hit {closestHit?.transform.position}");
 
-        if (gridManager.TryPlaceFigure(this, closestHit)) return;
+        if (gridManager.TryPlaceFigure(this, closestHit))
+        {
+            Destroy(_collider);
+            Destroy(this);
+            return;
+        }
 
         _figuresHolder.AddFigure(this.transform);
     
