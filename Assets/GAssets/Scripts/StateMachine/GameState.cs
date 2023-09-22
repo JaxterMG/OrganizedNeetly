@@ -30,6 +30,7 @@ namespace Core.StateMachine.Game
             _grid = GameObject.FindAnyObjectByType<Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
             _gameplayScreen.LoadContent();
+            GameObject.FindAnyObjectByType<FiguresSpawner>().OnInititalize();
 
             //     _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
             //     _dragAndDrop.OnInitialize();

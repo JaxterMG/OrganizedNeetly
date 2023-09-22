@@ -26,6 +26,6 @@ public class ComplexFiguresGenerator : MonoBehaviour
                 }
             }
         }
-        parent.AddComponent<FigureDragHandler>().Initialize(Shape);
+        parent.AddComponent<FigureDragHandler>().SetShape(Shape);
     }
 }

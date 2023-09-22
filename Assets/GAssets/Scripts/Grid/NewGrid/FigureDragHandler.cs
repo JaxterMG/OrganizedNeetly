@@ -1,11 +1,10 @@
-
-using System.Net;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using System;
 
 public class FigureDragHandler : MonoBehaviour
 {
+    public static event Action FigurePlaced;
     [SerializeField] private FiguresHolder _figuresHolder;
     public Dictionary<Vector2, Cell> FigureData = new Dictionary<Vector2, Cell>();
     public List<Vector2> Shape;
@@ -13,12 +12,12 @@ public class FigureDragHandler : MonoBehaviour
     private Camera mainCamera;
     private bool isDragging;
 
-    public Grid gridManager;
+    private Grid _grid;
     private Collider2D _collider;
 
     [SerializeField] LayerMask _gridMask;
 
-    private void Start()
+    private void OnEnable()
     {
         _collider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
@@ -26,10 +25,14 @@ public class FigureDragHandler : MonoBehaviour
         {
             FigureData.TryAdd(Shape[i], transform.GetChild(i).GetComponent<Cell>());
         }
-    }
-    public void Initialize(List<Vector2> shape)
+    }    public void SetShape(List<Vector2> shape)
     {
         Shape = shape;
+    }
+    public void Initialize(FiguresHolder figuresHolder, Grid grid)
+    {
+        _figuresHolder = figuresHolder;
+        _grid = grid;
     }
 
     private void OnMouseDown()
@@ -49,18 +52,19 @@ public class FigureDragHandler : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
-        GridCell closestHit =  FindClosestCellToFigure();
+        GridCell closestHit = FindClosestCellToFigure();
         Debug.Log($"Closest hit {closestHit?.transform.position}");
 
-        if (gridManager.TryPlaceFigure(this, closestHit))
+        if (_grid.TryPlaceFigure(this, closestHit))
         {
             Destroy(_collider);
             Destroy(this);
+            
             return;
         }
 
         _figuresHolder.AddFigure(this.transform);
-    
+
     }
 
     private void Update()
@@ -75,7 +79,7 @@ public class FigureDragHandler : MonoBehaviour
         float shortestMagnitude = 999;
         RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, new Vector2(0.35f, 0.35f), 0, Vector2.zero, 1, _gridMask);
 
-        if(hits.Length == 0) return null;
+        if (hits.Length == 0) return null;
 
         RaycastHit2D closestHit = hits[0];
         foreach (var hit in hits)
@@ -83,12 +87,12 @@ public class FigureDragHandler : MonoBehaviour
             var magnitude = (hit.point - new Vector2(transform.position.x, transform.position.y)).magnitude;
             Debug.Log($"Magnitude {magnitude}");
 
-            if(magnitude < shortestMagnitude)
+            if (magnitude < shortestMagnitude)
             {
                 shortestMagnitude = magnitude;
                 closestHit = hit;
             }
         }
-        return  closestHit.transform.GetComponent<GridCell>();
+        return closestHit.transform.GetComponent<GridCell>();
     }
 }

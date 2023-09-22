@@ -9,7 +9,7 @@ namespace Core.Localization.TextComponent
         void Start()
         {
             _text = GetComponent<TextMeshProUGUI>();
-            _text.text = CSVTranslationsReader.RequestTranslation(_text.text);
+            _text.text = CSVTranslationsReader.RequestTranslation(_text.text);            
         }
     }
 }
