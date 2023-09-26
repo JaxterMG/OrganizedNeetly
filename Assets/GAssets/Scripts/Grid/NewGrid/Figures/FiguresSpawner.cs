@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices;
 
 public class FiguresSpawner : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class FiguresSpawner : MonoBehaviour
 
         if(_currentFiguresCount <= 0)
         {
+            _currentFiguresCount = _desiredFiguresCount;
             SpawnFigures();
         }
     }
@@ -40,6 +42,11 @@ public class FiguresSpawner : MonoBehaviour
             figure.Initialize(_figuresHolder, _grid);
             _figuresHolder.AddFigure(figure.transform);
         }
+    }
+
+    public void ClearFigures()
+    {
+        _figuresHolder.ClearFigures();
     }
 
     void OnDisable()

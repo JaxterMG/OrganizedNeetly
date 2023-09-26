@@ -59,6 +59,7 @@ public class FigureDragHandler : MonoBehaviour
         {
             Destroy(_collider);
             Destroy(this);
+            FigurePlaced?.Invoke();
             
             return;
         }

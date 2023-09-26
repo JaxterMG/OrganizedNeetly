@@ -9,6 +9,7 @@ namespace Core.StateMachine.Game
     {
         private GameplayScreen _gameplayScreen;
         private Grid _grid;
+        private FiguresSpawner _figuresSpawner;
         public GameState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
         {
 
@@ -17,8 +18,7 @@ namespace Core.StateMachine.Game
 
         public override void Update()
         {
-            //     _dragAndDrop.OnUpdate();
-            //     _gridHighlighter.OnUpdate();
+            //Debug.Log($"Gamestate update");
         }
 
         public void EndGame()
@@ -30,7 +30,8 @@ namespace Core.StateMachine.Game
             _grid = GameObject.FindAnyObjectByType<Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
             _gameplayScreen.LoadContent();
-            GameObject.FindAnyObjectByType<FiguresSpawner>().OnInititalize();
+            _figuresSpawner = GameObject.FindAnyObjectByType<FiguresSpawner>();
+            _figuresSpawner.OnInititalize();
 
             //     _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
             //     _dragAndDrop.OnInitialize();
@@ -49,6 +50,9 @@ namespace Core.StateMachine.Game
 
         public override void OnExit(bool isHide = true)
         {
+            _figuresSpawner.ClearFigures();
+            _grid.ClearGrid();
+            
             _gameplayScreen.OnExit();
         }
 

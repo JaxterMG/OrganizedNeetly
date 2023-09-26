@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Grid : MonoBehaviour, IProvidable
 {
@@ -9,9 +10,9 @@ public class Grid : MonoBehaviour, IProvidable
     public int gridColumns = 10;  // Number of columns
     public float gapSize = 0.1f; // Size of the gap between cells
     public float cellSize = 1f;
-    private GridCell[,] grid;  // The grid represented as a 2D array
+    private GridCell[,] _grid;  // The grid represented as a 2D array
 
-    private Dictionary<Vector2, GridCell> _gridCellsPositions = new Dictionary<Vector2, GridCell>();
+    private Transform _gridHolder;
 
     public void OnInitialize()
     {
@@ -20,9 +21,9 @@ public class Grid : MonoBehaviour, IProvidable
 
     void GenerateGrid()
     {
-        Transform gridHolder = new GameObject("GridHolder").transform;
-        gridHolder.position = CalculateGridCenter();
-        grid = new GridCell[gridRows, gridColumns];
+        _gridHolder = new GameObject("GridHolder").transform;
+        _gridHolder.position = CalculateGridCenter();
+        _grid = new GridCell[gridRows, gridColumns];
 
         for (int y = 0; y < gridRows; y++)
         {
@@ -36,16 +37,14 @@ public class Grid : MonoBehaviour, IProvidable
 
                 cell.GridPos = new Vector2(x, y);
 
-                _gridCellsPositions.TryAdd(cell.GridPos, cell);
-
                 // Set the cell's size
                 cell.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
 
-                grid[x, y] = cell;
-                cell.transform.SetParent(gridHolder);
+                _grid[x, y] = cell;
+                cell.transform.SetParent(_gridHolder);
             }
         }
-        gridHolder.position = Vector3.zero;
+        _gridHolder.position = Vector3.zero;
     }
     Vector3 CalculateGridCenter()
     {
@@ -65,22 +64,89 @@ public class Grid : MonoBehaviour, IProvidable
         
         figureDragHandler.transform.position = closestCell.transform.position;
 
-        if (!_gridCellsPositions.TryGetValue(closestCell.GridPos, out var startGridCell)) return false;
+        if (_grid[(int)closestCell.GridPos.x, (int)closestCell.GridPos.y].Cell != null) return false;
 
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            if (!_gridCellsPositions.TryGetValue(closestCell.GridPos + pos, out var gridCell)) return false;
-            if (gridCell.Cell != null) return false;
+            if (_grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell != null) return false;
         }
 
+        List<Vector2> touchedGridCellsPos = new List<Vector2>();
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            _gridCellsPositions.TryGetValue(closestCell.GridPos + pos, out var gridCell);
-            gridCell.Cell = figureDragHandler.FigureData[pos];
+            _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell = figureDragHandler.FigureData[pos];
+
+            figureDragHandler.FigureData[pos].transform.SetParent(_grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell.transform);
+
+            touchedGridCellsPos.Add(closestCell.GridPos + pos);
+            Debug.Log(pos);
         }
+        //Destroy(figureDragHandler.gameObject);
+        CheckLinesToDelete(touchedGridCellsPos);
+
         return true;
     }
 
+    public void CheckLinesToDelete(List<Vector2> touchedCells)
+    {
+        List<int> horizontalLinesToDelete = new List<int>();
+        List<int> verticalLinesToDelete = new List<int>();
+        
+        foreach (var cell in touchedCells)
+        {
+            bool isHorizontalDelete = true;
+            bool isVerticalDelete = true;
+
+            for (var i = 0; i < gridRows; i++)
+            {
+                if(_grid[(int)i, (int)cell.y].Cell == null)
+                {
+                    isHorizontalDelete = false;
+                    break;
+                }
+            }
+            
+            for (var i = 0; i < gridColumns; i++)
+            {
+                if(_grid[(int)cell.x, (int)i].Cell == null)
+                {
+                    isVerticalDelete = false;
+                    break;
+                }
+                
+            }
+
+            if(isHorizontalDelete) horizontalLinesToDelete.Add((int)cell.y); 
+            if(isVerticalDelete) verticalLinesToDelete.Add((int)cell.x);
+        }
+        if(horizontalLinesToDelete.Count > 0)
+        {
+            foreach (var line in horizontalLinesToDelete)
+            {
+                for (int i = 0; i < gridRows; i++)
+                {
+                    Destroy(_grid[i, line].Cell.gameObject);
+                }
+            }
+
+        }
+        if(verticalLinesToDelete.Count > 0)
+        {
+            foreach (var line in verticalLinesToDelete)
+            {
+                for (int i = 0; i < gridColumns; i++)
+                {
+                    Destroy(_grid[line, i].Cell.gameObject);
+                }
+            }
+        }
+    }
+
+    public void ClearGrid()
+    {
+        Destroy(_gridHolder.gameObject);
+        Array.Clear(_grid, 0, _grid.Length);
+    }
 
     public void OnUpdate()
     {

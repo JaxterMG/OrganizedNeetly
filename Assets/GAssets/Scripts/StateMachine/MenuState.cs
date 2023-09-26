@@ -47,8 +47,8 @@ namespace Core.StateMachine.Menu
         }
         private void OnRestartButtonClicked()
         {
-            _gameController.ChangeState(new GameState(_gameController));
             _gameController.ExitAdditiveState(this);
+            _gameController.ChangeState(new GameState(_gameController));
         }
 
         public override void OnExit(bool isHide = true)
