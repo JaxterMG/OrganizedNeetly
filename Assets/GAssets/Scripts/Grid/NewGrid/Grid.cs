@@ -71,6 +71,10 @@ public class Grid : MonoBehaviour, IProvidable
 
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
+            if(((int)closestCell.GridPos.x + (int)pos.x) > gridColumns - 1
+            || ((int)closestCell.GridPos.x + (int)pos.x) < 0
+            || ((int)closestCell.GridPos.y + (int)pos.y) < 0 
+            || ((int)closestCell.GridPos.y + (int)pos.y) > gridRows - 1 ) return false;
             if (_grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell != null) return false;
         }
 
