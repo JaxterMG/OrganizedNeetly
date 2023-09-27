@@ -2,6 +2,8 @@ using System.Net.Http.Headers;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class Grid : MonoBehaviour, IProvidable
 {
@@ -87,7 +89,7 @@ public class Grid : MonoBehaviour, IProvidable
         return true;
     }
 
-    public void CheckLinesToDelete(List<Vector2> touchedCells)
+    public async void CheckLinesToDelete(List<Vector2> touchedCells)
     {
         List<int> horizontalLinesToDelete = new List<int>();
         List<int> verticalLinesToDelete = new List<int>();
@@ -97,34 +99,46 @@ public class Grid : MonoBehaviour, IProvidable
             bool isHorizontalDelete = true;
             bool isVerticalDelete = true;
 
-            for (var i = 0; i < gridRows; i++)
+            if(!horizontalLinesToDelete.Contains((int)cell.y))
             {
-                if(_grid[(int)i, (int)cell.y].Cell == null)
+                for (var i = 0; i < gridRows; i++)
                 {
-                    isHorizontalDelete = false;
-                    break;
+                    if(_grid[i, (int)cell.y].Cell == null)
+                    {
+                        isHorizontalDelete = false;
+                        break;
+                    }
                 }
             }
-            
-            for (var i = 0; i < gridColumns; i++)
+            else isHorizontalDelete = false;
+
+            if(!verticalLinesToDelete.Contains((int)cell.x))
             {
-                if(_grid[(int)cell.x, (int)i].Cell == null)
+                for (var i = 0; i < gridColumns; i++)
                 {
-                    isVerticalDelete = false;
-                    break;
+                    if(_grid[(int)cell.x, i].Cell == null)
+                    {
+                        isVerticalDelete = false;
+                        break;
+                    }
+                    
                 }
-                
             }
+            else isVerticalDelete = false;
 
             if(isHorizontalDelete) horizontalLinesToDelete.Add((int)cell.y); 
             if(isVerticalDelete) verticalLinesToDelete.Add((int)cell.x);
         }
+
+        int linesToDelete = horizontalLinesToDelete.Count + verticalLinesToDelete.Count;
+
         if(horizontalLinesToDelete.Count > 0)
         {
             foreach (var line in horizontalLinesToDelete)
             {
                 for (int i = 0; i < gridRows; i++)
                 {
+                    await Task.Delay(50);
                     Destroy(_grid[i, line].Cell.gameObject);
                 }
             }
@@ -136,6 +150,7 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridColumns; i++)
                 {
+                    await Task.Delay(1000);
                     Destroy(_grid[line, i].Cell.gameObject);
                 }
             }
