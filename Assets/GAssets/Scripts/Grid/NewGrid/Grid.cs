@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using Zenject;
 
 public class Grid : MonoBehaviour, IProvidable
 {
@@ -13,6 +14,8 @@ public class Grid : MonoBehaviour, IProvidable
     private GridCell[,] _grid;  // The grid represented as a 2D array
 
     private Transform _gridHolder;
+
+    [Inject] IScoreController _scoreController;
 
     public void OnInitialize()
     {
@@ -129,6 +132,7 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         int linesToDelete = horizontalLinesToDelete.Count + verticalLinesToDelete.Count;
+        _scoreController.AddPoints(linesToDelete);
 
         if(horizontalLinesToDelete.Count > 0)
         {
@@ -148,7 +152,7 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridColumns; i++)
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(50);
                     Destroy(_grid[line, i].Cell.gameObject);
                 }
             }
