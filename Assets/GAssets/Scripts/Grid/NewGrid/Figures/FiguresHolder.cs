@@ -11,33 +11,13 @@ public class FiguresHolder : MonoBehaviour
     [SerializeField] private float _moveTime = 0.5f;
 
 
-    private List<GameObject> _figures = new List<GameObject>();
+    private List<FigureDragHandler> _figures = new List<FigureDragHandler>();
 
-
-    private void Start()
+    public void AddFigure(FigureDragHandler figure)
     {
-        int figureCount = transform.childCount;
-
-        float spacing = totalWidth / (figureCount + 1);
-
-        for (int i = 0; i < figureCount; i++)
-        {
-            Transform figureTransform = transform.GetChild(i);
-            AddFigure(figureTransform);
-            float posX = -totalWidth / 2 + spacing * (i + 1);
-            Vector3 newPosition = new Vector3(posX, 0, 0);
-
-            figureTransform.localPosition = newPosition;
-
-            figureTransform.SetSiblingIndex(i);
-        }        
-    }
-
-    public void AddFigure(Transform figure)
-    {
-        figure.DOScale(_scale, _scaleTime);
-        figure.SetParent(this.transform);
-        _figures.Add(figure.gameObject);
+        figure.transform.DOScale(_scale, _scaleTime);
+        figure.transform.SetParent(this.transform);
+        _figures.Add(figure);
         ArrangeFigures();
     }
     public void ArrangeFigures()
@@ -66,9 +46,15 @@ public class FiguresHolder : MonoBehaviour
         _figures.Clear();
     }
 
-    public void ReleaseFigure(Transform figure)
+    public void ReleaseFigure(FigureDragHandler figure)
     {
-        figure.DOScale(Vector3.one, _scaleTime);
-        figure.SetParent(null);
+        figure.transform.DOScale(Vector3.one, _scaleTime);
+        figure.transform.SetParent(null);
+        _figures.Remove(figure);
+    }
+
+    public List<FigureDragHandler> GetFigures()
+    {
+        return _figures;
     }
 }

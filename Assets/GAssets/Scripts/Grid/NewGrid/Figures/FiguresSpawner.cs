@@ -40,7 +40,7 @@ public class FiguresSpawner : MonoBehaviour
         {
             var figure = Instantiate(_figures[UnityEngine.Random.Range(0, _figures.Count)], Vector3.zero, Quaternion.identity);
             figure.Initialize(_figuresHolder, _grid);
-            _figuresHolder.AddFigure(figure.transform);
+            _figuresHolder.AddFigure(figure);
         }
     }
 

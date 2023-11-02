@@ -25,7 +25,8 @@ public class FigureDragHandler : MonoBehaviour
         {
             FigureData.TryAdd(Shape[i], transform.GetChild(i).GetComponent<Cell>());
         }
-    }    public void SetShape(List<Vector2> shape)
+    }    
+    public void SetShape(List<Vector2> shape)
     {
         Shape = shape;
     }
@@ -39,7 +40,7 @@ public class FigureDragHandler : MonoBehaviour
     {
         isDragging = true;
         offset = gameObject.transform.position - GetMouseWorldPos();
-        _figuresHolder.ReleaseFigure(transform);
+        _figuresHolder.ReleaseFigure(this);
     }
 
     private Vector3 GetMouseWorldPos()
@@ -53,7 +54,7 @@ public class FigureDragHandler : MonoBehaviour
     {
         isDragging = false;
         GridCell closestHit = FindClosestCellToFigure();
-        Debug.Log($"Closest hit {closestHit?.transform.position}");
+        //Debug.Log($"Closest hit {closestHit?.transform.position}");
 
         if (_grid.TryPlaceFigure(this, closestHit))
         {
@@ -64,8 +65,7 @@ public class FigureDragHandler : MonoBehaviour
             return;
         }
 
-        _figuresHolder.AddFigure(this.transform);
-
+        _figuresHolder.AddFigure(this);
     }
 
     private void Update()
@@ -86,7 +86,7 @@ public class FigureDragHandler : MonoBehaviour
         foreach (var hit in hits)
         {
             var magnitude = (hit.point - new Vector2(transform.position.x, transform.position.y)).magnitude;
-            Debug.Log($"Magnitude {magnitude}");
+            //Debug.Log($"Magnitude {magnitude}");
 
             if (magnitude < shortestMagnitude)
             {

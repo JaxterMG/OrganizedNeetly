@@ -13,9 +13,12 @@ public class Grid : MonoBehaviour, IProvidable
     public float cellSize = 1f;
     private GridCell[,] _grid;  // The grid represented as a 2D array
 
+    [SerializeField] Transform _placedCellsHolder;
+
     private Transform _gridHolder;
 
     [Inject] IScoreController _scoreController;
+    [Inject] FiguresHolder _figuresHolder;
 
     public void OnInitialize()
     {
@@ -68,30 +71,81 @@ public class Grid : MonoBehaviour, IProvidable
         figureDragHandler.transform.position = closestCell.transform.position;
 
         if (_grid[(int)closestCell.GridPos.x, (int)closestCell.GridPos.y].Cell != null) return false;
-
-        foreach (var pos in figureDragHandler.FigureData.Keys)
-        {
-            if(((int)closestCell.GridPos.x + (int)pos.x) > gridColumns - 1
-            || ((int)closestCell.GridPos.x + (int)pos.x) < 0
-            || ((int)closestCell.GridPos.y + (int)pos.y) < 0 
-            || ((int)closestCell.GridPos.y + (int)pos.y) > gridRows - 1 ) return false;
-            if (_grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell != null) return false;
-        }
+        
+        if(!CanPlaceFigure(figureDragHandler.Shape, (int)closestCell.GridPos.x, (int)closestCell.GridPos.y)) return false;
 
         List<Vector2> touchedGridCellsPos = new List<Vector2>();
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
             _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell = figureDragHandler.FigureData[pos];
 
-            figureDragHandler.FigureData[pos].transform.SetParent(_grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell.transform);
+            figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
 
             touchedGridCellsPos.Add(closestCell.GridPos + pos);
-            Debug.Log(pos);
+            //Debug.Log(pos);
         }
-        //Destroy(figureDragHandler.gameObject);
+
         CheckLinesToDelete(touchedGridCellsPos);
+        Destroy(figureDragHandler.gameObject);
 
         return true;
+    }
+    bool CanPlaceFigure(List<Vector2> figure, int col, int row)
+    {
+        foreach (var pos in figure)
+        {
+            if(((int)col + (int)pos.x) > gridColumns - 1
+            || ((int)col + (int)pos.x) < 0
+            || ((int)row + (int)pos.y) < 0 
+            || ((int)row + (int)pos.y) > gridRows - 1 )
+            {
+                return false;
+            }
+            if (_grid[(int)col + (int)pos.x, (int)row + (int)pos.y].Cell != null) 
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Check if there is space to place a figure on the entire grid
+    /// </summary>
+    /// <param name="figure"></param>
+    /// <returns></returns>  
+    bool IsSpaceAvailableForFigure(List<Vector2> figure)
+    {
+        for (int col = 0; col < gridColumns; col++)
+        {
+            for (int row = 0; row < gridRows; row++)
+            {
+                if (CanPlaceFigure(figure, col, row))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if ability to place a figure on the entire grid
+    /// </summary>
+    /// <param name="figure"></param>
+    bool CheckAvailableSpaceForFigures(List<FigureDragHandler> figures)
+    {
+        foreach (var figure in figures)
+        {
+            if (IsSpaceAvailableForFigure(figure.Shape))
+            {
+                return true;
+            }            
+        }
+
+        Debug.Log("fail");
+        return false;
+
     }
 
     public async void CheckLinesToDelete(List<Vector2> touchedCells)
@@ -161,6 +215,8 @@ public class Grid : MonoBehaviour, IProvidable
                 }
             }
         }
+        await Task.Delay(1);
+        CheckAvailableSpaceForFigures(_figuresHolder.GetFigures());
     }
 
     public void ClearGrid()
@@ -168,9 +224,10 @@ public class Grid : MonoBehaviour, IProvidable
         Destroy(_gridHolder.gameObject);
         Array.Clear(_grid, 0, _grid.Length);
     }
+    // Check if there is space to place a figure represented by a List<Vector2>
+    
 
     public void OnUpdate()
     {
-        throw new System.NotImplementedException();
     }
 }
