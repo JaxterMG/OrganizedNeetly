@@ -33,23 +33,18 @@ namespace Core.StateMachine.Game
             _figuresSpawner = GameObject.FindAnyObjectByType<FiguresSpawner>();
             _figuresSpawner.OnInititalize();
 
-            //     _dragAndDrop = GameObject.FindAnyObjectByType<DragAndDrop>();
-            //     _dragAndDrop.OnInitialize();
-
-            //     _gridVisualizer = GameObject.FindAnyObjectByType<GridVisualizer>();
-            //     _gridVisualizer.OnInitialize();
-
-            //     _gridHighlighter = GameObject.FindAnyObjectByType<GridHighlighter>();
-            //     _gridVisualizer.OnInitialize();
-
         }
         private void OnPauseButtonPressed()
         {
             _gameController.CreateAdditiveState(new MenuState(_gameController, true));
         }
-
+        public void OnGameFail()
+        {
+            _gameController.CreateAdditiveState(new LoseState(_gameController, true));
+        }
         public override void OnExit(bool isHide = true)
         {
+            _grid.Fail -= OnGameFail;
             _figuresSpawner.ClearFigures();
             _grid.ClearGrid();
             
@@ -61,6 +56,7 @@ namespace Core.StateMachine.Game
             _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
             _grid.OnInitialize();
             _gameplayScreen.OnStart();
+            _grid.Fail += OnGameFail;
         }
     }
 }

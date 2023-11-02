@@ -1,5 +1,3 @@
-using Core.StateMachine.Menu;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class GameplayScreen : UIStateBase

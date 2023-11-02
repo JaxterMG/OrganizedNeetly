@@ -20,6 +20,8 @@ public class Grid : MonoBehaviour, IProvidable
     [Inject] IScoreController _scoreController;
     [Inject] FiguresHolder _figuresHolder;
 
+    public event Action Fail;
+
     public void OnInitialize()
     {
         GenerateGrid();
@@ -144,6 +146,7 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         Debug.Log("fail");
+        Fail?.Invoke();
         return false;
 
     }
