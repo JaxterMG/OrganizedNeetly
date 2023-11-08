@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class FigureDragHandler : MonoBehaviour
 {
@@ -55,13 +56,11 @@ public class FigureDragHandler : MonoBehaviour
         isDragging = false;
         GridCell closestHit = FindClosestCellToFigure();
         //Debug.Log($"Closest hit {closestHit?.transform.position}");
-
         if (_grid.TryPlaceFigure(this, closestHit))
         {
             Destroy(_collider);
-            Destroy(this);
+            Destroy(gameObject, 0.3f);
             FigurePlaced?.Invoke();
-            
             return;
         }
 

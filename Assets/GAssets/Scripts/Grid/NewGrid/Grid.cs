@@ -81,14 +81,14 @@ public class Grid : MonoBehaviour, IProvidable
         {
             _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell = figureDragHandler.FigureData[pos];
 
-            figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
+            //TODO: Clean handlers without breaking scale animation
+            //figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
 
             touchedGridCellsPos.Add(closestCell.GridPos + pos);
             //Debug.Log(pos);
         }
 
         CheckLinesToDelete(touchedGridCellsPos);
-        Destroy(figureDragHandler.gameObject);
 
         return true;
     }
