@@ -82,7 +82,7 @@ public class Grid : MonoBehaviour, IProvidable
             _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell = figureDragHandler.FigureData[pos];
 
             //TODO: Clean handlers without breaking scale animation
-            //figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
+            figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
 
             touchedGridCellsPos.Add(closestCell.GridPos + pos);
             //Debug.Log(pos);
@@ -224,6 +224,11 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void ClearGrid()
     {
+        foreach (Transform item in _placedCellsHolder)
+        {
+           Destroy(item.gameObject); 
+        }
+
         Destroy(_gridHolder.gameObject);
         Array.Clear(_grid, 0, _grid.Length);
     }

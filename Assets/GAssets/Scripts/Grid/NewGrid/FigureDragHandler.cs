@@ -58,8 +58,9 @@ public class FigureDragHandler : MonoBehaviour
         //Debug.Log($"Closest hit {closestHit?.transform.position}");
         if (_grid.TryPlaceFigure(this, closestHit))
         {
-            Destroy(_collider);
-            Destroy(gameObject, 0.3f);
+            //TODO: Rework delete
+            // Destroy(_collider);
+            // Destroy(gameObject, 0.3f);
             FigurePlaced?.Invoke();
             return;
         }

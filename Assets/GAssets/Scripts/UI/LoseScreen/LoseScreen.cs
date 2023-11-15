@@ -1,13 +1,14 @@
+using Michsky.MUIP;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class LoseScreen : UIStateBase
     {
-        public Button MainMenuButton;
-        public Button ShopButton;
-        public Button ContinueButton;
-        public Button RestartButton;
+        public ButtonManager MainMenuButton;
+        public ButtonManager ShopButton;
+        public ButtonManager ContinueButton;
+        public ButtonManager RestartButton;
 
         public override void OnExit(bool isHide = true)
         {
@@ -17,5 +18,6 @@ namespace UI
             RestartButton.onClick.RemoveAllListeners();
             base.OnExit(isHide);
         }
+        
     }
 }
