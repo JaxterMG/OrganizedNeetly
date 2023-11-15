@@ -1,16 +1,12 @@
-
-using Core.StateMachine.Game;
-using Core.StateMachine.Loading;
-using Core.StateMachine.Menu;
-using UnityEngine;
+using Michsky.MUIP;
 using UnityEngine.UI;
 
 public class MenuScreen : UIStateBase
 {
-    public Button MainMenuButton;
-    public Button ShopButton;
-    public Button ContinueButton;
-    public Button RestartButton;
+    public ButtonManager MainMenuButton;
+    public ButtonManager ShopButton;
+    public ButtonManager ContinueButton;
+    public ButtonManager RestartButton;
 
     public override void OnExit(bool isHide = true)
     {

@@ -1,14 +1,11 @@
-
-using Core.StateMachine.Game;
-using Core.StateMachine.Loading;
-using UnityEngine;
+using Michsky.MUIP;
 using UnityEngine.UI;
 
 public class MainMenuScreen : UIStateBase
 {
-    public Button PlayButton;
-    public Button ShopButton;
-    public Button LikeButton;
+    public ButtonManager PlayButton;
+    public ButtonManager ShopButton;
+    public ButtonManager LikeButton;
 
     public override void OnStart()
     {

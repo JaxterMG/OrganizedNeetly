@@ -1,10 +1,10 @@
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
+using Michsky.MUIP;
 
 public class ShopScreen : UIStateBase
 {
-    public Button BackButton;
+    public ButtonManager BackButton;
     
     public override void OnStart()
     {

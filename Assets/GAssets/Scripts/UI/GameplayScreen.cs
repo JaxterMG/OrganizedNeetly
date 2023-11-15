@@ -1,8 +1,8 @@
-using UnityEngine.UI;
+using Michsky.MUIP;
 
 public class GameplayScreen : UIStateBase
 {
-    public Button PauseButton;
+    public ButtonManager PauseButton;
     
     
     public override void OnExit(bool isHide = true)
