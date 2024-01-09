@@ -12,8 +12,12 @@ namespace Core.Localization
         private static string CurrentLanguage;
         public static void InitializeTranslations(string filePath)
         {
-            //TODO: Узнать язык у системы устройства пользователя
-            CurrentLanguage = "French";
+            SystemLanguage language = Application.systemLanguage; 
+            CurrentLanguage = language.ToString();
+            #if UNITY_EDITOR
+                CurrentLanguage = SystemLanguage.Afrikaans.ToString();
+            #endif
+
             TextAsset csvFile = Resources.Load<TextAsset>(filePath);
 
             if (csvFile == null)
@@ -53,7 +57,7 @@ namespace Core.Localization
             if (Translations == null || Translations.Count == 0)
             {
                 Debug.LogError("Null or empty translations dictionary");
-                return "Error";
+                return "error";
             }
 
             if (Translations.TryGetValue(key, out var languages))
@@ -64,8 +68,8 @@ namespace Core.Localization
                 }
             }
 
-            Debug.LogError("No such word or language in translations");
-            return "Error";
+            Debug.Log("No such word or language in translations, trying english version");
+            return  RequestTranslation(key, SystemLanguage.English.ToString());
         }
 
         public static void ClearTranslations()
