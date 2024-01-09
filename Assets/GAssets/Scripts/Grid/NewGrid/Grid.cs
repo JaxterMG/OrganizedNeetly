@@ -27,8 +27,6 @@ public class Grid : MonoBehaviour, IProvidable
     {
         GenerateGrid();
     }
-    
-    
 
     void GenerateGrid()
     {
@@ -71,13 +69,13 @@ public class Grid : MonoBehaviour, IProvidable
 
     public bool TryPlaceFigure(FigureDragHandler figureDragHandler, GridCell closestCell)
     {
-        if(!closestCell) return false;
-        
+        if (!closestCell) return false;
+
         figureDragHandler.transform.position = closestCell.transform.position;
 
         if (_grid[(int)closestCell.GridPos.x, (int)closestCell.GridPos.y].Cell != null) return false;
-        
-        if(!CanPlaceFigure(figureDragHandler.Shape, (int)closestCell.GridPos.x, (int)closestCell.GridPos.y)) return false;
+
+        if (!CanPlaceFigure(figureDragHandler.Shape, (int)closestCell.GridPos.x, (int)closestCell.GridPos.y)) return false;
 
         List<Vector2> touchedGridCellsPos = new List<Vector2>();
         foreach (var pos in figureDragHandler.FigureData.Keys)
@@ -92,21 +90,21 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         CheckLinesToDelete(touchedGridCellsPos);
-
+    
         return true;
     }
     bool CanPlaceFigure(List<Vector2> figure, int col, int row)
     {
         foreach (var pos in figure)
         {
-            if(((int)col + (int)pos.x) > gridColumns - 1
+            if (((int)col + (int)pos.x) > gridColumns - 1
             || ((int)col + (int)pos.x) < 0
-            || ((int)row + (int)pos.y) < 0 
-            || ((int)row + (int)pos.y) > gridRows - 1 )
+            || ((int)row + (int)pos.y) < 0
+            || ((int)row + (int)pos.y) > gridRows - 1)
             {
                 return false;
             }
-            if (_grid[(int)col + (int)pos.x, (int)row + (int)pos.y].Cell != null) 
+            if (_grid[(int)col + (int)pos.x, (int)row + (int)pos.y].Cell != null)
             {
                 return false;
             }
@@ -145,7 +143,7 @@ public class Grid : MonoBehaviour, IProvidable
             if (IsSpaceAvailableForFigure(figure.Shape))
             {
                 return true;
-            }            
+            }
         }
 
         Debug.Log("fail");
@@ -158,17 +156,17 @@ public class Grid : MonoBehaviour, IProvidable
     {
         List<int> horizontalLinesToDelete = new List<int>();
         List<int> verticalLinesToDelete = new List<int>();
-        
+
         foreach (var cell in touchedCells)
         {
             bool isHorizontalDelete = true;
             bool isVerticalDelete = true;
 
-            if(!horizontalLinesToDelete.Contains((int)cell.y))
+            if (!horizontalLinesToDelete.Contains((int)cell.y))
             {
                 for (var i = 0; i < gridRows; i++)
                 {
-                    if(_grid[i, (int)cell.y].Cell == null)
+                    if (_grid[i, (int)cell.y].Cell == null)
                     {
                         isHorizontalDelete = false;
                         break;
@@ -177,30 +175,30 @@ public class Grid : MonoBehaviour, IProvidable
             }
             else isHorizontalDelete = false;
 
-            if(!verticalLinesToDelete.Contains((int)cell.x))
+            if (!verticalLinesToDelete.Contains((int)cell.x))
             {
                 for (var i = 0; i < gridColumns; i++)
                 {
-                    if(_grid[(int)cell.x, i].Cell == null)
+                    if (_grid[(int)cell.x, i].Cell == null)
                     {
                         isVerticalDelete = false;
                         break;
                     }
-                    
+
                 }
             }
             else isVerticalDelete = false;
 
-            if(isHorizontalDelete) horizontalLinesToDelete.Add((int)cell.y); 
-            if(isVerticalDelete) verticalLinesToDelete.Add((int)cell.x);
+            if (isHorizontalDelete) horizontalLinesToDelete.Add((int)cell.y);
+            if (isVerticalDelete) verticalLinesToDelete.Add((int)cell.x);
         }
 
         int linesToDelete = horizontalLinesToDelete.Count + verticalLinesToDelete.Count;
-        
-        if(linesToDelete > 0)
+
+        if (linesToDelete > 0)
             _eventBus.Publish<int>(EventType.IncreaseScore, linesToDelete);
 
-        if(horizontalLinesToDelete.Count > 0)
+        if (horizontalLinesToDelete.Count > 0)
         {
             foreach (var line in horizontalLinesToDelete)
             {
@@ -212,7 +210,7 @@ public class Grid : MonoBehaviour, IProvidable
             }
 
         }
-        if(verticalLinesToDelete.Count > 0)
+        if (verticalLinesToDelete.Count > 0)
         {
             foreach (var line in verticalLinesToDelete)
             {
@@ -231,14 +229,14 @@ public class Grid : MonoBehaviour, IProvidable
     {
         foreach (Transform item in _placedCellsHolder)
         {
-           Destroy(item.gameObject); 
+            Destroy(item.gameObject);
         }
 
         Destroy(_gridHolder.gameObject);
         Array.Clear(_grid, 0, _grid.Length);
     }
     // Check if there is space to place a figure represented by a List<Vector2>
-    
+
 
     public void OnUpdate()
     {

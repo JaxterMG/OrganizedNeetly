@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using DG.Tweening;
 
 public class FigureDragHandler : MonoBehaviour
 {
+    private EventBus _eventBus;
     public static event Action FigurePlaced;
     [SerializeField] private FiguresHolder _figuresHolder;
     public Dictionary<Vector2, Cell> FigureData = new Dictionary<Vector2, Cell>();
@@ -19,7 +19,7 @@ public class FigureDragHandler : MonoBehaviour
     [SerializeField] LayerMask _gridMask;
 
     private void OnEnable()
-    {
+    {           
         _collider = GetComponent<Collider2D>();
         mainCamera = Camera.main;
         for (int i = 0; i < transform.childCount; i++)
@@ -31,14 +31,16 @@ public class FigureDragHandler : MonoBehaviour
     {
         Shape = shape;
     }
-    public void Initialize(FiguresHolder figuresHolder, Grid grid)
+    public void Initialize(EventBus eventBus,FiguresHolder figuresHolder, Grid grid)
     {
+        _eventBus = eventBus;
         _figuresHolder = figuresHolder;
         _grid = grid;
     }
 
     private void OnMouseDown()
     {
+        _eventBus.Publish<string>(EventType.PlaySound, "Pickup");
         isDragging = true;
         offset = gameObject.transform.position - GetMouseWorldPos();
         _figuresHolder.ReleaseFigure(this);
@@ -53,6 +55,7 @@ public class FigureDragHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
+        _eventBus.Publish<string>(EventType.PlaySound, "Place");
         isDragging = false;
         GridCell closestHit = FindClosestCellToFigure();
         //Debug.Log($"Closest hit {closestHit?.transform.position}");
