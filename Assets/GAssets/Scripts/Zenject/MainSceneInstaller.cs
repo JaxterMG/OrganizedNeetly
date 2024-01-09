@@ -7,5 +7,6 @@ public class MainSceneInstaller : MonoInstaller
         Container.Bind<FiguresHolder>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IScoreController>().To<ScoreController>().AsSingle();
         Container.Bind<ScoreView>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<EventBus>().AsSingle();
     }
 }

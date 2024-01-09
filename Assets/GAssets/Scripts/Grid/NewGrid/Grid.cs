@@ -19,6 +19,7 @@ public class Grid : MonoBehaviour, IProvidable
 
     [Inject] IScoreController _scoreController;
     [Inject] FiguresHolder _figuresHolder;
+    [Inject] EventBus _eventBus;
 
     public event Action Fail;
 
@@ -26,6 +27,8 @@ public class Grid : MonoBehaviour, IProvidable
     {
         GenerateGrid();
     }
+    
+    
 
     void GenerateGrid()
     {
@@ -193,7 +196,9 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         int linesToDelete = horizontalLinesToDelete.Count + verticalLinesToDelete.Count;
-        _scoreController.AddPoints(linesToDelete);
+        
+        if(linesToDelete > 0)
+            _eventBus.Publish<int>(EventType.IncreaseScore, linesToDelete);
 
         if(horizontalLinesToDelete.Count > 0)
         {

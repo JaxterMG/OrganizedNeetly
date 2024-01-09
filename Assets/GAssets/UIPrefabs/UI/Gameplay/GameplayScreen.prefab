@@ -165,6 +165,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayScoreHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 4635762714719955227, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635762714719955227, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.8862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635762714719955227, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.7411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635762714719955227, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.36078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635762714719955227, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.8862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.7411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.36078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

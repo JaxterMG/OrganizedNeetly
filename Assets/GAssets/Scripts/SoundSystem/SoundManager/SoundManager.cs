@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace Core.SoundSystem
 {
@@ -6,12 +7,19 @@ namespace Core.SoundSystem
     {
         private AudioSource[] _audioSources;
         public SoundLibrary _soundLibrary;
-        public static SoundManager Instance;
 
-        private void Awake()
+        [Inject]
+        private EventBus _eventBus;
+
+        private void  OnEnable()
         {
-            Instance = this;
+            _eventBus.Subscribe<string>(EventType.PlaySound, RequestSound);
+    
             _audioSources = GetComponents<AudioSource>();
+        }
+        void OnDisable()
+        {
+            _eventBus.Unsubscribe<string>(EventType.PlaySound, RequestSound);
         }
 
         public void RequestSound(string soundName)

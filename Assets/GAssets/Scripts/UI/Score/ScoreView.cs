@@ -10,5 +10,9 @@ public class ScoreView : MonoBehaviour
     {
         CurrentScore.text = score.ToString();
     }
+    public void UpdateHighScore(int score)
+    {
+        HighScore.text = score.ToString();
+    }
 
 }
