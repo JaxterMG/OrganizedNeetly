@@ -200,6 +200,7 @@ public class Grid : MonoBehaviour, IProvidable
 
         if (horizontalLinesToDelete.Count > 0)
         {
+            _eventBus.Publish<string>(EventType.PlaySound, "LineDelete");
             foreach (var line in horizontalLinesToDelete)
             {
                 for (int i = 0; i < gridRows; i++)
@@ -212,6 +213,7 @@ public class Grid : MonoBehaviour, IProvidable
         }
         if (verticalLinesToDelete.Count > 0)
         {
+            _eventBus.Publish<string>(EventType.PlaySound, "LineDelete");
             foreach (var line in verticalLinesToDelete)
             {
                 for (int i = 0; i < gridColumns; i++)
