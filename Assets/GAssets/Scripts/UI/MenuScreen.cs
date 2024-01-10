@@ -13,7 +13,6 @@ public class MenuScreen : UIStateBase
         base.OnStart(MainMenuButton, ShopButton, ContinueButton, RestartButton, SettingsButton);
     }
 
-
     public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
     {
         base.OnExit(isHide, MainMenuButton, ShopButton, ContinueButton, RestartButton, SettingsButton);
