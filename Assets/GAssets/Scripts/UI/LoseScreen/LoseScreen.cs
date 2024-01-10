@@ -10,14 +10,16 @@ namespace UI
         public ButtonManager ContinueButton;
         public ButtonManager RestartButton;
 
-        public override void OnExit(bool isHide = true)
+        public override void OnStart(params ButtonManager[] buttonManagers)
         {
-            MainMenuButton.onClick.RemoveAllListeners();
-            ShopButton.onClick.RemoveAllListeners();
-            ContinueButton.onClick.RemoveAllListeners();
-            RestartButton.onClick.RemoveAllListeners();
-            base.OnExit(isHide);
+            base.OnStart(MainMenuButton, ShopButton, ContinueButton, RestartButton);
         }
-        
+
+
+        public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
+        {
+            base.OnExit(isHide, MainMenuButton, ShopButton, ContinueButton, RestartButton);
+        }
+
     }
 }

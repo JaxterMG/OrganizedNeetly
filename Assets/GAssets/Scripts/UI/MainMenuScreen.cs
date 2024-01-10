@@ -7,16 +7,14 @@ public class MainMenuScreen : UIStateBase
     public ButtonManager ShopButton;
     public ButtonManager LikeButton;
 
-    public override void OnStart()
+    public override void OnStart(params ButtonManager[] buttonManagers)
     {
-        base.OnStart();
+        base.OnStart(PlayButton, ShopButton, LikeButton);
     }
-    
-    public override void OnExit(bool isHide = true)
+
+
+    public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
     {
-        PlayButton.onClick.RemoveAllListeners();
-        ShopButton.onClick.RemoveAllListeners();
-        LikeButton.onClick.RemoveAllListeners();
-        base.OnExit(isHide);
+        base.OnExit(isHide, PlayButton, ShopButton, LikeButton);
     }
 }

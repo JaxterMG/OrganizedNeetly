@@ -5,8 +5,8 @@ using Michsky.MUIP;
 public class ShopScreen : UIStateBase
 {
     public ButtonManager BackButton;
-    
-    public override void OnStart()
+ 
+    public override void OnStart(params ButtonManager[] buttonManagers)
     {
         _canvasGroup.DOFade(1, 0);
         _canvasGroup.blocksRaycasts = true;
@@ -15,13 +15,15 @@ public class ShopScreen : UIStateBase
         RectTransform shopRect = GetComponent<RectTransform>();
         shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 0);
         shopRect.DOAnchorPos(new Vector2(0, 0), 1);
+        AddButtonsListerToPublishClickSounds(BackButton);
     }
 
-    public override void OnExit(bool isHide = true)
+
+    public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
     {
         BackButton.onClick.RemoveAllListeners();
         RectTransform shopRect = GetComponent<RectTransform>();
         shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 1);
-        base.OnExit(false);
+        base.OnExit(false, BackButton);
     }
 }
