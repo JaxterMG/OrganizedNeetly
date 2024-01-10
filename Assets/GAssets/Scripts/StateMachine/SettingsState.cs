@@ -6,20 +6,20 @@ namespace Core.StateMachine.Loading
 {
     public class SettingsState : State
     {
-        private ShopScreen _shopScreen;
+        private SettingsScreen _settingsScreen;
         public SettingsState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
-            _shopScreen = GameObject.FindAnyObjectByType<ShopScreen>();
+            _settingsScreen = GameObject.FindAnyObjectByType<SettingsScreen>();
         }
         public override void LoadContent()
         {
-            _shopScreen.LoadContent();
+            _settingsScreen.LoadContent();
         }
 
         public override void OnStart()
         {
-            _shopScreen.BackButton.onClick.AddListener(OnBackButtonPressed);
-            _shopScreen.OnStart();
+            _settingsScreen.BackButton.onClick.AddListener(OnBackButtonPressed);
+            _settingsScreen.OnStart();
         }
 
         
@@ -39,7 +39,7 @@ namespace Core.StateMachine.Loading
 
         public override void OnExit(bool isHide = true)
         {
-            _shopScreen.OnExit();
+            _settingsScreen.OnExit();
         }
 
         

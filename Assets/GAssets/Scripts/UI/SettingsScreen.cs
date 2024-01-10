@@ -5,7 +5,10 @@ using Michsky.MUIP;
 public class SettingsScreen : UIStateBase
 {
     public ButtonManager BackButton;
- 
+    
+    [SerializeField] float _animationAmplitude;
+    [SerializeField] float _animationPeriod;
+
     public override void OnStart(params ButtonManager[] buttonManagers)
     {
         _canvasGroup.DOFade(1, 0);
@@ -13,8 +16,8 @@ public class SettingsScreen : UIStateBase
         _canvasGroup.interactable = true;
 
         RectTransform shopRect = GetComponent<RectTransform>();
-        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 0);
-        shopRect.DOAnchorPos(new Vector2(0, 0), 1);
+        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 0).SetEase(Ease.InBounce);
+        shopRect.DOAnchorPos(new Vector2(0, 0), 0.5f).SetEase(Ease.OutElastic, _animationAmplitude, _animationPeriod);
         AddButtonsListerToPublishClickSounds(BackButton);
     }
 
@@ -23,7 +26,7 @@ public class SettingsScreen : UIStateBase
     {
         BackButton.onClick.RemoveAllListeners();
         RectTransform shopRect = GetComponent<RectTransform>();
-        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 1);
+        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 0.5f).SetEase(Ease.InElastic, _animationAmplitude, _animationPeriod);
         base.OnExit(false, BackButton);
     }
 }
