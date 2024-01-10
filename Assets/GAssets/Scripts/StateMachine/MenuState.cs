@@ -8,7 +8,7 @@ namespace Core.StateMachine.Menu
     public class MenuState : State
     {
         private MenuScreen _menuScreen;
-        public MenuState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public MenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _menuScreen = GameObject.FindAnyObjectByType<MenuScreen>();
         }
@@ -34,12 +34,12 @@ namespace Core.StateMachine.Menu
 
         private void OnMainMenuButtonClicked()
         {
-            _gameController.ChangeState(new MainMenuState(_gameController));
+            _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
             _gameController.ExitAdditiveState(this);
         }
         private void OnShopButtonButtonClicked()
         {
-            _gameController.CreateAdditiveState(new ShopState(_gameController, true));
+            _gameController.CreateAdditiveState(new ShopState(_eventBus, _gameController, true));
         }
         private void OnContinueButtonClicked()
         {
@@ -48,7 +48,7 @@ namespace Core.StateMachine.Menu
         private void OnRestartButtonClicked()
         {
             _gameController.ExitAdditiveState(this);
-            _gameController.ChangeState(new GameState(_gameController));
+            _gameController.ChangeState(new GameState(_eventBus, _gameController));
         }
 
         public override void OnExit(bool isHide = true)

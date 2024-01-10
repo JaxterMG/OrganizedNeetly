@@ -8,7 +8,7 @@ namespace Core.StateMachine.Loading
     public class LoadingState : State
     {
         private LoadingScreen _loadingScreen;
-        public LoadingState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public LoadingState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _loadingScreen = GameObject.FindAnyObjectByType<LoadingScreen>();
         }
@@ -21,7 +21,7 @@ namespace Core.StateMachine.Loading
         {
             _loadingScreen.OnStart();
             await Task.Delay(5000);
-            _gameController.ChangeState(new MainMenuState(_gameController));
+            _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
         }
 
         

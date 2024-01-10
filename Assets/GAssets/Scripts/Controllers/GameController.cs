@@ -4,24 +4,26 @@ using UnityEngine;
 using Core.Localization;
 using Core.StateMachine.Loading;
 using System.Collections.Generic;
+using Zenject;
 
 namespace Core.Controllers
 {
     public class GameController : MonoBehaviour
     {
+        [Inject] EventBus _eventBus;
         private State _currentState;
         private List<State> _additiveStates = new List<State>();
 
         void Awake()
         {
-            _currentState = new LoadingState(this);
+            _currentState = new LoadingState(_eventBus, this);
             LoadContent();
         }
 
         private void LoadContent()
         {
             CSVTranslationsReader.InitializeTranslations("Localization/Localization");
-            ChangeState(new LoadingState(this));
+            ChangeState(new LoadingState(_eventBus, this));
         }
 
         private void Update()

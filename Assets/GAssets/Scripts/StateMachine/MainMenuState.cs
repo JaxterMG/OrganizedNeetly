@@ -8,7 +8,7 @@ namespace Core.StateMachine.Menu
     public class MainMenuState : State
     {
         private MainMenuScreen _mainMenuScreen;
-        public MainMenuState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public MainMenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _mainMenuScreen = GameObject.FindAnyObjectByType<MainMenuScreen>();
         }
@@ -33,11 +33,11 @@ namespace Core.StateMachine.Menu
 
         private void OnPlayButtonPressed()
         {
-            _gameController.ChangeState(new GameState(_gameController));
+            _gameController.ChangeState(new GameState(_eventBus, _gameController));
         }
         private void OnShopButtonPressed()
         {
-            _gameController.ChangeState(new ShopState(_gameController), false);
+            _gameController.ChangeState(new ShopState(_eventBus, _gameController), false);
         }
         private void OnLikeButtonPressed()
         {

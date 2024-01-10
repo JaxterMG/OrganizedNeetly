@@ -10,7 +10,7 @@ namespace Core.StateMachine.Game
         private GameplayScreen _gameplayScreen;
         private Grid _grid;
         private FiguresSpawner _figuresSpawner;
-        public GameState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public GameState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
 
 
@@ -36,11 +36,11 @@ namespace Core.StateMachine.Game
         }
         private void OnPauseButtonPressed()
         {
-            _gameController.CreateAdditiveState(new MenuState(_gameController, true));
+            _gameController.CreateAdditiveState(new MenuState(_eventBus, _gameController, true));
         }
         public void OnGameFail()
         {
-            _gameController.CreateAdditiveState(new LoseState(_gameController, true));
+            _gameController.CreateAdditiveState(new LoseState(_eventBus, _gameController, true));
         }
         public override void OnExit(bool isHide = true)
         {

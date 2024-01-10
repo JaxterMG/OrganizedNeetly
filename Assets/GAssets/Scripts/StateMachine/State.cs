@@ -4,10 +4,12 @@ namespace Core.StateMachine
 {
     public abstract class State
     {
+        protected EventBus _eventBus;
         protected bool _isAdditiveState;
         protected GameController _gameController;
-        public State(GameController gameController, bool isAdditiveState = false)
+        public State(EventBus eventBus, GameController gameController, bool isAdditiveState = false)
         {
+            _eventBus = eventBus;
             _gameController = gameController;
             _isAdditiveState = isAdditiveState;
         }

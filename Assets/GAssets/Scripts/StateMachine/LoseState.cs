@@ -9,7 +9,7 @@ namespace Core.StateMachine.Game
     public class LoseState : State
     {
         private LoseScreen _loseScreen;
-        public LoseState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public LoseState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _loseScreen = GameObject.FindAnyObjectByType<LoseScreen>();
         }
@@ -20,6 +20,8 @@ namespace Core.StateMachine.Game
 
         public override void OnStart()
         {
+            _eventBus.Publish<string>(EventType.PlaySound, "Lose");
+
             _loseScreen.MainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
             _loseScreen.ShopButton.onClick.AddListener(OnShopButtonButtonClicked);
             _loseScreen.ContinueButton.onClick.AddListener(OnContinueButtonClicked);
@@ -35,12 +37,12 @@ namespace Core.StateMachine.Game
 
         private void OnMainMenuButtonClicked()
         {
-            _gameController.ChangeState(new MainMenuState(_gameController));
+            _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
             _gameController.ExitAdditiveState(this);
         }
         private void OnShopButtonButtonClicked()
         {
-            _gameController.CreateAdditiveState(new ShopState(_gameController, true));
+            _gameController.CreateAdditiveState(new ShopState(_eventBus, _gameController, true));
         }
         private void OnContinueButtonClicked()
         {
@@ -49,7 +51,7 @@ namespace Core.StateMachine.Game
         private void OnRestartButtonClicked()
         {
             _gameController.ExitAdditiveState(this);
-            _gameController.ChangeState(new GameState(_gameController));
+            _gameController.ChangeState(new GameState(_eventBus, _gameController));
         }
 
         public override void OnExit(bool isHide = true)

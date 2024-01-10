@@ -7,7 +7,7 @@ namespace Core.StateMachine.Loading
     public class ShopState : State
     {
         private ShopScreen _shopScreen;
-        public ShopState(GameController gameController, bool isAdditiveState = false) : base(gameController, isAdditiveState)
+        public ShopState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _shopScreen = GameObject.FindAnyObjectByType<ShopScreen>();
         }
@@ -34,7 +34,7 @@ namespace Core.StateMachine.Loading
                 _gameController.ExitAdditiveState(this);
                 return;
             }
-            _gameController.ChangeState(new MainMenuState(_gameController), false);
+            _gameController.ChangeState(new MainMenuState(_eventBus, _gameController), false);
         }
 
         public override void OnExit(bool isHide = true)
