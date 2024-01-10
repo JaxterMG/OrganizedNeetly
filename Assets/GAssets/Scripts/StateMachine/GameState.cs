@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Core.Controllers;
 using Core.StateMachine.Menu;
 using UnityEngine;
@@ -31,8 +32,6 @@ namespace Core.StateMachine.Game
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
             _gameplayScreen.LoadContent();
             _figuresSpawner = GameObject.FindAnyObjectByType<FiguresSpawner>();
-            _figuresSpawner.OnInititalize();
-
         }
         private void OnPauseButtonPressed()
         {
@@ -51,10 +50,14 @@ namespace Core.StateMachine.Game
             _gameplayScreen.OnExit();
         }
 
-        public override void OnStart()
+        public override async void OnStart()
         {
             _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
             _grid.OnInitialize();
+
+            await Task.Delay(200);
+
+            _figuresSpawner.OnInititalize();
             _gameplayScreen.OnStart();
             _grid.Fail += OnGameFail;
         }

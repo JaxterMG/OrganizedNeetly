@@ -25,7 +25,12 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnInitialize()
     {
+        _eventBus.Subscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
         GenerateGrid();
+    }
+    void OnDestroy()
+    {
+        _eventBus.Unsubscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
     }
 
     void GenerateGrid()
@@ -136,20 +141,18 @@ public class Grid : MonoBehaviour, IProvidable
     /// Checks if ability to place a figure on the entire grid
     /// </summary>
     /// <param name="figure"></param>
-    bool CheckAvailableSpaceForFigures(List<FigureDragHandler> figures)
+    private void CheckAvailableSpaceForFigures(List<FigureDragHandler> figures)
     {
         foreach (var figure in figures)
         {
             if (IsSpaceAvailableForFigure(figure.Shape))
             {
-                return true;
+                return ;
             }
         }
 
         Debug.Log("fail");
         Fail?.Invoke();
-        return false;
-
     }
 
     public async void CheckLinesToDelete(List<Vector2> touchedCells)
@@ -223,8 +226,10 @@ public class Grid : MonoBehaviour, IProvidable
                 }
             }
         }
-        await Task.Delay(1);
-        CheckAvailableSpaceForFigures(_figuresHolder.GetFigures());
+        if(_figuresHolder.GetFigures().Count > 0)
+        {
+            CheckAvailableSpaceForFigures(_figuresHolder.GetFigures());
+        }
     }
 
     public void ClearGrid()

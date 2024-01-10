@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 public class FiguresHolder : MonoBehaviour
 {
+    [Inject] EventBus _eventBus;
+
     public float spacing = 2f;
     public float totalWidth = 10;
     [SerializeField] private float _scale = 0.5f;
@@ -31,15 +35,13 @@ public class FiguresHolder : MonoBehaviour
             Transform figureTransform = transform.GetChild(i);
             float posX = -totalWidth / 2 + spacing * (i + 1);
             Vector3 newPosition = new Vector3(posX, 0, 0);
-
-            figureTransform.DOLocalMove(newPosition, _moveTime);
-
             figureTransform.SetSiblingIndex(i);
+            figureTransform.DOLocalMove(newPosition, _moveTime);
         }
     }
     public void ClearFigures()
     {
-         foreach (var figure in _figures)
+        foreach (var figure in _figures)
         {
             DestroyImmediate(figure.gameObject, true);
         }

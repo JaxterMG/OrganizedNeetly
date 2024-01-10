@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public enum EventType
 {
+    SpawnFigures,
     PlaySound,
     IncreaseScore
 }
