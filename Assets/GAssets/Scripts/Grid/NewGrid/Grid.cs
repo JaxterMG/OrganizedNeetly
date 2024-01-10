@@ -21,7 +21,7 @@ public class Grid : MonoBehaviour, IProvidable
     [Inject] FiguresHolder _figuresHolder;
     [Inject] EventBus _eventBus;
 
-    public event Action Fail;
+    public event Action<IScoreController> Fail;
 
     public void OnInitialize()
     {
@@ -152,7 +152,7 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         Debug.Log("fail");
-        Fail?.Invoke();
+        Fail?.Invoke(_scoreController);
     }
 
     public async void CheckLinesToDelete(List<Vector2> touchedCells)

@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class ScoreController : IScoreController
@@ -15,6 +16,7 @@ public class ScoreController : IScoreController
         _scoreView = scoreView;
 
         _eventBus.Subscribe<int>(EventType.IncreaseScore, AddPoints);
+        PlayerPrefs.DeleteKey("HighScore");
         _highScore = PlayerPrefs.GetInt("HighScore", 0);
         _scoreView.UpdateHighScore(_highScore);
     }
@@ -33,10 +35,16 @@ public class ScoreController : IScoreController
     {
         return _points;
     }
+
+    public bool IsHighScore()
+    {
+        return _points < _highScore ? false : true;
+    }
 }
 
 public interface IScoreController
 {
     public void AddPoints(int points);
     public int GetPoints();
+    public bool IsHighScore();
 }

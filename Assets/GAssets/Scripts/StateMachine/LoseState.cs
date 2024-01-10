@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Core.Controllers;
 using Core.StateMachine.Loading;
 using Core.StateMachine.Menu;
@@ -8,6 +9,7 @@ namespace Core.StateMachine.Game
 {
     public class LoseState : State
     {
+        private IScoreController _scoreController;
         private LoseScreen _loseScreen;
         public LoseState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
@@ -18,7 +20,7 @@ namespace Core.StateMachine.Game
             _loseScreen.LoadContent();
         }
 
-        public override void OnStart()
+        public override async void OnStart()
         {
             _eventBus.Publish<string>(EventType.PlaySound, "Lose");
 
@@ -26,8 +28,17 @@ namespace Core.StateMachine.Game
             _loseScreen.ShopButton.onClick.AddListener(OnShopButtonButtonClicked);
             _loseScreen.ContinueButton.onClick.AddListener(OnContinueButtonClicked);
             _loseScreen.RestartButton.onClick.AddListener(OnRestartButtonClicked);
-
             _loseScreen.OnStart();
+            await Task.Delay(400);
+            if(_scoreController.IsHighScore())
+            {
+                _eventBus.Publish<string>(EventType.PlaySound, "HighScore");
+            }
+        }
+
+        public void LinkScoreController(IScoreController scoreController)
+        {
+            _scoreController = scoreController;
         }
 
 

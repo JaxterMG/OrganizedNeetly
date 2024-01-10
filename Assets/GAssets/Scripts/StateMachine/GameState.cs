@@ -37,9 +37,11 @@ namespace Core.StateMachine.Game
         {
             _gameController.CreateAdditiveState(new MenuState(_eventBus, _gameController, true));
         }
-        public void OnGameFail()
+        public void OnGameFail(IScoreController scoreController)
         {
-            _gameController.CreateAdditiveState(new LoseState(_eventBus, _gameController, true));
+            LoseState loseState = new LoseState(_eventBus, _gameController, true);
+            loseState.LinkScoreController(scoreController);
+            _gameController.CreateAdditiveState(loseState);
         }
         public override void OnExit(bool isHide = true)
         {
