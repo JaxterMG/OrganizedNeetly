@@ -95,6 +95,7 @@ MonoBehaviour:
   PlayButton: {fileID: 2864455749039156510}
   ShopButton: {fileID: 595510691120790392}
   LikeButton: {fileID: 1972339295265927572}
+  SettingsButton: {fileID: 7384648781734239359}
 --- !u!225 &2943591240912193674
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -324,6 +325,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2802335c4d779444bd335c6e21f1cc0, type: 3}
+--- !u!114 &7384648781734239359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6667687696780113136, guid: f2802335c4d779444bd335c6e21f1cc0, type: 3}
+  m_PrefabInstance: {fileID: 4247994317216966799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d218e07e7315e243acdfcc700d01eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7547001659468012295 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5931168506992636808, guid: f2802335c4d779444bd335c6e21f1cc0, type: 3}

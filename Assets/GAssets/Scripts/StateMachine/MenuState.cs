@@ -23,6 +23,7 @@ namespace Core.StateMachine.Menu
             _menuScreen.ShopButton.onClick.AddListener(OnShopButtonButtonClicked);
             _menuScreen.ContinueButton.onClick.AddListener(OnContinueButtonClicked);
             _menuScreen.RestartButton.onClick.AddListener(OnRestartButtonClicked);
+            _menuScreen.SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
 
             _menuScreen.OnStart();
         }
@@ -49,6 +50,10 @@ namespace Core.StateMachine.Menu
         {
             _gameController.ExitAdditiveState(this);
             _gameController.ChangeState(new GameState(_eventBus, _gameController));
+        }
+        private void OnSettingsButtonClicked()
+        {
+            _gameController.CreateAdditiveState(new SettingsState(_eventBus, _gameController, true));
         }
 
         public override void OnExit(bool isHide = true)

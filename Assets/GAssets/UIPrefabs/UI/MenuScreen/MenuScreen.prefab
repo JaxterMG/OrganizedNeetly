@@ -95,6 +95,7 @@ MonoBehaviour:
   ShopButton: {fileID: 9035672767705622296}
   ContinueButton: {fileID: 597634280558012438}
   RestartButton: {fileID: 3418657439536221170}
+  SettingsButton: {fileID: 4547670229072130285}
 --- !u!225 &6589660724346119393
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -731,3 +732,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5931168506992636808, guid: f2802335c4d779444bd335c6e21f1cc0, type: 3}
   m_PrefabInstance: {fileID: 7175627668017415197}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4547670229072130285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6667687696780113136, guid: f2802335c4d779444bd335c6e21f1cc0, type: 3}
+  m_PrefabInstance: {fileID: 7175627668017415197}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d218e07e7315e243acdfcc700d01eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

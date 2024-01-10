@@ -22,6 +22,7 @@ namespace Core.StateMachine.Menu
             _mainMenuScreen.PlayButton.onClick.AddListener(OnPlayButtonPressed);
             _mainMenuScreen.ShopButton.onClick.AddListener(OnShopButtonPressed);
             _mainMenuScreen.LikeButton.onClick.AddListener(OnLikeButtonPressed);
+            _mainMenuScreen.SettingsButton.onClick.AddListener(OnSettingsButtonPressed);
 
             _mainMenuScreen.OnStart();
         }
@@ -42,6 +43,10 @@ namespace Core.StateMachine.Menu
         private void OnLikeButtonPressed()
         {
             //_gameController.ChangeState(new GameState(_gameController));
+        }
+        private void OnSettingsButtonPressed()
+        {
+            _gameController.ChangeState(new SettingsState(_eventBus, _gameController), false);
         }
 
         public override void OnExit(bool isHide = true)

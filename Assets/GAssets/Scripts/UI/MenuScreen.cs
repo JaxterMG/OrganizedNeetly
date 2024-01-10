@@ -1,5 +1,4 @@
 using Michsky.MUIP;
-using UnityEngine.UI;
 
 public class MenuScreen : UIStateBase
 {
@@ -7,15 +6,16 @@ public class MenuScreen : UIStateBase
     public ButtonManager ShopButton;
     public ButtonManager ContinueButton;
     public ButtonManager RestartButton;
+    public ButtonManager SettingsButton;
 
     public override void OnStart(params ButtonManager[] buttonManagers)
     {
-        base.OnStart(MainMenuButton, ShopButton, ContinueButton, RestartButton);
+        base.OnStart(MainMenuButton, ShopButton, ContinueButton, RestartButton, SettingsButton);
     }
 
 
     public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
     {
-        base.OnExit(isHide, MainMenuButton, ShopButton, ContinueButton, RestartButton);
+        base.OnExit(isHide, MainMenuButton, ShopButton, ContinueButton, RestartButton, SettingsButton);
     }
 }
