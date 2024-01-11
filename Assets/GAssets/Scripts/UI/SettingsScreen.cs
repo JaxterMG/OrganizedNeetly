@@ -24,6 +24,8 @@ public class SettingsScreen : UIStateBase
 
     public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
     {
+        _canvasGroup.blocksRaycasts = false;
+        _canvasGroup.interactable = false;
         BackButton.onClick.RemoveAllListeners();
         RectTransform shopRect = GetComponent<RectTransform>();
         shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 0.5f).SetEase(Ease.InElastic, _animationAmplitude, _animationPeriod);
