@@ -85,10 +85,15 @@ public class Grid : MonoBehaviour, IProvidable
         List<Vector2> touchedGridCellsPos = new List<Vector2>();
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y].Cell = figureDragHandler.FigureData[pos];
+            GridCell gridCell = _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y];
+            Cell cell = gridCell.Cell;
+            
+            cell = figureDragHandler.FigureData[pos];
 
             //TODO: Clean handlers without breaking scale animation
             figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
+            figureDragHandler.FigureData[pos].transform.position = gridCell.transform.position;
+            figureDragHandler.FigureData[pos].transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
 
             touchedGridCellsPos.Add(closestCell.GridPos + pos);
             //Debug.Log(pos);
