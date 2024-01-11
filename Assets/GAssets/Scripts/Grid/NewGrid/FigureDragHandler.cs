@@ -42,7 +42,7 @@ public class FigureDragHandler : MonoBehaviour
     {
         _eventBus.Publish<string>(EventType.PlaySound, "Pickup");
         isDragging = true;
-        offset = gameObject.transform.position - GetMouseWorldPos();
+        offset = gameObject.transform.position - GetMouseWorldPos() + new Vector3(0, 0.5f, 0);
         _figuresHolder.ReleaseFigure(this);
     }
 
@@ -63,7 +63,7 @@ public class FigureDragHandler : MonoBehaviour
         {
             //TODO: Rework delete
             // Destroy(_collider);
-            // Destroy(gameObject, 0.3f);
+            Destroy(gameObject, 0f);
             FigurePlaced?.Invoke();
             return;
         }
