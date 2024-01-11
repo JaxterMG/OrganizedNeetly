@@ -5,6 +5,7 @@ public enum EventType
 {
     SpawnFigures,
     PlaySound,
+    ChangeSoundsVolume,
     IncreaseScore
 }
 public class EventBus

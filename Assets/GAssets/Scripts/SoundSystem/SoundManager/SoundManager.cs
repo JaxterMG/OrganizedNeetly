@@ -11,9 +11,12 @@ namespace Core.SoundSystem
         [Inject]
         private EventBus _eventBus;
 
+        private bool _isTurnedOffSound; 
+
         private void  OnEnable()
         {
             _eventBus.Subscribe<string>(EventType.PlaySound, RequestSound);
+            _eventBus.Subscribe<bool>(EventType.ChangeSoundsVolume, ChangeSoundsVolume);
     
             _audioSources = GetComponents<AudioSource>();
         }
@@ -22,8 +25,14 @@ namespace Core.SoundSystem
             _eventBus.Unsubscribe<string>(EventType.PlaySound, RequestSound);
         }
 
+        private void ChangeSoundsVolume(bool isTurnOff)
+        {
+            _isTurnedOffSound = isTurnOff;
+        }
         public void RequestSound(string soundName)
         {
+            if(_isTurnedOffSound) return;
+            
             var source = ChooseUnoccupiedSource();
             var clip = FindClip(soundName);
             PlaySound(source, clip);
