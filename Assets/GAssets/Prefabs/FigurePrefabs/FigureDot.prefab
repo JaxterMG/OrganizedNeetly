@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a64801d832b534c94b71eff1923d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FigureName: FigureDot
   _figuresHolder: {fileID: 0}
   Shape:
   - {x: 0, y: 0}

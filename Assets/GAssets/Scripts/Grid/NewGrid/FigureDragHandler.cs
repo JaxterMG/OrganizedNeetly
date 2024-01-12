@@ -5,6 +5,7 @@ using System;
 public class FigureDragHandler : MonoBehaviour
 {
     private EventBus _eventBus;
+    public string FigureName;
     public static event Action FigurePlaced;
     [SerializeField] private FiguresHolder _figuresHolder;
     public Dictionary<Vector2, Cell> FigureData = new Dictionary<Vector2, Cell>();
@@ -31,11 +32,19 @@ public class FigureDragHandler : MonoBehaviour
     {
         Shape = shape;
     }
-    public void Initialize(EventBus eventBus,FiguresHolder figuresHolder, Grid grid)
+    public void Initialize(EventBus eventBus,FiguresHolder figuresHolder, Grid grid, Color figureColor)
     {
         _eventBus = eventBus;
         _figuresHolder = figuresHolder;
         _grid = grid;
+        SetColorTheme(figureColor);
+    }
+    private void SetColorTheme(Color figureColor)
+    {
+        foreach (var renderer in GetComponentsInChildren<SpriteRenderer>())
+        {
+            renderer.color = figureColor;
+        }
     }
 
     private void OnMouseDown()

@@ -6,6 +6,7 @@ using Zenject;
 public class FiguresSpawner : MonoBehaviour
 {
     [Inject] EventBus _eventBus;
+    [Inject] ColorsChanger _colorsChanger;
     
     [SerializeField] private int _spawnDelay = 200;
     [SerializeField] private List<FigureDragHandler> _figures;
@@ -44,8 +45,9 @@ public class FiguresSpawner : MonoBehaviour
             _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
 
-            var figure = Instantiate(_figures[UnityEngine.Random.Range(0, _figures.Count)], Vector3.zero, Quaternion.identity);
-            figure.Initialize(_eventBus, _figuresHolder, _grid);
+            FigureDragHandler figureDragHandler = _figures[UnityEngine.Random.Range(0, _figures.Count)];
+            var figure = Instantiate(figureDragHandler, Vector3.zero, Quaternion.identity);
+            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
             _figuresHolder.AddFigure(figure);
         }
         _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
