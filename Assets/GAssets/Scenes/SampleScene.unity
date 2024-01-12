@@ -668,6 +668,8 @@ MonoBehaviour:
   - {fileID: 6681680394346472111, guid: 423ed0e3d11a8564daae6824a0346979, type: 3}
   - {fileID: 3972659044367624639, guid: 38ceca597fe212b48a2fc1fd3b6efbde, type: 3}
   - {fileID: 1921304924323698346, guid: 02a6d9428fab24a45abcce7dcb0fe1ae, type: 3}
+  - {fileID: 6681680394346472111, guid: 861740faf55849547954b3fbd55a0a61, type: 3}
+  - {fileID: 6681680394346472111, guid: fed72463a4e9eb440a90b43e6f77f63c, type: 3}
   _desiredFiguresCount: 3
 --- !u!1 &895212122
 GameObject:

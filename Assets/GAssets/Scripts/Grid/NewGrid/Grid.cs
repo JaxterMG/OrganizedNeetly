@@ -86,9 +86,9 @@ public class Grid : MonoBehaviour, IProvidable
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
             GridCell gridCell = _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y];
-            Cell cell = gridCell.Cell;
+
             
-            cell = figureDragHandler.FigureData[pos];
+            gridCell.Cell = figureDragHandler.FigureData[pos];
 
             //TODO: Clean handlers without breaking scale animation
             figureDragHandler.FigureData[pos].transform.SetParent(_placedCellsHolder);
