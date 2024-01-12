@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f34571def0422dc4083ebd0398bcfbda
+    m_Address: BackGroundColorDefaultTheme
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b7fe108021c2fc4fadb582b39e03c5e, type: 2}
   m_SchemaSet:
