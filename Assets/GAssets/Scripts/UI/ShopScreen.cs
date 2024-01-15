@@ -5,9 +5,11 @@ using Michsky.MUIP;
 public class ShopScreen : UIStateBase
 {
     public ButtonManager BackButton;
+    public GameObject ShopScreenHolder;
  
     public override void OnStart(params ButtonManager[] buttonManagers)
     {
+        ShopScreenHolder.SetActive(true);
         _canvasGroup.DOFade(1, 0);
         _canvasGroup.blocksRaycasts = true;
         _canvasGroup.interactable = true;
@@ -23,7 +25,7 @@ public class ShopScreen : UIStateBase
     {
         BackButton.onClick.RemoveAllListeners();
         RectTransform shopRect = GetComponent<RectTransform>();
-        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 1);
+        shopRect.DOAnchorPos(new Vector2(0, ScreenAnchorsController.Instance.DownAnchor.localPosition.y * 2), 1).OnComplete(() => ShopScreenHolder.SetActive(false));
         base.OnExit(false, BackButton);
     }
 }
