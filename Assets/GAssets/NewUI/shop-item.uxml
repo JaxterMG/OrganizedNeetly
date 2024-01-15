@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="shop-item" style="flex-grow: 1; flex-direction: row; justify-content: space-around; align-items: center; align-self: center;">
+        <ui:VisualElement name="image-holder" style="flex-grow: 1; width: 33%;">
+            <ui:VisualElement style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Modern%20UI%20Pack/Textures/Border/Flat/Square%20Filled.png?fileID=2800000&amp;guid=b325a13e94f3bac4199e75b91fa98449&amp;type=3#Square Filled&apos;); -unity-background-scale-mode: scale-to-fit;" />
+        </ui:VisualElement>
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="theme-text" style="width: 33%; -unity-text-align: upper-center;" />
+        <ui:VisualElement name="item-button-holder" style="flex-grow: 1; width: 33%; align-items: center; justify-content: center;">
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="item-button" style="width: 50%; height: 50%; align-items: flex-start;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
