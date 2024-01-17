@@ -27,6 +27,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ae0eaeef486d564d984edfa8eeeb73f
+    m_Address: DefaultUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 696448b16214c144eb49e382b0aa5a91
+    m_Address: SoftBackGround
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7211c5141ca8be94cbc1d1e6242801ba
+    m_Address: SoftTheme
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b1627b55713ae42a1b2f5a03ff4828
+    m_Address: SoftUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b7fe108021c2fc4fadb582b39e03c5e, type: 2}
   m_SchemaSet:

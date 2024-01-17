@@ -111,10 +111,10 @@ RectTransform:
   - {fileID: 4127094774069863402}
   m_Father: {fileID: 918865520068246770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 32.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 32.5, y: -32.5}
+  m_SizeDelta: {x: 0, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3511174552718768793
 CanvasGroup:
@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 6486320436254334675}
   - component: {fileID: 1278530467872218182}
   - component: {fileID: 4514658856744957454}
+  - component: {fileID: 7971191844487101538}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -336,6 +337,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &7971191844487101538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357133448511319237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8304ef14ec066546a90201e53f9c6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiElementName: Back
+  _uiImages:
+  - {fileID: 7530799744350317131}
+  - {fileID: 8264203112203634478}
+  - {fileID: 7742896201976629849}
 --- !u!1 &446743446722982388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1395,7 @@ GameObject:
   - component: {fileID: 5284261281817389600}
   - component: {fileID: 1650225267356307722}
   - component: {fileID: 5633742833833550541}
+  - component: {fileID: 9059947103101973627}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1534,6 +1553,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &9059947103101973627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551686016556738761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8304ef14ec066546a90201e53f9c6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiElementName: Sound
+  _uiImages:
+  - {fileID: 5989117675051421949}
+  - {fileID: 2389656289247002952}
+  - {fileID: 7963389616714194789}
 --- !u!1 &2617992096801332502
 GameObject:
   m_ObjectHideFlags: 0
