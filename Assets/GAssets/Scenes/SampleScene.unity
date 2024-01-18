@@ -343,6 +343,7 @@ MonoBehaviour:
   gapSize: 0.05
   cellSize: 0.35
   _placedCellsHolder: {fileID: 694351524}
+  _fieldColor: {fileID: 11400000, guid: 9d171840159558f4790339fdda83611e, type: 2}
 --- !u!1 &241692377
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,6 +3016,10 @@ PrefabInstance:
     - target: {fileID: 2436500193446746074, guid: 765c3c79e7fe9a347a685b461c63ca13, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2442002286158257775, guid: 765c3c79e7fe9a347a685b461c63ca13, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.0227051
       objectReference: {fileID: 0}
     - target: {fileID: 2446123110500804518, guid: 765c3c79e7fe9a347a685b461c63ca13, type: 3}
       propertyPath: m_SizeDelta.y

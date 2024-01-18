@@ -21,15 +21,22 @@ public class Grid : MonoBehaviour, IProvidable
     [Inject] FiguresHolder _figuresHolder;
     [Inject] EventBus _eventBus;
 
+    [SerializeField] private FieldColor _fieldColor;
+
     public event Action<IScoreController> Fail;
+    [Inject]ColorsChanger _colorsChanger;
 
     public void OnInitialize()
     {
+        _colorsChanger.LoadGridColor(PlayerPrefs.GetString("GridColor", "DefaultGrid"));
+       // _colorsChanger.LoadGridColor("SoftGrid");
+        _eventBus.Subscribe<FieldColor>(EventType.ChangeGridColor, ChangeGridColor);
         _eventBus.Subscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
         GenerateGrid();
     }
     void OnDestroy()
     {
+        _eventBus.Unsubscribe<FieldColor>(EventType.ChangeGridColor, ChangeGridColor);
         _eventBus.Unsubscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
     }
 
@@ -48,7 +55,7 @@ public class Grid : MonoBehaviour, IProvidable
 
                 // Instantiate the cell prefab at this position
                 GridCell cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
-
+                cell.GetComponent<SpriteRenderer>().color = _fieldColor.Color;
                 cell.GridPos = new Vector2(x, y);
 
                 // Set the cell's size
@@ -247,8 +254,19 @@ public class Grid : MonoBehaviour, IProvidable
         Destroy(_gridHolder.gameObject);
         Array.Clear(_grid, 0, _grid.Length);
     }
-    // Check if there is space to place a figure represented by a List<Vector2>
 
+    private void ChangeGridColor(FieldColor fieldColor)
+    {
+        _fieldColor = fieldColor;
+
+        for (var i = 0; i < _grid.GetLength(0); i++)
+        {
+            for (var j = 0; j < _grid.GetLength(1); j++)
+            {
+                _grid[i,j].GetComponent<SpriteRenderer>().color = fieldColor.Color;
+            }
+        }
+    }
 
     public void OnUpdate()
     {

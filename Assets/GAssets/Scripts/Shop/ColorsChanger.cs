@@ -14,17 +14,22 @@ public class ColorsChanger
         _eventBus = eventBus;
 
         _camera = Camera.main;
-        //string backGroundColorKey = PlayerPrefs.GetString("BackGroundColor", "BackGroundColorDefaultTheme");
-        string backGroundColorKey = "SoftBackGround";
+        string backGroundColorKey = PlayerPrefs.GetString("BackGroundColor", "BackGroundColorDefaultTheme");
+        //string backGroundColorKey = "SoftBackGround";
         LoadBackGroundColor(backGroundColorKey);
 
-        //string addressableKey = PlayerPrefs.GetString("FiguresColors", "DefaultTheme");
-        string addressableKey = "SoftTheme";
+        string addressableKey = PlayerPrefs.GetString("FiguresColors", "DefaultTheme");
+        //string addressableKey = "SoftTheme";
         LoadFiguresColors(addressableKey);
 
-        string uiColors = "SoftUI";
-        //string uiColors = PlayerPrefs.GetString("UIColors", "DefaultUI");
+        //string uiColors = "SoftUI";
+        string uiColors = PlayerPrefs.GetString("UIColors", "DefaultUI");
         LoadUIColors(uiColors);
+
+        //string gridColor = "SoftGrid";
+        string gridColor = PlayerPrefs.GetString("GridColor", "DefaultGrid");
+        LoadGridColor(gridColor);
+
     }
 
     public FiguresColors GetFiguresColors()
@@ -81,6 +86,23 @@ public class ColorsChanger
         else
         {
             Debug.LogError("Не удалось загрузить UIColors с ключом: ");
+        }
+    }
+
+    public void LoadGridColor(string key)
+    {
+        Addressables.LoadAssetAsync<FieldColor>(key).Completed += OnGridColorLoaded;
+    }
+
+    private void OnGridColorLoaded(AsyncOperationHandle<FieldColor> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            _eventBus.Publish<FieldColor>(EventType.ChangeGridColor, handle.Result);
+        }
+        else
+        {
+            Debug.LogError("Не удалось загрузить FieldColor с ключом: ");
         }
     }
 }
