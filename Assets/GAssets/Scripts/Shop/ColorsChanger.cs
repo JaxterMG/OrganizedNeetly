@@ -14,22 +14,41 @@ public class ColorsChanger
         _eventBus = eventBus;
 
         _camera = Camera.main;
-        string backGroundColorKey = PlayerPrefs.GetString("BackGroundColor", "BackGroundColorDefaultTheme");
+        string backGroundColorKey = PlayerPrefs.GetString("BackGroundColor", "DefaultBackGroundColor");
         //string backGroundColorKey = "SoftBackGround";
         LoadBackGroundColor(backGroundColorKey);
 
-        string addressableKey = PlayerPrefs.GetString("FiguresColors", "DefaultTheme");
+        string addressableKey = PlayerPrefs.GetString("FiguresColors", "DefaultFiguresColors");
         //string addressableKey = "SoftTheme";
         LoadFiguresColors(addressableKey);
 
         //string uiColors = "SoftUI";
-        string uiColors = PlayerPrefs.GetString("UIColors", "DefaultUI");
+        string uiColors = PlayerPrefs.GetString("UIColors", "DefaultUIColors");
         LoadUIColors(uiColors);
 
         //string gridColor = "SoftGrid";
-        string gridColor = PlayerPrefs.GetString("GridColor", "DefaultGrid");
+        string gridColor = PlayerPrefs.GetString("GridColor", "DefaultGridColor");
         LoadGridColor(gridColor);
 
+    }
+    public void ChangeTheme(string theme)
+    {
+        string backgroundColor = $"{theme}BackGroundColor";
+        string figuresColors = $"{theme}FiguresColors";
+        string uiColors = $"{theme}UIColors";
+        string gridColor = $"{theme}GridColor";
+
+        PlayerPrefs.SetString("BackGroundColor", backgroundColor);
+        LoadBackGroundColor(backgroundColor);
+
+        PlayerPrefs.SetString("FiguresColors", figuresColors);
+        LoadFiguresColors(figuresColors);
+
+        PlayerPrefs.GetString("UIColors", uiColors);
+        LoadUIColors(uiColors);
+
+        PlayerPrefs.SetString("GridColor", gridColor);
+        LoadGridColor(gridColor);
     }
 
     public FiguresColors GetFiguresColors()

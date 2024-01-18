@@ -18,42 +18,42 @@ MonoBehaviour:
   m_GUID: f6e2b5941bfdd8d4bbb09fadf7e819b1
   m_SerializeEntries:
   - m_GUID: d85b18c51b0b0f94f94b9d4bcdd075cd
-    m_Address: DefaultTheme
+    m_Address: DefaultFiguresColors
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f34571def0422dc4083ebd0398bcfbda
-    m_Address: BackGroundColorDefaultTheme
+    m_Address: DefaultBackGroundColor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2ae0eaeef486d564d984edfa8eeeb73f
-    m_Address: DefaultUI
+    m_Address: DefaultUIColors
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 696448b16214c144eb49e382b0aa5a91
-    m_Address: SoftBackGround
+    m_Address: SoftBackGroundColor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7211c5141ca8be94cbc1d1e6242801ba
-    m_Address: SoftTheme
+    m_Address: SoftFiguresColors
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30b1627b55713ae42a1b2f5a03ff4828
-    m_Address: SoftUI
+    m_Address: SoftUIColors
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9d171840159558f4790339fdda83611e
-    m_Address: DefaultField
+    m_Address: DefaultGridColor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6709e15ba243f349936c17b5236e918
-    m_Address: SoftGrid
+    m_Address: SoftGridColor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
