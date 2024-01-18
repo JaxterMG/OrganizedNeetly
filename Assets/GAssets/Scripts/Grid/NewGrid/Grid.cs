@@ -258,7 +258,7 @@ public class Grid : MonoBehaviour, IProvidable
     private void ChangeGridColor(FieldColor fieldColor)
     {
         _fieldColor = fieldColor;
-
+        if(_grid == null)return;
         for (var i = 0; i < _grid.GetLength(0); i++)
         {
             for (var j = 0; j < _grid.GetLength(1); j++)

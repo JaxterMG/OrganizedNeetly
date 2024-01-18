@@ -44,7 +44,7 @@ public class ColorsChanger
         PlayerPrefs.SetString("FiguresColors", figuresColors);
         LoadFiguresColors(figuresColors);
 
-        PlayerPrefs.GetString("UIColors", uiColors);
+        PlayerPrefs.SetString("UIColors", uiColors);
         LoadUIColors(uiColors);
 
         PlayerPrefs.SetString("GridColor", gridColor);
