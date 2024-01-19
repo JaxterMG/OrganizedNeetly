@@ -10,6 +10,7 @@ public class FiguresSpawner : MonoBehaviour
     
     [SerializeField] private int _spawnDelay = 200;
     [SerializeField] private List<FigureDragHandler> _figures;
+    [SerializeField] private Transform _spawnPoint;
 
     private int _currentFiguresCount;
     [SerializeField] private int _desiredFiguresCount = 3;  
@@ -46,7 +47,7 @@ public class FiguresSpawner : MonoBehaviour
             await Task.Delay(_spawnDelay);
 
             FigureDragHandler figureDragHandler = _figures[UnityEngine.Random.Range(0, _figures.Count)];
-            var figure = Instantiate(figureDragHandler, Vector3.zero, Quaternion.identity);
+            var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
             figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
             _figuresHolder.AddFigure(figure);
         }

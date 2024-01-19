@@ -52,7 +52,7 @@ public class FigureDragHandler : MonoBehaviour
         _eventBus.Publish<string>(EventType.PlaySound, "Pickup");
         isDragging = true;
         offset = gameObject.transform.position - GetMouseWorldPos() + new Vector3(0, 0.5f, 0);
-        _figuresHolder.ReleaseFigure(this);
+        OnFigureDrag();
     }
 
     private Vector3 GetMouseWorldPos()
@@ -61,6 +61,11 @@ public class FigureDragHandler : MonoBehaviour
         mousePoint.z = mainCamera.WorldToScreenPoint(gameObject.transform.position).z;
         return mainCamera.ScreenToWorldPoint(mousePoint);
     }
+    private void OnFigureDrag()
+    {
+        _figuresHolder.OnFigureDrag(this);
+    }
+
 
     private void OnMouseUp()
     {
@@ -72,19 +77,25 @@ public class FigureDragHandler : MonoBehaviour
         {
             //TODO: Rework delete
             // Destroy(_collider);
+            OnFigureRelease(false);
             Destroy(gameObject, 0f);
             FigurePlaced?.Invoke();
             return;
         }
 
-        _figuresHolder.AddFigure(this);
+        OnFigureRelease(true);
+    }
+    private void OnFigureRelease(bool backToHolder)
+    {
+        _figuresHolder.OnFigureRelease(this, backToHolder);
     }
 
     private void Update()
     {
         if (isDragging)
         {
-            transform.position = GetMouseWorldPos() + offset;
+            Vector3 mousePos = GetMouseWorldPos();
+            transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, -0.01f);
         }
     }
     private GridCell FindClosestCellToFigure()

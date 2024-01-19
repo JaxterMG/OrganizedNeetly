@@ -17,6 +17,8 @@ public class FiguresHolder : MonoBehaviour
 
     private List<FigureDragHandler> _figures = new List<FigureDragHandler>();
 
+    private Vector3 _lastTouchedFigurePos;
+
     public void AddFigure(FigureDragHandler figure)
     {
         figure.transform.DOScale(_scale, _scaleTime);
@@ -48,11 +50,21 @@ public class FiguresHolder : MonoBehaviour
         _figures.Clear();
     }
 
-    public void ReleaseFigure(FigureDragHandler figure)
+    public void OnFigureRelease(FigureDragHandler figure, bool backToHolder)
     {
-        figure.transform.DOScale(Vector3.one, _scaleTime);
+        if(backToHolder)
+        {
+            figure.transform.DOMove(_lastTouchedFigurePos, _moveTime);
+            figure.transform.DOScale(_scale, _scaleTime);
+            return;
+        }
         figure.transform.SetParent(null);
         _figures.Remove(figure);
+    }
+    public void OnFigureDrag(FigureDragHandler figure)
+    {
+        _lastTouchedFigurePos = figure.transform.position;
+        figure.transform.DOScale(Vector3.one, _scaleTime);
     }
 
     public List<FigureDragHandler> GetFigures()
