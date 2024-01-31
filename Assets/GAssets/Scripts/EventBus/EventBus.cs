@@ -8,7 +8,9 @@ public enum EventType
     ChangeSoundsVolume,
     IncreaseScore,
     ChangeUIColor,
-    ChangeGridColor
+    ChangeGridColor,
+    AddMoney,
+    SubtractMoney
 }
 public class EventBus
 {

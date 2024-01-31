@@ -211,7 +211,10 @@ public class Grid : MonoBehaviour, IProvidable
         int linesToDelete = horizontalLinesToDelete.Count + verticalLinesToDelete.Count;
 
         if (linesToDelete > 0)
+        {
             _eventBus.Publish<int>(EventType.IncreaseScore, linesToDelete);
+            _eventBus.Publish<int>(EventType.AddMoney, linesToDelete);
+        }
 
         if (horizontalLinesToDelete.Count > 0)
         {
@@ -221,7 +224,7 @@ public class Grid : MonoBehaviour, IProvidable
                 for (int i = 0; i < gridRows; i++)
                 {
                     await Task.Delay(50);
-                    Destroy(_grid[i, line].Cell.gameObject);
+                    Destroy(_grid[i, line].Cell?.gameObject);
                 }
             }
 
@@ -234,7 +237,7 @@ public class Grid : MonoBehaviour, IProvidable
                 for (int i = 0; i < gridColumns; i++)
                 {
                     await Task.Delay(50);
-                    Destroy(_grid[line, i].Cell.gameObject);
+                    Destroy(_grid[line, i].Cell?.gameObject);
                 }
             }
         }

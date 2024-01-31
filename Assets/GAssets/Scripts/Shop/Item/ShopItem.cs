@@ -18,12 +18,17 @@ public class ShopItem : MonoBehaviour
     [SerializeField] ButtonManager _buyButton;
     [SerializeField] private TextMeshProUGUI _themeText;
 
+    private int _isPurchased;
+
+    private MoneyManager _moneyManager;
+
     void Awake()
     {
+        _moneyManager = FindObjectOfType<MoneyManager>();
         _themeText.text = _theme;
         _buyButton.onClick.AddListener(OnButtonClicked);
-
-        if(PlayerPrefs.GetInt(_theme, 0) == 0)
+        _isPurchased = PlayerPrefs.GetInt(_theme, 0);
+        if(_isPurchased == 0)
         {
             _buyButton.SetText($"{_cost}");
         }
@@ -35,9 +40,13 @@ public class ShopItem : MonoBehaviour
     }
     private void OnButtonClicked()
     {
-        if(PlayerPrefs.GetInt(_theme, 0) == 0)
+        if(_isPurchased == 0 &&_moneyManager.GetMoneyCount() < _cost) return;
+
+        if(_isPurchased == 0)
         {
-            PlayerPrefs.SetInt(_theme, 1);
+            _isPurchased = 1;
+            PlayerPrefs.SetInt(_theme, _isPurchased);
+            _eventBus.Publish<int>(EventType.SubtractMoney, _cost);
             _buyButton.enableIcon = false;
             _buyButton.SetText($"Use");
         }

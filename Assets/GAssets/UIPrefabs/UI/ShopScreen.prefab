@@ -124,6 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1063610448131734618}
+  - component: {fileID: 2268604000790682052}
   m_Layer: 5
   m_Name: MoneyHolder
   m_TagString: Untagged
@@ -152,6 +153,19 @@ RectTransform:
   m_AnchoredPosition: {x: -103.43842, y: 0}
   m_SizeDelta: {x: -206.8768, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2268604000790682052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061498644775096510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46f7bf53eaf38e4781d999c13475b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moneyText: {fileID: 7201942213360488322}
 --- !u!1 &2577348976924948316
 GameObject:
   m_ObjectHideFlags: 0
