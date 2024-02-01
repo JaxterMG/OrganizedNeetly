@@ -14,7 +14,6 @@ namespace Core.StateMachine.Game
         public GameState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
 
-
         }
 
         public override void Update()
@@ -43,17 +42,9 @@ namespace Core.StateMachine.Game
             loseState.LinkScoreController(scoreController);
             _gameController.CreateAdditiveState(loseState);
         }
-        public override void OnExit(bool isHide = true)
-        {
-            _grid.Fail -= OnGameFail;
-            _figuresSpawner.ClearFigures();
-            _grid.ClearGrid();
-            
-            _gameplayScreen.OnExit();
-        }
-
         public override async void OnStart()
         {
+            _eventBus.Subscribe<int>(EventType.Revive, _figuresSpawner.SpawnReviveFigures);
             _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
             _grid.OnInitialize();
 
@@ -62,6 +53,16 @@ namespace Core.StateMachine.Game
             _figuresSpawner.OnInititalize();
             _gameplayScreen.OnStart();
             _grid.Fail += OnGameFail;
+        }
+        public override void OnExit(bool isHide = true)
+        {
+            _eventBus.Unsubscribe<int>(EventType.Revive, _figuresSpawner.SpawnReviveFigures);
+            
+            _grid.Fail -= OnGameFail;
+            _figuresSpawner.ClearFigures();
+            _grid.ClearGrid();
+
+            _gameplayScreen.OnExit();
         }
     }
 }

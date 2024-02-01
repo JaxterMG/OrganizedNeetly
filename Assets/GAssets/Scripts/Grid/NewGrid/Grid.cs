@@ -153,7 +153,7 @@ public class Grid : MonoBehaviour, IProvidable
     /// Checks if ability to place a figure on the entire grid
     /// </summary>
     /// <param name="figure"></param>
-    private void CheckAvailableSpaceForFigures(List<FigureDragHandler> figures)
+    public void CheckAvailableSpaceForFigures(List<FigureDragHandler> figures)
     {
         foreach (var figure in figures)
         {
@@ -240,10 +240,6 @@ public class Grid : MonoBehaviour, IProvidable
                     Destroy(_grid[line, i].Cell?.gameObject);
                 }
             }
-        }
-        if(_figuresHolder.GetFigures().Count > 0)
-        {
-            CheckAvailableSpaceForFigures(_figuresHolder.GetFigures());
         }
     }
 

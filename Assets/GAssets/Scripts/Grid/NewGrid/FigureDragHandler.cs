@@ -80,6 +80,10 @@ public class FigureDragHandler : MonoBehaviour
             OnFigureRelease(false);
             Destroy(gameObject, 0f);
             FigurePlaced?.Invoke();
+            if(_figuresHolder.GetFigures().Count > 0)
+            {
+                _grid.CheckAvailableSpaceForFigures(_figuresHolder.GetFigures());
+            }
             return;
         }
 

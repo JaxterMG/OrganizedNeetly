@@ -10,7 +10,8 @@ public enum EventType
     ChangeUIColor,
     ChangeGridColor,
     AddMoney,
-    SubtractMoney
+    SubtractMoney,
+    Revive
 }
 public class EventBus
 {

@@ -14,6 +14,7 @@ namespace Core.StateMachine.Game
         public LoseState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _loseScreen = GameObject.FindAnyObjectByType<LoseScreen>();
+
         }
         public override void LoadContent()
         {
@@ -57,6 +58,7 @@ namespace Core.StateMachine.Game
         }
         private void OnContinueButtonClicked()
         {
+            _eventBus.Publish<int>(EventType.Revive, 3);
             _gameController.ExitAdditiveState(this);
         }
         private void OnRestartButtonClicked()
