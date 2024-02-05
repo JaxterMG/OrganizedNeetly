@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Threading.Tasks;
 using Zenject;
+using DG.Tweening;
 
 public class Grid : MonoBehaviour, IProvidable
 {
@@ -223,8 +224,11 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridRows; i++)
                 {
-                    await Task.Delay(50);
-                    Destroy(_grid[i, line].Cell?.gameObject);
+                    _grid[i, line].Cell?.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.Linear).OnComplete(() => 
+                    {
+                        Destroy(_grid[i, line].Cell?.gameObject);
+                    });
+                    await Task.Delay(100);
                 }
             }
 
@@ -236,8 +240,11 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridColumns; i++)
                 {
+                    _grid[line, i].Cell?.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() => 
+                    {
+                        Destroy(_grid[line, i].Cell?.gameObject);
+                    });
                     await Task.Delay(50);
-                    Destroy(_grid[line, i].Cell?.gameObject);
                 }
             }
         }
