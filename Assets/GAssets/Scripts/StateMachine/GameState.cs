@@ -38,9 +38,12 @@ namespace Core.StateMachine.Game
         }
         public void OnGameFail(IScoreController scoreController)
         {
-            LoseState loseState = new LoseState(_eventBus, _gameController, true);
-            loseState.LinkScoreController(scoreController);
-            _gameController.CreateAdditiveState(loseState);
+            ReviveState reviveState = new ReviveState(_eventBus, _gameController, true);
+            reviveState.LinkScoreController(scoreController);
+            //LoseState loseState = new LoseState(_eventBus, _gameController, true);
+            //loseState.LinkScoreController(scoreController);
+            //_gameController.CreateAdditiveState(loseState);
+            _gameController.CreateAdditiveState(reviveState);
         }
         public override async void OnStart()
         {

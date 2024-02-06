@@ -23,7 +23,7 @@ namespace Core.StateMachine.Game
 
         public override async void OnStart()
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "Lose");
+           // _eventBus.Publish<string>(EventType.PlaySound, "Lose");
 
             _loseScreen.MainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
             _loseScreen.ShopButton.onClick.AddListener(OnShopButtonButtonClicked);

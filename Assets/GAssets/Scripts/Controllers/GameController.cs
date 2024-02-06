@@ -29,6 +29,11 @@ namespace Core.Controllers
         private void Update()
         {
             _currentState.Update();
+            for (int i = _additiveStates.Count - 1; i >= 0; i--)
+            {
+                var additiveState = _additiveStates[i];
+                additiveState.Update();
+            }
         }
         public void ChangeState(State state, bool isHidePrevious = true)
         {
