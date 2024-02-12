@@ -1,12 +1,12 @@
-using System.Runtime.InteropServices.WindowsRuntime;
+using Newtonsoft.Json;
 using UnityEngine;
 
-public class ScoreController : IScoreController
+public class ScoreController : IScoreController, ISavable
 {
     private EventBus _eventBus;
     private ScoreView _scoreView;
     
-    private int _points;
+    public int Points{get; private set;}
 
     private int _highScore;
     
@@ -22,23 +22,34 @@ public class ScoreController : IScoreController
     }
     public void AddPoints(int points)
     {
-        _points += points;
-        if(_points > _highScore)
+        Points += points;
+        if(Points > _highScore)
         {
-            PlayerPrefs.SetInt("HighScore", _points);
-            _scoreView.UpdateHighScore(_points);
+            PlayerPrefs.SetInt("HighScore", Points);
+            _scoreView.UpdateHighScore(Points);
         }
-        _scoreView.UpdateScore(_points);
+        _scoreView.UpdateScore(Points);
     }
 
     public int GetPoints()
     {
-        return _points;
+        return Points;
     }
 
     public bool IsHighScore()
     {
-        return _points < _highScore ? false : true;
+        return Points < _highScore ? false : true;
+    }
+
+    public void Load(string jsonData)
+    {
+        var data = JsonConvert.DeserializeObject<ScoreController>(jsonData);
+        Points = data.Points;
+    }
+
+    public string Save()
+    {
+        return JsonConvert.SerializeObject(this);
     }
 }
 

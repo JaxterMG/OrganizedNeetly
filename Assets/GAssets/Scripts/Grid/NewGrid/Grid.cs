@@ -4,22 +4,23 @@ using System;
 using System.Threading.Tasks;
 using Zenject;
 using DG.Tweening;
+using Newtonsoft.Json;
 
-public class Grid : MonoBehaviour, IProvidable
+public class Grid : MonoBehaviour, IProvidable, ISavable
 {
-    public GridCell gridCellPrefab;  // Prefab for the grid cell
-    public int gridRows = 10;  // Number of rows
-    public int gridColumns = 10;  // Number of columns
-    public float gapSize = 0.1f; // Size of the gap between cells
+    [SerializeField] GameObject _cellPrefab;
+    public GridCell gridCellPrefab;
+    public int gridRows = 10;
+    public int gridColumns = 10;
+    public float gapSize = 0.1f;
     public float cellSize = 1f;
-    private GridCell[,] _grid;  // The grid represented as a 2D array
+    public GridCell[,] GridCells {get; private set;}
 
     [SerializeField] Transform _placedCellsHolder;
 
     private Transform _gridHolder;
 
     [Inject] IScoreController _scoreController;
-    [Inject] FiguresHolder _figuresHolder;
     [Inject] EventBus _eventBus;
 
     [SerializeField] private FieldColor _fieldColor;
@@ -29,11 +30,19 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnInitialize()
     {
+        SaveLoadHandler saveLoadHandler = FindObjectOfType<SaveLoadHandler>();
+        saveLoadHandler.RegisterSavable(this);
+
         _colorsChanger.LoadGridColor(PlayerPrefs.GetString("GridColor", "DefaultGrid"));
-       // _colorsChanger.LoadGridColor("SoftGrid");
         _eventBus.Subscribe<FieldColor>(EventType.ChangeGridColor, ChangeGridColor);
         _eventBus.Subscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
-        GenerateGrid();
+        
+        if(!saveLoadHandler.HasSaveFile())
+            GenerateGrid();
+        else
+        {
+            saveLoadHandler.LoadAll();
+        }
     }
     void OnDestroy()
     {
@@ -45,7 +54,7 @@ public class Grid : MonoBehaviour, IProvidable
     {
         _gridHolder = new GameObject("GridHolder").transform;
         _gridHolder.position = CalculateGridCenter();
-        _grid = new GridCell[gridRows, gridColumns];
+        GridCells = new GridCell[gridRows, gridColumns];
 
         for (int y = 0; y < gridRows; y++)
         {
@@ -62,7 +71,7 @@ public class Grid : MonoBehaviour, IProvidable
                 // Set the cell's size
                 cell.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
 
-                _grid[x, y] = cell;
+                GridCells[x, y] = cell;
                 cell.transform.SetParent(_gridHolder);
             }
         }
@@ -86,14 +95,14 @@ public class Grid : MonoBehaviour, IProvidable
 
         figureDragHandler.transform.position = closestCell.transform.position;
 
-        if (_grid[(int)closestCell.GridPos.x, (int)closestCell.GridPos.y].Cell != null) return false;
+        if (GridCells[(int)closestCell.GridPos.x, (int)closestCell.GridPos.y].Cell != null) return false;
 
         if (!CanPlaceFigure(figureDragHandler.Shape, (int)closestCell.GridPos.x, (int)closestCell.GridPos.y)) return false;
 
         List<Vector2> touchedGridCellsPos = new List<Vector2>();
         foreach (var pos in figureDragHandler.FigureData.Keys)
         {
-            GridCell gridCell = _grid[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y];
+            GridCell gridCell = GridCells[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y];
 
             
             gridCell.Cell = figureDragHandler.FigureData[pos];
@@ -122,7 +131,7 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 return false;
             }
-            if (_grid[(int)col + (int)pos.x, (int)row + (int)pos.y].Cell != null)
+            if (GridCells[(int)col + (int)pos.x, (int)row + (int)pos.y].Cell != null)
             {
                 return false;
             }
@@ -182,7 +191,7 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (var i = 0; i < gridRows; i++)
                 {
-                    if (_grid[i, (int)cell.y].Cell == null)
+                    if (GridCells[i, (int)cell.y].Cell == null)
                     {
                         isHorizontalDelete = false;
                         break;
@@ -195,7 +204,7 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (var i = 0; i < gridColumns; i++)
                 {
-                    if (_grid[(int)cell.x, i].Cell == null)
+                    if (GridCells[(int)cell.x, i].Cell == null)
                     {
                         isVerticalDelete = false;
                         break;
@@ -224,9 +233,9 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridRows; i++)
                 {
-                    _grid[i, line].Cell?.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.Linear).OnComplete(() => 
+                    GridCells[i, line].Cell?.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.Linear).OnComplete(() => 
                     {
-                        Destroy(_grid[i, line].Cell?.gameObject);
+                        Destroy(GridCells[i, line].Cell?.gameObject);
                     });
                     await Task.Delay(100);
                 }
@@ -240,9 +249,9 @@ public class Grid : MonoBehaviour, IProvidable
             {
                 for (int i = 0; i < gridColumns; i++)
                 {
-                    _grid[line, i].Cell?.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() => 
+                    GridCells[line, i].Cell?.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() => 
                     {
-                        Destroy(_grid[line, i].Cell?.gameObject);
+                        Destroy(GridCells[line, i].Cell?.gameObject);
                     });
                     await Task.Delay(50);
                 }
@@ -258,23 +267,107 @@ public class Grid : MonoBehaviour, IProvidable
         }
 
         Destroy(_gridHolder.gameObject);
-        Array.Clear(_grid, 0, _grid.Length);
+        Array.Clear(GridCells, 0, GridCells.Length);
     }
 
     private void ChangeGridColor(FieldColor fieldColor)
     {
         _fieldColor = fieldColor;
-        if(_grid == null)return;
-        for (var i = 0; i < _grid.GetLength(0); i++)
+        if(GridCells == null)return;
+        for (var i = 0; i < GridCells.GetLength(0); i++)
         {
-            for (var j = 0; j < _grid.GetLength(1); j++)
+            for (var j = 0; j < GridCells.GetLength(1); j++)
             {
-                _grid[i,j].GetComponent<SpriteRenderer>().color = fieldColor.Color;
+                GridCells[i,j].GetComponent<SpriteRenderer>().color = fieldColor.Color;
             }
         }
     }
 
     public void OnUpdate()
     {
+    }
+
+    private struct GridSaveData
+    {
+        public GridCellData[,] GridCells;
+        public GridSaveData(GridCell[,] cell)
+        {
+            GridCells = new GridCellData[cell.GetLength(0), cell.GetLength(1)];
+            for (var y = 0; y < cell.GetLength(1); y++)
+            {
+                for (var x = 0; x < cell.GetLength(0); x++)
+                {
+                    GridCellData gridCell = new GridCellData
+                    (
+                        (int)cell[x,y].GridPos.x,
+                        (int)cell[x,y].GridPos.y,
+                        cell[x,y]?.Cell == null ? false : true
+                        //cell[i,j].Cell.CellTheme
+                    );
+                    GridCells[x,y] = gridCell;
+                }
+            }
+        }
+    }
+    private struct GridCellData
+    {
+        public int GridPosX;
+        public int GridPosY;
+        public bool IsOccupied;
+        //public string CellTheme;
+        public GridCellData(int gridPosX, int gridPosY, bool isOccupied)//, string cellTheme)
+        {
+            GridPosX = gridPosX;
+            GridPosY = gridPosY;
+            IsOccupied = isOccupied;
+            //CellTheme = cellTheme;
+        }
+    }
+    public string Save()
+    {
+        GridSaveData gridSaveData = new GridSaveData(GridCells);
+        return JsonConvert.SerializeObject(gridSaveData);
+    }
+
+    public void Load(string jsonData)
+    {
+        var data = JsonConvert.DeserializeObject<GridSaveData>(jsonData);
+        LoadSavedGrid(data);
+    }
+    private void LoadSavedGrid(GridSaveData data)
+    {
+        _gridHolder = new GameObject("GridHolder").transform;
+        _gridHolder.position = CalculateGridCenter();
+        GridCells = new GridCell[data.GridCells.GetLength(0), data.GridCells.GetLength(1)];
+
+        for (int y = 0; y < data.GridCells.GetLength(1); y++)
+        {
+            for (int x = 0; x < data.GridCells.GetLength(0); x++)
+            {
+                // Calculate the position for this cell
+                Vector3 cellPosition = new Vector3((x * (cellSize + gapSize)), (y * (cellSize + gapSize)), 0);
+
+                // Instantiate the cell prefab at this position
+                GridCell cell = Instantiate(gridCellPrefab, cellPosition, Quaternion.identity);
+                cell.GetComponent<SpriteRenderer>().color = _fieldColor.Color;
+                cell.GridPos = new Vector2(x, y);
+
+
+                // Set the cell's size
+                cell.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
+
+                GridCells[x, y] = cell;
+
+                cell.transform.SetParent(_gridHolder);
+                if(data.GridCells[x,y].IsOccupied)
+                {
+                    Cell newCell = Instantiate(_cellPrefab, GridCells[x,y].transform.position, Quaternion.identity).GetComponent<Cell>();
+                    GridCells[x, y].Cell = newCell;
+                    newCell.transform.position = cell.transform.localPosition;
+                    newCell.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+                }
+            }
+        }
+        _gridHolder.position = Vector3.zero;
     }
 }

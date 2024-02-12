@@ -30,6 +30,7 @@ public class FiguresSpawner : MonoBehaviour
 
     private void OnFigurePlaced()
     {
+        FindObjectOfType<RandomNumbersGenerator>().IncreaseRandomCounter();
         _currentFiguresCount--;
 
         if(_currentFiguresCount <= 0)
@@ -41,12 +42,13 @@ public class FiguresSpawner : MonoBehaviour
 
     private async void SpawnFigures()
     {
+        RandomNumbersGenerator randomNumbersGenerator = FindObjectOfType<RandomNumbersGenerator>();
         for (_currentFiguresCount = 0; _currentFiguresCount < _desiredFiguresCount; _currentFiguresCount++)
         {
             _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
-            FigureDragHandler figureDragHandler = _figures[UnityEngine.Random.Range(0, _figures.Count)];
+            FigureDragHandler figureDragHandler = _figures[randomNumbersGenerator.RequestRandomNumber(0, _figures.Count)];
             var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
             figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
             _figuresHolder.AddFigure(figure);

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Core.Controllers;
+using Core.StateMachine.Game;
 using Core.StateMachine.Menu;
 using UnityEngine;
 
@@ -21,7 +22,13 @@ namespace Core.StateMachine.Loading
         {
             _loadingScreen.OnStart();
             await Task.Delay(5000);
-            _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
+            if(!GameObject.FindObjectOfType<SaveLoadHandler>().HasSaveFile())
+                _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
+            else
+            {
+                _gameController.ChangeState(new GameState(_eventBus, _gameController));
+            }
+            
         }
 
         
