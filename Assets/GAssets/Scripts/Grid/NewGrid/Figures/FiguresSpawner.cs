@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
-public class FiguresSpawner : MonoBehaviour
+public class FiguresSpawner : MonoBehaviour, ISavable
 {
     [Inject] EventBus _eventBus;
     [Inject] ColorsChanger _colorsChanger;
@@ -22,10 +23,13 @@ public class FiguresSpawner : MonoBehaviour
         _grid = FindAnyObjectByType<Grid>();
         _figuresHolder = GetComponent<FiguresHolder>();
         FigureDragHandler.FigurePlaced += OnFigurePlaced;
+        FindObjectOfType<SaveLoadHandler>().RegisterSavable(this);
     }
     public void OnInititalize()
     {
-        SpawnFigures();
+        
+        if(!FindObjectOfType<SaveLoadHandler>().HasSaveFile())
+            SpawnFigures();
     }
 
     private void OnFigurePlaced()
@@ -83,4 +87,39 @@ public class FiguresSpawner : MonoBehaviour
         FigureDragHandler.FigurePlaced -= OnFigurePlaced;
     }
 
+    private struct FiguresSpawnerData
+    {
+        public int FiguresLeft;
+
+        public FiguresSpawnerData(int figuresLeft)
+        {
+            FiguresLeft = figuresLeft;
+        }
+    }
+
+    public void Load(string jsonData)
+    {
+        var data = JsonConvert.DeserializeObject<FiguresSpawnerData>(jsonData);
+        LoadFigures(data.FiguresLeft);
+    }
+    private async void LoadFigures(int figuresLeft)
+    {
+        RandomNumbersGenerator randomNumbersGenerator = FindObjectOfType<RandomNumbersGenerator>();
+        for (_currentFiguresCount = 0; _currentFiguresCount < figuresLeft; _currentFiguresCount++)
+        {
+            _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
+            await Task.Delay(_spawnDelay);
+            // Можно сделать рандом с сидом для испытаний
+            FigureDragHandler figureDragHandler = _figures[randomNumbersGenerator.RequestRandomNumber(0, _figures.Count)];
+            var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
+            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
+            _figuresHolder.AddFigure(figure);
+        }
+        _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
+    }
+    public string Save()
+    {
+        FiguresSpawnerData figuresSpawnerData = new FiguresSpawnerData(_currentFiguresCount);
+        return JsonConvert.SerializeObject(figuresSpawnerData);
+    }
 }
