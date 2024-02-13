@@ -301,7 +301,8 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
                     (
                         (int)cell[x,y].GridPos.x,
                         (int)cell[x,y].GridPos.y,
-                        cell[x,y]?.Cell == null ? false : true
+                        cell[x,y]?.Cell == null ? false : true,
+                        cell[x,y]?.Cell?.FigureName
                         //cell[i,j].Cell.CellTheme
                     );
                     GridCells[x,y] = gridCell;
@@ -314,13 +315,14 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         public int GridPosX;
         public int GridPosY;
         public bool IsOccupied;
-        //public string CellTheme;
-        public GridCellData(int gridPosX, int gridPosY, bool isOccupied)//, string cellTheme)
+        public string FigureName;
+
+        public GridCellData(int gridPosX, int gridPosY, bool isOccupied, string figureName)
         {
             GridPosX = gridPosX;
             GridPosY = gridPosY;
             IsOccupied = isOccupied;
-            //CellTheme = cellTheme;
+            FigureName = figureName;
         }
     }
     public string Save()
@@ -362,6 +364,8 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
                 if(data.GridCells[x,y].IsOccupied)
                 {
                     Cell newCell = Instantiate(_cellPrefab, GridCells[x,y].transform.position, Quaternion.identity).GetComponent<Cell>();
+                    newCell.FigureName = data.GridCells[x,y].FigureName;
+                    newCell.SetColor(_colorsChanger.GetFiguresColors().Figures[newCell.FigureName]);
                     GridCells[x, y].Cell = newCell;
                     newCell.transform.position = cell.transform.localPosition;
                     newCell.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);

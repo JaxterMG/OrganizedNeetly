@@ -66,6 +66,11 @@ public class ColorsChanger
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             _figuresColors = handle.Result;
+
+            foreach (var cell in GameObject.FindObjectsOfType<Cell>())
+            {
+                cell.SetColor(GetFiguresColors().Figures[cell.FigureName]);
+            }
         }
         else
         {

@@ -41,9 +41,10 @@ public class FigureDragHandler : MonoBehaviour
     }
     private void SetColorTheme(Color figureColor)
     {
-        foreach (var renderer in GetComponentsInChildren<SpriteRenderer>())
+        foreach (var cell in GetComponentsInChildren<Cell>())
         {
-            renderer.color = figureColor;
+            cell.SetColor(figureColor);
+            cell.FigureName = FigureName;
         }
     }
 

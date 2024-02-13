@@ -27,7 +27,6 @@ public class FiguresSpawner : MonoBehaviour, ISavable
     }
     public void OnInititalize()
     {
-        
         if(!FindObjectOfType<SaveLoadHandler>().HasSaveFile())
             SpawnFigures();
     }
