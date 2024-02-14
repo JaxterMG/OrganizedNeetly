@@ -11,6 +11,7 @@ namespace Core.StateMachine.Menu
         public MainMenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _mainMenuScreen = GameObject.FindAnyObjectByType<MainMenuScreen>();
+            _mainMenuScreen.ShowScore(gameController.ScoreController.GetHighScore());
         }
         public override void LoadContent()
         {

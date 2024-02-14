@@ -5,11 +5,13 @@ using Core.Localization;
 using Core.StateMachine.Loading;
 using System.Collections.Generic;
 using Zenject;
+using UnityEngine.SocialPlatforms;
 
 namespace Core.Controllers
 {
     public class GameController : MonoBehaviour
     {
+        [Inject] public IScoreController ScoreController;
         [Inject] EventBus _eventBus;
         private State _currentState;
         private List<State> _additiveStates = new List<State>();

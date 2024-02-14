@@ -1,4 +1,6 @@
 using Michsky.MUIP;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuScreen : UIStateBase
@@ -7,6 +9,12 @@ public class MainMenuScreen : UIStateBase
     public ButtonManager ShopButton;
     public ButtonManager LikeButton;
     public ButtonManager SettingsButton;
+    [SerializeField] private TextMeshProUGUI _score;
+    
+    public void ShowScore(int score)
+    {
+        _score.text = score.ToString();
+    }
 
     public override void OnStart(params ButtonManager[] buttonManagers)
     {

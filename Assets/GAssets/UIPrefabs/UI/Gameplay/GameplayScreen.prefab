@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseButton: {fileID: 5006720521806785901}
+  _score: {fileID: 1960270005723883484}
 --- !u!1001 &1226766567477086309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -273,6 +274,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+--- !u!114 &1960270005723883484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5731817327499114972, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}
+  m_PrefabInstance: {fileID: 6106817677375118848}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4919012731606430202 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1223886557497487354, guid: b8dd2a694ecc2b4479bdcb5c3e248600, type: 3}

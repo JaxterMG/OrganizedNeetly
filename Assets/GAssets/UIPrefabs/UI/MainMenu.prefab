@@ -96,6 +96,7 @@ MonoBehaviour:
   ShopButton: {fileID: 595510691120790392}
   LikeButton: {fileID: 1972339295265927572}
   SettingsButton: {fileID: 7384648781734239359}
+  _score: {fileID: 3617532645590447560}
 --- !u!225 &2943591240912193674
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -443,6 +444,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5955405865696615295, guid: c4fbe080fb8fbdf4da64205f0a5f907a, type: 3}
   m_PrefabInstance: {fileID: 8420168476379452136}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3617532645590447560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5111159345723615008, guid: c4fbe080fb8fbdf4da64205f0a5f907a, type: 3}
+  m_PrefabInstance: {fileID: 8420168476379452136}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8804646723992913421
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ public class ScoreController : IScoreController, ISavable
         _eventBus = eventBus;
         _scoreView = scoreView;
 
+        GameObject.FindObjectOfType<SaveLoadHandler>().RegisterSavable(this);
         _eventBus.Subscribe<int>(EventType.IncreaseScore, AddPoints);
-        PlayerPrefs.DeleteKey("HighScore");
         _highScore = PlayerPrefs.GetInt("HighScore", 0);
         _scoreView.UpdateHighScore(_highScore);
     }
@@ -40,16 +40,32 @@ public class ScoreController : IScoreController, ISavable
     {
         return Points < _highScore ? false : true;
     }
-
+    
+    public int GetHighScore()
+    {
+        return _highScore;
+    }
+    private struct ScoreData
+    {
+        public int Score;
+        public int HighScore;
+        public ScoreData(int score, int highScore)
+        {
+            Score = score;
+            HighScore = highScore;
+        }
+    }
     public void Load(string jsonData)
     {
-        var data = JsonConvert.DeserializeObject<ScoreController>(jsonData);
-        Points = data.Points;
+        var data = JsonConvert.DeserializeObject<ScoreData>(jsonData);
+        Points = data.Score;
+        _scoreView.UpdateHighScore(_highScore);
+        _scoreView.UpdateScore(Points);
     }
 
     public string Save()
     {
-        return JsonConvert.SerializeObject(this);
+        return JsonConvert.SerializeObject(new ScoreData(Points, _highScore));
     }
 }
 
@@ -57,5 +73,6 @@ public interface IScoreController
 {
     public void AddPoints(int points);
     public int GetPoints();
+    public int GetHighScore();
     public bool IsHighScore();
 }

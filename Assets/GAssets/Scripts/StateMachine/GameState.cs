@@ -13,7 +13,7 @@ namespace Core.StateMachine.Game
         private FiguresSpawner _figuresSpawner;
         public GameState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
-
+            
         }
 
         public override void Update()
@@ -29,6 +29,7 @@ namespace Core.StateMachine.Game
         {
             _grid = GameObject.FindAnyObjectByType<Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
+            _gameplayScreen.ShowScore(_gameController.ScoreController.GetPoints());
             _gameplayScreen.LoadContent();
             _figuresSpawner = GameObject.FindAnyObjectByType<FiguresSpawner>();
         }
