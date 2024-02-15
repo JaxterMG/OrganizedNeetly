@@ -8,6 +8,8 @@ public class SaveLoadHandler : MonoBehaviour
     private List<ISavable> _savables = new List<ISavable>();
     private string SaveFilePath = Application.streamingAssetsPath + "/savefile.json";
 
+    private bool _isSave = true;
+
     public void RegisterSavable(ISavable savable)
     {
         _savables.Add(savable);
@@ -22,6 +24,7 @@ public class SaveLoadHandler : MonoBehaviour
     /// </summary>
     public void SaveAll()
     {
+        if(!_isSave) return;
         var saveData = new Dictionary<string, string>();
         foreach (var savableObject in _savables)
         {
@@ -44,6 +47,12 @@ public class SaveLoadHandler : MonoBehaviour
                 savableObject.Load(jsonData);
             }
         }
+    }
+    public void DeleteSaveFile()
+    {
+        if (!File.Exists(SaveFilePath)) return;
+        File.Delete(SaveFilePath);
+        _isSave = false;
     }
     public bool HasSaveFile()
     {

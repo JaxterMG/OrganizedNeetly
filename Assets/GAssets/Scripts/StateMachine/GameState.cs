@@ -11,6 +11,7 @@ namespace Core.StateMachine.Game
         private GameplayScreen _gameplayScreen;
         private Grid _grid;
         private FiguresSpawner _figuresSpawner;
+        private SaveLoadHandler _saveLoadHandler;
         public GameState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             
@@ -29,6 +30,7 @@ namespace Core.StateMachine.Game
         {
             _grid = GameObject.FindAnyObjectByType<Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
+            _saveLoadHandler = GameObject.FindObjectOfType<SaveLoadHandler>();
             _gameplayScreen.ShowScore(_gameController.ScoreController.GetPoints());
             _gameplayScreen.LoadContent();
             _figuresSpawner = GameObject.FindAnyObjectByType<FiguresSpawner>();
@@ -39,6 +41,7 @@ namespace Core.StateMachine.Game
         }
         public void OnGameFail(IScoreController scoreController)
         {
+            _saveLoadHandler.DeleteSaveFile();
             ReviveState reviveState = new ReviveState(_eventBus, _gameController, true);
             reviveState.LinkScoreController(scoreController);
             //LoseState loseState = new LoseState(_eventBus, _gameController, true);
