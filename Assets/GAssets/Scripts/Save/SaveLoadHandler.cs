@@ -16,6 +16,7 @@ public class SaveLoadHandler : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        if(!_isSave) return;
         SaveAll();
     }
 
@@ -24,7 +25,6 @@ public class SaveLoadHandler : MonoBehaviour
     /// </summary>
     public void SaveAll()
     {
-        if(!_isSave) return;
         var saveData = new Dictionary<string, string>();
         foreach (var savableObject in _savables)
         {
@@ -37,7 +37,7 @@ public class SaveLoadHandler : MonoBehaviour
     public void LoadAll()
     {
         if (!File.Exists(SaveFilePath)) return;
-
+       
         var saveData = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(SaveFilePath));
         foreach (var savableObject in _savables)
         {
@@ -47,11 +47,13 @@ public class SaveLoadHandler : MonoBehaviour
                 savableObject.Load(jsonData);
             }
         }
+        _isSave = true;
     }
     public void DeleteSaveFile()
     {
         if (!File.Exists(SaveFilePath)) return;
         File.Delete(SaveFilePath);
+
         _isSave = false;
     }
     public bool HasSaveFile()

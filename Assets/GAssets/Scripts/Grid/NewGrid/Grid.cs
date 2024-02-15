@@ -366,6 +366,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
                     Cell newCell = Instantiate(_cellPrefab, GridCells[x,y].transform.position, Quaternion.identity).GetComponent<Cell>();
                     newCell.FigureName = data.GridCells[x,y].FigureName;
                     newCell.SetColor(_colorsChanger.GetFiguresColors().Figures[newCell.FigureName]);
+                    newCell.transform.SetParent(_placedCellsHolder);
                     GridCells[x, y].Cell = newCell;
                     newCell.transform.position = cell.transform.localPosition;
                     newCell.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
