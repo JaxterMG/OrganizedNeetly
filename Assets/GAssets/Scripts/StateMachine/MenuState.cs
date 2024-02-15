@@ -8,6 +8,7 @@ namespace Core.StateMachine.Menu
     public class MenuState : State
     {
         private MenuScreen _menuScreen;
+        private SaveLoadHandler _saveLoadHandler;
         public MenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _menuScreen = GameObject.FindAnyObjectByType<MenuScreen>();
@@ -15,6 +16,8 @@ namespace Core.StateMachine.Menu
         public override void LoadContent()
         {
             _menuScreen.LoadContent();
+            _saveLoadHandler = GameObject.FindObjectOfType<SaveLoadHandler>();
+            
         }
 
         public override void OnStart()
@@ -35,6 +38,7 @@ namespace Core.StateMachine.Menu
 
         private void OnMainMenuButtonClicked()
         {
+            _saveLoadHandler.SaveAll();
             _gameController.ChangeState(new MainMenuState(_eventBus, _gameController));
             _gameController.ExitAdditiveState(this);
         }
@@ -48,6 +52,7 @@ namespace Core.StateMachine.Menu
         }
         private void OnRestartButtonClicked()
         {
+            _saveLoadHandler.DeleteSaveFile();
             _gameController.ExitAdditiveState(this);
             _gameController.ChangeState(new GameState(_eventBus, _gameController));
         }
