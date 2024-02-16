@@ -42,12 +42,22 @@ namespace Core.StateMachine.Game
         public void OnGameFail(IScoreController scoreController)
         {
             _saveLoadHandler.DeleteSaveFile();
-            ReviveState reviveState = new ReviveState(_eventBus, _gameController, true);
-            reviveState.LinkScoreController(scoreController);
-            //LoseState loseState = new LoseState(_eventBus, _gameController, true);
-            //loseState.LinkScoreController(scoreController);
-            //_gameController.CreateAdditiveState(loseState);
-            _gameController.CreateAdditiveState(reviveState);
+            if(PlayerPrefs.GetInt("Revive") == 0)
+            {
+                ReviveState reviveState = new ReviveState(_eventBus, _gameController, true);
+                reviveState.LinkScoreController(scoreController);
+                //LoseState loseState = new LoseState(_eventBus, _gameController, true);
+                //loseState.LinkScoreController(scoreController);
+                //_gameController.CreateAdditiveState(loseState);
+                _gameController.CreateAdditiveState(reviveState);
+            }
+            else
+            {
+                LoseState loseState = new LoseState(_eventBus, _gameController, true);
+                loseState.LinkScoreController(scoreController);
+                _gameController.CreateAdditiveState(loseState);
+                PlayerPrefs.SetInt("Revive", 0);
+            }
         }
         public override async void OnStart()
         {

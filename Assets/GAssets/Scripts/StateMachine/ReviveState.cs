@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Core.Controllers;
 using UI;
 using UnityEngine;
+using Zenject.SpaceFighter;
 
 namespace Core.StateMachine.Game
 {
@@ -52,11 +53,13 @@ namespace Core.StateMachine.Game
 
         private void OnReviveButtonClicked()
         {   
+            PlayerPrefs.SetInt("Revive", 1);
             _eventBus.Publish<int>(EventType.Revive, 3);            
             _gameController.ExitAdditiveState(this);
         }
         private void OnDeclineButtonClicked()
         {
+            PlayerPrefs.SetInt("Revive", 0);
             LoseState loseState = new LoseState(_eventBus, _gameController, true);
             loseState.LinkScoreController(_scoreController);
             _gameController.CreateAdditiveState(loseState);
