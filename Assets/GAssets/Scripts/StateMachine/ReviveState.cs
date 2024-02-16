@@ -1,14 +1,11 @@
-using System.Data;
 using System.Threading.Tasks;
 using Core.Controllers;
-using Core.StateMachine.Loading;
-using Core.StateMachine.Menu;
 using UI;
 using UnityEngine;
 
 namespace Core.StateMachine.Game
 {
-    public class ReviveState : State
+    public class ReviveState : State, ISavable
     {
         private IScoreController _scoreController;
         private ReviveScreen _reviveScreen;
@@ -69,6 +66,20 @@ namespace Core.StateMachine.Game
         public override void OnExit(bool isHide = true)
         {
             _reviveScreen.OnExit(isHide);
+        }
+
+        private struct ReviveBonusData
+        {
+
+        }
+        public string Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Load(string jsonData)
+        {
+            throw new System.NotImplementedException();
         }
     }
     

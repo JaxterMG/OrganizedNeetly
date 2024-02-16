@@ -338,6 +338,9 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     }
     private void LoadSavedGrid(GridSaveData data)
     {
+        if(_gridHolder != null)
+            Destroy(_gridHolder.gameObject);
+            
         _gridHolder = new GameObject("GridHolder").transform;
         _gridHolder.position = CalculateGridCenter();
         GridCells = new GridCell[data.GridCells.GetLength(0), data.GridCells.GetLength(1)];
