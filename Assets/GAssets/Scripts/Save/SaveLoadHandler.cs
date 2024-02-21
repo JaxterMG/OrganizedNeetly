@@ -12,7 +12,8 @@ public class SaveLoadHandler : MonoBehaviour
 
     public void RegisterSavable(ISavable savable)
     {
-        _savables.Add(savable);
+        if(!_savables.Contains(savable))
+            _savables.Add(savable);
     }
     private void OnApplicationQuit()
     {

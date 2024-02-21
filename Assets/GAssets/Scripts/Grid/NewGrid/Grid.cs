@@ -340,6 +340,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     {
         if(_gridHolder != null)
             Destroy(_gridHolder.gameObject);
+        GridCells = null;
             
         _gridHolder = new GameObject("GridHolder").transform;
         _gridHolder.position = CalculateGridCenter();
