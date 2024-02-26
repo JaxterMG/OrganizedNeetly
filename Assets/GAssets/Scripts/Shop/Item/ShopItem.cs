@@ -1,3 +1,4 @@
+using System;
 using Michsky.MUIP;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,7 @@ using Zenject;
 
 public class ShopItem : MonoBehaviour
 {
+    public event Action ThemeChanged; 
     [Inject] private EventBus _eventBus;
     [Inject] private ColorsChanger _colorsChanger;
     [SerializeField] private string _theme;
@@ -37,6 +39,7 @@ public class ShopItem : MonoBehaviour
             _buyButton.SetText($"Use");
             _buyButton.enableIcon = false;
         }
+        _buyButton?.onClick.AddListener(() => _eventBus.Publish<string>(EventType.PlaySound, "UIClick"));
     }
     private void OnButtonClicked()
     {
@@ -51,6 +54,7 @@ public class ShopItem : MonoBehaviour
             _buyButton.SetText($"Use");
         }
         _colorsChanger.ChangeTheme(_theme);
+        ThemeChanged?.Invoke();
     }
 
     void OnDestroy()

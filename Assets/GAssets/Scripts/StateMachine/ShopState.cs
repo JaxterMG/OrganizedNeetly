@@ -18,6 +18,11 @@ namespace Core.StateMachine.Loading
 
         public override void OnStart()
         {
+            for (int i = 0; i < _shopScreen.ShopItems.Length; i++)
+            {
+                _shopScreen.ShopItems[i].ThemeChanged += OnBackButtonPressed;
+            }
+            
             _shopScreen.BackButton.onClick.AddListener(OnBackButtonPressed);
             _shopScreen.OnStart();
         }
@@ -39,6 +44,10 @@ namespace Core.StateMachine.Loading
 
         public override void OnExit(bool isHide = true)
         {
+            for (int i = 0; i < _shopScreen.ShopItems.Length; i++)
+            {
+                _shopScreen.ShopItems[i].ThemeChanged -= OnBackButtonPressed;
+            }
             _shopScreen.OnExit();
         }
 

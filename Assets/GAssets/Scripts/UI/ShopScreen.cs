@@ -6,6 +6,7 @@ public class ShopScreen : UIStateBase
 {
     public ButtonManager BackButton;
     public GameObject ShopScreenHolder;
+    public ShopItem[] ShopItems;
  
     public override void OnStart(params ButtonManager[] buttonManagers)
     {
