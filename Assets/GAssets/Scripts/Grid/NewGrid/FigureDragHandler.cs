@@ -6,6 +6,7 @@ public class FigureDragHandler : MonoBehaviour
 {
     private EventBus _eventBus;
     public string FigureName;
+    public int FigureIndex;
     public static event Action FigurePlaced;
     [SerializeField] private FiguresHolder _figuresHolder;
     public Dictionary<Vector2, Cell> FigureData = new Dictionary<Vector2, Cell>();
@@ -16,6 +17,7 @@ public class FigureDragHandler : MonoBehaviour
 
     private Grid _grid;
     private Collider2D _collider;
+    public int FigureId;
 
     [SerializeField] LayerMask _gridMask;
 
@@ -32,12 +34,13 @@ public class FigureDragHandler : MonoBehaviour
     {
         Shape = shape;
     }
-    public void Initialize(EventBus eventBus,FiguresHolder figuresHolder, Grid grid, Color figureColor)
+    public void Initialize(EventBus eventBus,FiguresHolder figuresHolder, Grid grid, Color figureColor, int figureId)
     {
         _eventBus = eventBus;
         _figuresHolder = figuresHolder;
         _grid = grid;
         SetColorTheme(figureColor);
+        FigureId = figureId;
     }
     private void SetColorTheme(Color figureColor)
     {

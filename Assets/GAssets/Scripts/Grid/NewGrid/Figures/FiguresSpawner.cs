@@ -8,13 +8,13 @@ public class FiguresSpawner : MonoBehaviour, ISavable
 {
     [Inject] EventBus _eventBus;
     [Inject] ColorsChanger _colorsChanger;
-    
+
     [SerializeField] private int _spawnDelay = 200;
     [SerializeField] private List<FigureDragHandler> _figures;
     [SerializeField] private Transform _spawnPoint;
 
     private int _currentFiguresCount;
-    [SerializeField] private int _desiredFiguresCount = 3;  
+    [SerializeField] private int _desiredFiguresCount = 3;
     private Grid _grid;
     private FiguresHolder _figuresHolder;
 
@@ -27,7 +27,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
     }
     public void OnInititalize()
     {
-        if(!FindObjectOfType<SaveLoadHandler>().HasSaveFile())
+        if (!FindObjectOfType<SaveLoadHandler>().HasSaveFile())
             SpawnFigures();
     }
 
@@ -36,7 +36,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
         FindObjectOfType<RandomNumbersGenerator>().IncreaseRandomCounter();
         _currentFiguresCount--;
 
-        if(_currentFiguresCount <= 0)
+        if (_currentFiguresCount <= 0)
         {
             _currentFiguresCount = _desiredFiguresCount;
             SpawnFigures();
@@ -51,9 +51,11 @@ public class FiguresSpawner : MonoBehaviour, ISavable
             _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
-            FigureDragHandler figureDragHandler = _figures[randomNumbersGenerator.RequestRandomNumber(0, _figures.Count)];
+            int figureId = randomNumbersGenerator.RequestRandomNumber(0, _figures.Count);
+
+            FigureDragHandler figureDragHandler = _figures[figureId];
             var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
-            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
+            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureId);
             _figuresHolder.AddFigure(figure);
         }
         _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
@@ -69,7 +71,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
             // Можно сделать рандом с сидом для испытаний
             FigureDragHandler figureDragHandler = _figures[figureIndex];
             var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
-            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
+            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureIndex);
             _figuresHolder.AddFigure(figure);
         }
         _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
@@ -89,36 +91,47 @@ public class FiguresSpawner : MonoBehaviour, ISavable
     private struct FiguresSpawnerData
     {
         public int FiguresLeft;
+        public int[] FigureIds;
 
-        public FiguresSpawnerData(int figuresLeft)
+        public FiguresSpawnerData(int figuresLeft, int[] figureIds)
         {
             FiguresLeft = figuresLeft;
+            FigureIds = figureIds;
         }
     }
 
     public void Load(string jsonData)
     {
         var data = JsonConvert.DeserializeObject<FiguresSpawnerData>(jsonData);
-        LoadFigures(data.FiguresLeft);
+        LoadFigures(data);
     }
-    private async void LoadFigures(int figuresLeft)
+    private async void LoadFigures(FiguresSpawnerData data)
     {
-        RandomNumbersGenerator randomNumbersGenerator = FindObjectOfType<RandomNumbersGenerator>();
-        for (_currentFiguresCount = 0; _currentFiguresCount < figuresLeft; _currentFiguresCount++)
+        for (_currentFiguresCount = 0; _currentFiguresCount < data.FiguresLeft; _currentFiguresCount++)
         {
             _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
-            FigureDragHandler figureDragHandler = _figures[randomNumbersGenerator.RequestRandomNumber(0, _figures.Count)];
+            int figureId = data.FigureIds[_currentFiguresCount];
+            FigureDragHandler figureDragHandler = _figures[data.FigureIds[_currentFiguresCount]];
+
             var figure = Instantiate(figureDragHandler, _spawnPoint.position, Quaternion.identity);
-            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName]);
+            figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureId);
             _figuresHolder.AddFigure(figure);
         }
         _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
     }
     public string Save()
     {
-        FiguresSpawnerData figuresSpawnerData = new FiguresSpawnerData(_currentFiguresCount);
+        var figures = _figuresHolder.GetFigures();
+        int[] figuresIds = new int[figures.Count];
+
+        for (int i = 0; i < figures.Count; i++)
+        {
+            figuresIds[i] = figures[i].FigureId;
+        }
+
+        FiguresSpawnerData figuresSpawnerData = new FiguresSpawnerData(_currentFiguresCount, figuresIds);
         return JsonConvert.SerializeObject(figuresSpawnerData);
     }
 }
