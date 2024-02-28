@@ -695,6 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackButton: {fileID: 4680065043247397831}
   ShopScreenHolder: {fileID: 1160397040231502931}
+  ShopItems: []
 --- !u!225 &6793614645924314477
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1254,7 +1255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1262,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1302,11 +1303,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 539.2865
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -77.1685
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1826263179889147117, guid: 5d5c17f665005f340a632d6f31ecda81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

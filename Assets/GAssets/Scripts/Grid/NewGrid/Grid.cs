@@ -223,7 +223,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         if (linesToDelete > 0)
         {
             _eventBus.Publish<int>(EventType.IncreaseScore, linesToDelete);
-            _eventBus.Publish<int>(EventType.AddMoney, linesToDelete);
+            _eventBus.Publish<(int, Vector3)>(EventType.AddMoney, (linesToDelete, GridCells[(int)touchedCells[0].x, (int)touchedCells[0].y].Cell.transform.position));
         }
 
         if (horizontalLinesToDelete.Count > 0)

@@ -6,9 +6,11 @@ public class MoneyManager : MonoBehaviour
     [Inject] private EventBus _eventBus;
     private int _money;
     private MoneyView[] _moneyViews;
+    [SerializeField] private MoneyAttractorView _moneyAttractorView;
+
     void Start()
     {
-        _eventBus.Subscribe<int>(EventType.AddMoney, AddMoney);
+        _eventBus.Subscribe<(int, Vector3)>(EventType.AddMoney, AddMoney);
         _eventBus.Unsubscribe<int>(EventType.SubtractMoney, SubtractMoney);
         _money = PlayerPrefs.GetInt("Money", 0);
         _moneyViews = FindObjectsOfType<MoneyView>();
@@ -17,8 +19,8 @@ public class MoneyManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        _eventBus.Unsubscribe<int>(EventType.AddMoney, AddMoney);
-        _eventBus.Unsubscribe<int>(EventType.SubtractMoney, AddMoney);
+        _eventBus.Unsubscribe<(int, Vector3)>(EventType.AddMoney, AddMoney);
+        _eventBus.Unsubscribe<(int,Vector3)>(EventType.SubtractMoney, AddMoney);
     }
     private void UpdateViews()
     {
@@ -27,10 +29,10 @@ public class MoneyManager : MonoBehaviour
             view.UpdateView(_money);
         }
     }
-    public void AddMoney(int amount)
+    public void AddMoney((int amount, Vector3 position) data)
     {
-        _money += amount;
-
+        _money += data.amount;
+        _moneyAttractorView.RequestViewUpdate(data.position);
         PlayerPrefs.SetInt("Money", _money);
         UpdateViews();
     }
