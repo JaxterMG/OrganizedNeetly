@@ -16,7 +16,7 @@ public class ScoreController : IScoreController, ISavable
         _scoreView = scoreView;
 
         GameObject.FindObjectOfType<SaveLoadHandler>().RegisterSavable(this);
-        _eventBus.Subscribe<int>(EventType.IncreaseScore, AddPoints);
+        _eventBus.Subscribe<int>(BusEventType.IncreaseScore, AddPoints);
         _highScore = PlayerPrefs.GetInt("HighScore", 0);
         _scoreView.UpdateHighScore(_highScore);
     }

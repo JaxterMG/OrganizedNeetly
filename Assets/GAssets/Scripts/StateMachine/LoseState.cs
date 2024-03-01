@@ -33,7 +33,7 @@ namespace Core.StateMachine.Game
             await Task.Delay(400);
             if(_scoreController.IsHighScore())
             {
-                _eventBus.Publish<string>(EventType.PlaySound, "HighScore");
+                _eventBus.Publish<string>(BusEventType.PlaySound, "HighScore");
             }
         }
 
@@ -58,7 +58,7 @@ namespace Core.StateMachine.Game
         }
         private void OnContinueButtonClicked()
         {
-            _eventBus.Publish<int>(EventType.Revive, 3);
+            _eventBus.Publish<int>(BusEventType.Revive, 3);
             _gameController.ExitAdditiveState(this);
         }
         private void OnRestartButtonClicked()

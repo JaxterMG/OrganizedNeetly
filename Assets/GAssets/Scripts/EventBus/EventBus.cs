@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public enum EventType
+public enum BusEventType
 {
     SpawnFigures,
     PlaySound,
@@ -15,9 +15,9 @@ public enum EventType
 }
 public class EventBus
 {
-    private Dictionary<EventType, Delegate> eventHandlers = new Dictionary<EventType, Delegate>();
+    private Dictionary<BusEventType, Delegate> eventHandlers = new Dictionary<BusEventType, Delegate>();
 
-    public void Subscribe<T>(EventType eventType, Action<T> handler)
+    public void Subscribe<T>(BusEventType eventType, Action<T> handler)
     {
         if (!eventHandlers.ContainsKey(eventType))
         {
@@ -29,7 +29,7 @@ public class EventBus
         }
     }
 
-    public void Unsubscribe<T>(EventType eventType, Action<T> handler)
+    public void Unsubscribe<T>(BusEventType eventType, Action<T> handler)
     {
         if (eventHandlers.ContainsKey(eventType))
         {
@@ -37,7 +37,7 @@ public class EventBus
         }
     }
 
-    public void Publish<T>(EventType eventType, T argument)
+    public void Publish<T>(BusEventType eventType, T argument)
     {
         if (eventHandlers.ContainsKey(eventType))
         {

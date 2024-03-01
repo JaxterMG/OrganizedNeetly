@@ -15,14 +15,14 @@ namespace Core.SoundSystem
 
         private void  OnEnable()
         {
-            _eventBus.Subscribe<string>(EventType.PlaySound, RequestSound);
-            _eventBus.Subscribe<bool>(EventType.ChangeSoundsVolume, ChangeSoundsVolume);
+            _eventBus.Subscribe<string>(BusEventType.PlaySound, RequestSound);
+            _eventBus.Subscribe<bool>(BusEventType.ChangeSoundsVolume, ChangeSoundsVolume);
     
             _audioSources = GetComponents<AudioSource>();
         }
         void OnDisable()
         {
-            _eventBus.Unsubscribe<string>(EventType.PlaySound, RequestSound);
+            _eventBus.Unsubscribe<string>(BusEventType.PlaySound, RequestSound);
         }
 
         private void ChangeSoundsVolume(bool isTurnOff)

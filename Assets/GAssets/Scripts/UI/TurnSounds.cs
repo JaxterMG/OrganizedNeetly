@@ -21,7 +21,7 @@ public class TurnSounds : MonoBehaviour
     public void ChangeSounds()
     {
         _isTurnedOff = !_isTurnedOff;
-        _eventBus.Publish<bool>(EventType.ChangeSoundsVolume, _isTurnedOff);
+        _eventBus.Publish<bool>(BusEventType.ChangeSoundsVolume, _isTurnedOff);
         _crossImage.enabled = _isTurnedOff ? true : false;
     }
 }

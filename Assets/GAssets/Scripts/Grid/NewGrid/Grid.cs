@@ -34,8 +34,8 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         saveLoadHandler.RegisterSavable(this);
 
         _colorsChanger.LoadGridColor(PlayerPrefs.GetString("GridColor", "DefaultGrid"));
-        _eventBus.Subscribe<FieldColor>(EventType.ChangeGridColor, ChangeGridColor);
-        _eventBus.Subscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
+        _eventBus.Subscribe<FieldColor>(BusEventType.ChangeGridColor, ChangeGridColor);
+        _eventBus.Subscribe<List<FigureDragHandler>>(BusEventType.SpawnFigures, CheckAvailableSpaceForFigures);
         
         if(!saveLoadHandler.HasSaveFile())
             GenerateGrid();
@@ -46,8 +46,8 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     }
     void OnDestroy()
     {
-        _eventBus.Unsubscribe<FieldColor>(EventType.ChangeGridColor, ChangeGridColor);
-        _eventBus.Unsubscribe<List<FigureDragHandler>>(EventType.SpawnFigures, CheckAvailableSpaceForFigures);
+        _eventBus.Unsubscribe<FieldColor>(BusEventType.ChangeGridColor, ChangeGridColor);
+        _eventBus.Unsubscribe<List<FigureDragHandler>>(BusEventType.SpawnFigures, CheckAvailableSpaceForFigures);
     }
 
     void GenerateGrid()
@@ -222,13 +222,13 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
 
         if (linesToDelete > 0)
         {
-            _eventBus.Publish<int>(EventType.IncreaseScore, linesToDelete);
-            _eventBus.Publish<(int, Vector3)>(EventType.AddMoney, (linesToDelete, GridCells[(int)touchedCells[0].x, (int)touchedCells[0].y].Cell.transform.position));
+            _eventBus.Publish<int>(BusEventType.IncreaseScore, linesToDelete);
+            _eventBus.Publish<(int, Vector3)>(BusEventType.AddMoney, (linesToDelete, GridCells[(int)touchedCells[0].x, (int)touchedCells[0].y].Cell.transform.position));
         }
 
         if (horizontalLinesToDelete.Count > 0)
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "LineDelete");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "LineDelete");
             foreach (var line in horizontalLinesToDelete)
             {
                 for (int i = 0; i < gridRows; i++)
@@ -244,7 +244,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         }
         if (verticalLinesToDelete.Count > 0)
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "LineDelete");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "LineDelete");
             foreach (var line in verticalLinesToDelete)
             {
                 for (int i = 0; i < gridColumns; i++)

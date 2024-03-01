@@ -61,7 +61,7 @@ namespace Core.StateMachine.Game
         }
         public override async void OnStart()
         {
-            _eventBus.Subscribe<int>(EventType.Revive, _figuresSpawner.SpawnReviveFigures);
+            _eventBus.Subscribe<int>(BusEventType.Revive, _figuresSpawner.SpawnReviveFigures);
             _gameplayScreen.PauseButton.onClick.AddListener(OnPauseButtonPressed);
             _grid.OnInitialize();
 
@@ -73,7 +73,7 @@ namespace Core.StateMachine.Game
         }
         public override void OnExit(bool isHide = true)
         {
-            _eventBus.Unsubscribe<int>(EventType.Revive, _figuresSpawner.SpawnReviveFigures);
+            _eventBus.Unsubscribe<int>(BusEventType.Revive, _figuresSpawner.SpawnReviveFigures);
             
             _grid.Fail -= OnGameFail;
             _figuresSpawner.ClearFigures();

@@ -48,7 +48,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
         RandomNumbersGenerator randomNumbersGenerator = FindObjectOfType<RandomNumbersGenerator>();
         for (_currentFiguresCount = 0; _currentFiguresCount < _desiredFiguresCount; _currentFiguresCount++)
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
             int figureId = randomNumbersGenerator.RequestRandomNumber(0, _figures.Count);
@@ -58,7 +58,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
             figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureId);
             _figuresHolder.AddFigure(figure);
         }
-        _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
+        _eventBus.Publish<List<FigureDragHandler>>(BusEventType.SpawnFigures, _figuresHolder.GetFigures());
     }
 
     public async void SpawnReviveFigures(int figureIndex = 3)
@@ -66,7 +66,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
         ClearFigures();
         for (_currentFiguresCount = 0; _currentFiguresCount < _desiredFiguresCount; _currentFiguresCount++)
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
             FigureDragHandler figureDragHandler = _figures[figureIndex];
@@ -74,7 +74,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
             figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureIndex);
             _figuresHolder.AddFigure(figure);
         }
-        _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
+        _eventBus.Publish<List<FigureDragHandler>>(BusEventType.SpawnFigures, _figuresHolder.GetFigures());
     }
 
 
@@ -109,7 +109,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
     {
         for (_currentFiguresCount = 0; _currentFiguresCount < data.FiguresLeft; _currentFiguresCount++)
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "Spawn");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "Spawn");
             await Task.Delay(_spawnDelay);
             // Можно сделать рандом с сидом для испытаний
             int figureId = data.FigureIds[_currentFiguresCount];
@@ -119,7 +119,7 @@ public class FiguresSpawner : MonoBehaviour, ISavable
             figure.Initialize(_eventBus, _figuresHolder, _grid, _colorsChanger.GetFiguresColors().Figures[figureDragHandler.FigureName], figureId);
             _figuresHolder.AddFigure(figure);
         }
-        _eventBus.Publish<List<FigureDragHandler>>(EventType.SpawnFigures, _figuresHolder.GetFigures());
+        _eventBus.Publish<List<FigureDragHandler>>(BusEventType.SpawnFigures, _figuresHolder.GetFigures());
     }
     public string Save()
     {

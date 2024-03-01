@@ -43,7 +43,7 @@ public class ShopItem : MonoBehaviour
             _buyButton.SetText($"Use");
             _buyButton.enableIcon = false;
         }
-        _buyButton?.onClick.AddListener(() => _eventBus.Publish<string>(EventType.PlaySound, "UIClick"));
+        _buyButton?.onClick.AddListener(() => _eventBus.Publish<string>(BusEventType.PlaySound, "UIClick"));
     }
     private void OnButtonClicked()
     {
@@ -53,7 +53,7 @@ public class ShopItem : MonoBehaviour
         {
             _isPurchased = 1;
             PlayerPrefs.SetInt(_theme, _isPurchased);
-            _eventBus.Publish<int>(EventType.SubtractMoney, _cost);
+            _eventBus.Publish<int>(BusEventType.SubtractMoney, _cost);
             _buyButton.enableIcon = false;
             _buyButton.SetText($"Use");
         }

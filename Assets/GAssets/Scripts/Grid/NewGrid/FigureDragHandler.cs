@@ -53,7 +53,7 @@ public class FigureDragHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _eventBus.Publish<string>(EventType.PlaySound, "Pickup");
+        _eventBus.Publish<string>(BusEventType.PlaySound, "Pickup");
         isDragging = true;
         offset = gameObject.transform.position - GetMouseWorldPos() + new Vector3(0, 0.5f, 0);
         OnFigureDrag();
@@ -73,7 +73,7 @@ public class FigureDragHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
-        _eventBus.Publish<string>(EventType.PlaySound, "Place");
+        _eventBus.Publish<string>(BusEventType.PlaySound, "Place");
         isDragging = false;
         GridCell closestHit = FindClosestCellToFigure();
         //Debug.Log($"Closest hit {closestHit?.transform.position}");

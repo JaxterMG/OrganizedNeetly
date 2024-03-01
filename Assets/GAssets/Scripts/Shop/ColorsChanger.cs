@@ -105,7 +105,7 @@ public class ColorsChanger
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _eventBus.Publish<Dictionary<string, Color>>(EventType.ChangeUIColor, handle.Result.UI);
+            _eventBus.Publish<Dictionary<string, Color>>(BusEventType.ChangeUIColor, handle.Result.UI);
         }
         else
         {
@@ -122,7 +122,7 @@ public class ColorsChanger
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            _eventBus.Publish<FieldColor>(EventType.ChangeGridColor, handle.Result);
+            _eventBus.Publish<FieldColor>(BusEventType.ChangeGridColor, handle.Result);
         }
         else
         {

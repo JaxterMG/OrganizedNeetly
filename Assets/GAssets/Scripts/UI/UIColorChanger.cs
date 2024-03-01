@@ -10,11 +10,11 @@ public class UIColorChanger : MonoBehaviour
     [SerializeField] private Image[] _uiImages;
     private void OnEnable()
     {
-        _eventBus.Subscribe<Dictionary<string, Color>>(EventType.ChangeUIColor, ChangeUIColor);
+        _eventBus.Subscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
     }
     void OnDisable()
     {
-        _eventBus.Unsubscribe<Dictionary<string, Color>>(EventType.ChangeUIColor, ChangeUIColor);
+        _eventBus.Unsubscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
     }
 
     private void ChangeUIColor(Dictionary<string, Color> uiColors)

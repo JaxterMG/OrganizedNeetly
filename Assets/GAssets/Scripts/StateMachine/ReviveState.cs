@@ -22,7 +22,7 @@ namespace Core.StateMachine.Game
 
         public override async void OnStart()
         {
-            _eventBus.Publish<string>(EventType.PlaySound, "Lose");
+            _eventBus.Publish<string>(BusEventType.PlaySound, "Lose");
 
             _reviveScreen.ReviveButton.onClick.AddListener(OnReviveButtonClicked);
             _reviveScreen.DeclineButton.onClick.AddListener(OnDeclineButtonClicked);
@@ -54,7 +54,7 @@ namespace Core.StateMachine.Game
         private void OnReviveButtonClicked()
         {   
             PlayerPrefs.SetInt("Revive", 1);
-            _eventBus.Publish<int>(EventType.Revive, 3);            
+            _eventBus.Publish<int>(BusEventType.Revive, 3);            
             _gameController.ExitAdditiveState(this);
         }
         private void OnDeclineButtonClicked()

@@ -10,8 +10,8 @@ public class MoneyManager : MonoBehaviour
 
     void Start()
     {
-        _eventBus.Subscribe<(int, Vector3)>(EventType.AddMoney, AddMoney);
-        _eventBus.Unsubscribe<int>(EventType.SubtractMoney, SubtractMoney);
+        _eventBus.Subscribe<(int, Vector3)>(BusEventType.AddMoney, AddMoney);
+        _eventBus.Unsubscribe<int>(BusEventType.SubtractMoney, SubtractMoney);
         _money = PlayerPrefs.GetInt("Money", 0);
         _moneyViews = FindObjectsOfType<MoneyView>();
         UpdateViews();
@@ -19,8 +19,8 @@ public class MoneyManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        _eventBus.Unsubscribe<(int, Vector3)>(EventType.AddMoney, AddMoney);
-        _eventBus.Unsubscribe<(int,Vector3)>(EventType.SubtractMoney, AddMoney);
+        _eventBus.Unsubscribe<(int, Vector3)>(BusEventType.AddMoney, AddMoney);
+        _eventBus.Unsubscribe<(int,Vector3)>(BusEventType.SubtractMoney, AddMoney);
     }
     private void UpdateViews()
     {

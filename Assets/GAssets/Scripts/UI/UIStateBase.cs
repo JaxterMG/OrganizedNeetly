@@ -41,7 +41,7 @@ public abstract class UIStateBase : MonoBehaviour
     {
         foreach (var buttonManager in buttonManagers)
         {
-            buttonManager?.onClick.AddListener(() => _eventBus.Publish<string>(EventType.PlaySound, "UIClick"));
+            buttonManager?.onClick.AddListener(() => _eventBus.Publish<string>(BusEventType.PlaySound, "UIClick"));
         }
     }
 }
