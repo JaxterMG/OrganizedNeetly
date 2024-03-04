@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b56dd30b1cda6e4b81478688c765589, type: 3}
   m_Name: MoneyPooler
   m_EditorClassIdentifier: 
-  poolableObject: {fileID: 0}
+  poolableObject: {fileID: 7203177861299901740, guid: 4503db20be3c1dd4c96e1121d3e72958, type: 3}
   createOnStart: 0

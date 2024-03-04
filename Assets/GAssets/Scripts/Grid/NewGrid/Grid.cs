@@ -14,7 +14,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     public int gridColumns = 10;
     public float gapSize = 0.1f;
     public float cellSize = 1f;
-    public GridCell[,] GridCells {get; private set;}
+    public GridCell[,] GridCells { get; private set; }
 
     [SerializeField] Transform _placedCellsHolder;
 
@@ -26,7 +26,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     [SerializeField] private FieldColor _fieldColor;
 
     public event Action<IScoreController> Fail;
-    [Inject]ColorsChanger _colorsChanger;
+    [Inject] ColorsChanger _colorsChanger;
 
     public void OnInitialize()
     {
@@ -36,8 +36,8 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         _colorsChanger.LoadGridColor(PlayerPrefs.GetString("GridColor", "DefaultGrid"));
         _eventBus.Subscribe<FieldColor>(BusEventType.ChangeGridColor, ChangeGridColor);
         _eventBus.Subscribe<List<FigureDragHandler>>(BusEventType.SpawnFigures, CheckAvailableSpaceForFigures);
-        
-        if(!saveLoadHandler.HasSaveFile())
+
+        if (!saveLoadHandler.HasSaveFile())
             GenerateGrid();
         else
         {
@@ -104,7 +104,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         {
             GridCell gridCell = GridCells[(int)closestCell.GridPos.x + (int)pos.x, (int)closestCell.GridPos.y + (int)pos.y];
 
-            
+
             gridCell.Cell = figureDragHandler.FigureData[pos];
 
             //TODO: Clean handlers without breaking scale animation
@@ -117,7 +117,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         }
 
         CheckLinesToDelete(touchedGridCellsPos);
-    
+
         return true;
     }
     bool CanPlaceFigure(List<Vector2> figure, int col, int row)
@@ -169,7 +169,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
         {
             if (IsSpaceAvailableForFigure(figure.Shape))
             {
-                return ;
+                return;
             }
         }
 
@@ -226,6 +226,7 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
             _eventBus.Publish<(int, Vector3)>(BusEventType.AddMoney, (linesToDelete, GridCells[(int)touchedCells[0].x, (int)touchedCells[0].y].Cell.transform.position));
         }
 
+        // Первый шаг: Удаление горизонтальных линий
         if (horizontalLinesToDelete.Count > 0)
         {
             _eventBus.Publish<string>(BusEventType.PlaySound, "LineDelete");
@@ -233,15 +234,28 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
             {
                 for (int i = 0; i < gridRows; i++)
                 {
-                    GridCells[i, line].Cell?.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.Linear).OnComplete(() => 
+                    var cell = GridCells[i, line].Cell;
+                    if (cell != null)
                     {
-                        Destroy(GridCells[i, line].Cell?.gameObject);
-                    });
-                    await Task.Delay(100);
+                        cell.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() =>
+                        {
+                            Destroy(cell.gameObject);
+                        });
+                        // Ожидание завершения анимации перед удалением следующей ячейки
+                        await Task.Delay(50);
+                    }
                 }
             }
-
         }
+
+        // Дополнительная задержка перед началом удаления вертикальных линий, если это необходимо
+        if (verticalLinesToDelete.Count > 0)
+        {
+            // Возможно, потребуется задержка между удалениями разных типов линий
+            await Task.Delay(100); // Задержка для визуального разделения процессов удаления
+        }
+
+        // Второй шаг: Удаление вертикальных линий
         if (verticalLinesToDelete.Count > 0)
         {
             _eventBus.Publish<string>(BusEventType.PlaySound, "LineDelete");
@@ -249,11 +263,16 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
             {
                 for (int i = 0; i < gridColumns; i++)
                 {
-                    GridCells[line, i].Cell?.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() => 
+                    var cell = GridCells[line, i].Cell;
+                    if (cell != null)
                     {
-                        Destroy(GridCells[line, i].Cell?.gameObject);
-                    });
-                    await Task.Delay(50);
+                        cell.transform.DOScale(Vector3.zero, 0.05f).SetEase(Ease.Linear).OnComplete(() =>
+                        {
+                            Destroy(cell.gameObject);
+                        });
+                        // Ожидание завершения анимации перед удалением следующей ячейки
+                        await Task.Delay(50);
+                    }
                 }
             }
         }
@@ -273,12 +292,12 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     private void ChangeGridColor(FieldColor fieldColor)
     {
         _fieldColor = fieldColor;
-        if(GridCells == null)return;
+        if (GridCells == null) return;
         for (var i = 0; i < GridCells.GetLength(0); i++)
         {
             for (var j = 0; j < GridCells.GetLength(1); j++)
             {
-                GridCells[i,j].GetComponent<SpriteRenderer>().color = fieldColor.Color;
+                GridCells[i, j].GetComponent<SpriteRenderer>().color = fieldColor.Color;
             }
         }
     }
@@ -299,13 +318,13 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
                 {
                     GridCellData gridCell = new GridCellData
                     (
-                        (int)cell[x,y].GridPos.x,
-                        (int)cell[x,y].GridPos.y,
-                        cell[x,y]?.Cell == null ? false : true,
-                        cell[x,y]?.Cell?.FigureName
-                        //cell[i,j].Cell.CellTheme
+                        (int)cell[x, y].GridPos.x,
+                        (int)cell[x, y].GridPos.y,
+                        cell[x, y]?.Cell == null ? false : true,
+                        cell[x, y]?.Cell?.FigureName
+                    //cell[i,j].Cell.CellTheme
                     );
-                    GridCells[x,y] = gridCell;
+                    GridCells[x, y] = gridCell;
                 }
             }
         }
@@ -338,10 +357,10 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
     }
     private void LoadSavedGrid(GridSaveData data)
     {
-        if(_gridHolder != null)
+        if (_gridHolder != null)
             Destroy(_gridHolder.gameObject);
         GridCells = null;
-            
+
         _gridHolder = new GameObject("GridHolder").transform;
         _gridHolder.position = CalculateGridCenter();
         GridCells = new GridCell[data.GridCells.GetLength(0), data.GridCells.GetLength(1)];
@@ -365,10 +384,10 @@ public class Grid : MonoBehaviour, IProvidable, ISavable
                 GridCells[x, y] = cell;
 
                 cell.transform.SetParent(_gridHolder);
-                if(data.GridCells[x,y].IsOccupied)
+                if (data.GridCells[x, y].IsOccupied)
                 {
-                    Cell newCell = Instantiate(_cellPrefab, GridCells[x,y].transform.position, Quaternion.identity).GetComponent<Cell>();
-                    newCell.FigureName = data.GridCells[x,y].FigureName;
+                    Cell newCell = Instantiate(_cellPrefab, GridCells[x, y].transform.position, Quaternion.identity).GetComponent<Cell>();
+                    newCell.FigureName = data.GridCells[x, y].FigureName;
                     newCell.SetColor(_colorsChanger.GetFiguresColors().Figures[newCell.FigureName]);
                     newCell.transform.SetParent(_placedCellsHolder);
                     GridCells[x, y].Cell = newCell;
