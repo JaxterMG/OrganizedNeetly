@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba5ce7713d0aad4eb94d23f82399473, type: 3}
-  m_Name: SoftGrid
+  m_Script: {fileID: 11500000, guid: 86c9ce9d8a1127a439274f8606abaf73, type: 3}
+  m_Name: RedishBackGroundTheme
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,4 +21,4 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  Color: {r: 0.78231114, g: 0.8, b: 0.6408, a: 1}
+  Color: {r: 0.16862746, g: 0.07058824, b: 0.16470589, a: 1}

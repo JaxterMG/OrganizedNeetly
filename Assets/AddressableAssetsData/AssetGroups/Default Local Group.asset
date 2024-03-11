@@ -57,6 +57,66 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d90ef0c0940512746b50065848513a2b
+    m_Address: EnergyBackGroundColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ccbca20dd05d4c4e81ae82d06367ddf
+    m_Address: EnergyGridColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2e5701e2cd131d4fa2495254efd93a9
+    m_Address: EnergyFiguresColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 846b8c4e00ff5e04fa622d6cb4ed5dc5
+    m_Address: EnergyUIColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fd6f129132bb774ca0171cbf200e048
+    m_Address: RedishBackGroundColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bffdca7392cfad43889459dc3a0492b
+    m_Address: RedishGridColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dde0d63eceaf6424c912fc9f9fb76a76
+    m_Address: RedishFiguresColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d987b5f284974f49b3b282b3b33e937
+    m_Address: RedishUIColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fd14f4eada3e81419a74534769562bc
+    m_Address: FrostBackGroundColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fda42c0ea1a33f45964bebe92219b86
+    m_Address: FrostGridColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac476921077f1f44dbe63d6171c85d06
+    m_Address: FrostFiguresColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40464b0333cbbd64da7fd7b49c01dc86
+    m_Address: FrostUIColors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b7fe108021c2fc4fadb582b39e03c5e, type: 2}
   m_SchemaSet:

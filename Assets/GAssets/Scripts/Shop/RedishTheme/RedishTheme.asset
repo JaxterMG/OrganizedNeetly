@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 989faf31d11b5274b897f5e8ab2db903, type: 3}
-  m_Name: EnergyTheme
+  m_Name: RedishTheme
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -46,13 +46,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.5358817
+      Data: 0.90196085
     - Name: 
       Entry: 4
-      Data: 0.698039234
+      Data: 0.258823544
     - Name: 
       Entry: 4
-      Data: 0.411145121
+      Data: 0.24313727
     - Name: 
       Entry: 4
       Data: 1
@@ -73,13 +73,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.879
+      Data: 0.801
     - Name: 
       Entry: 4
-      Data: 0.7159117
+      Data: 0.115343995
     - Name: 
       Entry: 4
-      Data: 0.348963022
+      Data: 0.326807946
     - Name: 
       Entry: 4
       Data: 1
@@ -100,13 +100,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.8431373
+      Data: 0.794
     - Name: 
       Entry: 4
-      Data: 0.470588267
+      Data: 0.160445571
     - Name: 
       Entry: 4
-      Data: 0.31764707
+      Data: 0.255067348
     - Name: 
       Entry: 4
       Data: 1
@@ -127,13 +127,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.3096154
+      Data: 0.8980392
     - Name: 
       Entry: 4
-      Data: 0.5115385
+      Data: 0.4000161
     - Name: 
       Entry: 4
-      Data: 0.7
+      Data: 0.239215687
     - Name: 
       Entry: 4
       Data: 1
@@ -154,13 +154,13 @@ MonoBehaviour:
       Data: UnityEngine.Color, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 0.6132414
+      Data: 1
     - Name: 
       Entry: 4
-      Data: 0.359999955
+      Data: 0.262745142
     - Name: 
       Entry: 4
-      Data: 0.9
+      Data: 0.4038874
     - Name: 
       Entry: 4
       Data: 1
