@@ -1,6 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class LoadingScreen : UIStateBase
+namespace Core.UI
 {
+	public class LoadingScreen : UIStateBase
+	{
+	}
 }

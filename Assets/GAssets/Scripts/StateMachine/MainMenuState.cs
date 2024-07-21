@@ -1,14 +1,14 @@
 using Core.Controllers;
-using Core.StateMachine.Game;
-using Core.StateMachine.Loading;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Menu
+namespace Core.StateMachine
 {
     public class MainMenuState : State
     {
         private MainMenuScreen _mainMenuScreen;
-        public MainMenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public MainMenuState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _mainMenuScreen = GameObject.FindAnyObjectByType<MainMenuScreen>();
             _mainMenuScreen.ShowScore(gameController.ScoreController.GetHighScore());

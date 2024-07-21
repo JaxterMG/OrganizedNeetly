@@ -1,18 +1,21 @@
 using TMPro;
 using UnityEngine;
 
-public class ScoreView : MonoBehaviour
+namespace Core.UI.Score
 {
-    public TextMeshProUGUI CurrentScore;
-    public TextMeshProUGUI HighScore;
-
-    public void UpdateScore(int score)
+    public class ScoreView : MonoBehaviour
     {
-        CurrentScore.text = score.ToString();
-    }
-    public void UpdateHighScore(int score)
-    {
-        HighScore.text = score.ToString();
-    }
+        public TextMeshProUGUI CurrentScore;
+        public TextMeshProUGUI HighScore;
 
+        public void UpdateScore(int score)
+        {
+            CurrentScore.text = score.ToString();
+        }
+
+        public void UpdateHighScore(int score)
+        {
+            HighScore.text = score.ToString();
+        }
+    }
 }

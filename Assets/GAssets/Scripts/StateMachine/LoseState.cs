@@ -1,17 +1,18 @@
 using System.Threading.Tasks;
 using Core.Controllers;
-using Core.StateMachine.Loading;
-using Core.StateMachine.Menu;
-using UI;
+using Core.EventBus;
+using Core.Score;
+using Core.UI.LoseScreen;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Game
+namespace Core.StateMachine
 {
     public class LoseState : State
     {
         private IScoreController _scoreController;
         private LoseScreen _loseScreen;
-        public LoseState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public LoseState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _loseScreen = GameObject.FindAnyObjectByType<LoseScreen>();
 

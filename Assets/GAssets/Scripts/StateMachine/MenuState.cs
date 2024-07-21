@@ -1,15 +1,16 @@
 using Core.Controllers;
-using Core.StateMachine.Game;
-using Core.StateMachine.Loading;
+using Core.Save;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Menu
+namespace Core.StateMachine
 {
     public class MenuState : State
     {
         private MenuScreen _menuScreen;
         private SaveLoadHandler _saveLoadHandler;
-        public MenuState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public MenuState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _menuScreen = GameObject.FindAnyObjectByType<MenuScreen>();
         }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace Core.Localization.TextComponent
+namespace Core.Translator
 {
     public class TextTranslationHandler : MonoBehaviour
     {

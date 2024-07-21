@@ -1,13 +1,14 @@
 using Core.Controllers;
+using Core.EventBus;
 
 namespace Core.StateMachine
 {
     public abstract class State
     {
-        protected EventBus _eventBus;
+        protected EventBus.EventBus _eventBus;
         protected bool _isAdditiveState;
         protected GameController _gameController;
-        public State(EventBus eventBus, GameController gameController, bool isAdditiveState = false)
+        public State(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false)
         {
             _eventBus = eventBus;
             _gameController = gameController;

@@ -1,5 +1,8 @@
-public interface ISavable
+namespace Core.Save
 {
-    public string Save();
-    public void Load(string jsonData);
+    public interface ISavable
+    {
+        public string Save();
+        public void Load(string jsonData);
+    }
 }

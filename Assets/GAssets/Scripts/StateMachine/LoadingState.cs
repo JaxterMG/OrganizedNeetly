@@ -1,15 +1,16 @@
 using System.Threading.Tasks;
 using Core.Controllers;
-using Core.StateMachine.Game;
-using Core.StateMachine.Menu;
+using Core.Save;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Loading
+namespace Core.StateMachine
 {
     public class LoadingState : State
     {
         private LoadingScreen _loadingScreen;
-        public LoadingState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public LoadingState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _loadingScreen = GameObject.FindAnyObjectByType<LoadingScreen>();
         }

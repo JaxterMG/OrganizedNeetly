@@ -1,5 +1,8 @@
-public interface IProvidable
+namespace Core.Grid
 {
-    public void OnInitialize();
-    public void OnUpdate();
+    public interface IProvidable
+    {
+        public void OnInitialize();
+        public void OnUpdate();
+    }
 }

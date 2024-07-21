@@ -1,27 +1,35 @@
+using Core.EventBus;
 using Michsky.MUIP;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Core.EventBus;
 
-public class TurnSounds : MonoBehaviour
+namespace Core.UI
 {
-    [Inject] EventBus _eventBus;
-    [SerializeField] ButtonManager _soundButton;
-    [SerializeField] Image _crossImage;
+    public class TurnSounds : MonoBehaviour
+    {
+        [Inject] EventBus.EventBus _eventBus;
+        [SerializeField] ButtonManager _soundButton;
+        [SerializeField] Image _crossImage;
 
-    private bool _isTurnedOff;
-    void OnEnable()
-    {
-        _soundButton.onClick.AddListener(ChangeSounds);
-    }
-    void OnDisable()
-    {
-        _soundButton.onClick.RemoveListener(ChangeSounds);
-    }
-    public void ChangeSounds()
-    {
-        _isTurnedOff = !_isTurnedOff;
-        _eventBus.Publish<bool>(BusEventType.ChangeSoundsVolume, _isTurnedOff);
-        _crossImage.enabled = _isTurnedOff ? true : false;
+        private bool _isTurnedOff;
+
+        void OnEnable()
+        {
+            _soundButton.onClick.AddListener(ChangeSounds);
+        }
+
+        void OnDisable()
+        {
+            _soundButton.onClick.RemoveListener(ChangeSounds);
+        }
+
+        public void ChangeSounds()
+        {
+            _isTurnedOff = !_isTurnedOff;
+            _eventBus.Publish<bool>(BusEventType.ChangeSoundsVolume, _isTurnedOff);
+            _crossImage.enabled = _isTurnedOff ? true : false;
+        }
     }
 }

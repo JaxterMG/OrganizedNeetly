@@ -1,7 +1,9 @@
+using Core.EventBus;
 using UnityEngine;
 using Zenject;
+using Core.EventBus;
 
-namespace Core.SoundSystem
+namespace Core.SoundSystem.SoundManager
 {
     public class SoundManager : MonoBehaviour
     {
@@ -9,7 +11,7 @@ namespace Core.SoundSystem
         public SoundLibrary _soundLibrary;
 
         [Inject]
-        private EventBus _eventBus;
+        private EventBus.EventBus _eventBus;
 
         private bool _isTurnedOffSound; 
 

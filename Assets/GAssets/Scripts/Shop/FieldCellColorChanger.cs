@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class FieldCellColorChanger : MonoBehaviour
+namespace Core.Shop
 {
+	public class FieldCellColorChanger : MonoBehaviour
+	{
 
+	}
 }

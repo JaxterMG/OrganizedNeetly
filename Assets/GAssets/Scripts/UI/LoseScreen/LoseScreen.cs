@@ -1,7 +1,6 @@
 using Michsky.MUIP;
-using UnityEngine.UI;
 
-namespace UI
+namespace Core.UI.LoseScreen
 {
     public class LoseScreen : UIStateBase
     {

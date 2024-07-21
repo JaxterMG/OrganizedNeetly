@@ -1,18 +1,24 @@
 using System.Threading.Tasks;
 using Core.Controllers;
-using Core.StateMachine.Menu;
+using Core.EventBus;
+using Core.Grid.Figures;
+using Core.Save;
+using Core.Score;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
+using Core.Grid;
 
-namespace Core.StateMachine.Game
+namespace Core.StateMachine
 {
 
     public class GameState : State
     {
         private GameplayScreen _gameplayScreen;
-        private Grid _grid;
+        private Grid.Grid _grid;
         private FiguresSpawner _figuresSpawner;
         private SaveLoadHandler _saveLoadHandler;
-        public GameState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public GameState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             
         }
@@ -28,7 +34,7 @@ namespace Core.StateMachine.Game
 
         public override void LoadContent()
         {
-            _grid = GameObject.FindAnyObjectByType<Grid>();
+            _grid = GameObject.FindAnyObjectByType<Grid.Grid>();
             _gameplayScreen = GameObject.FindAnyObjectByType<GameplayScreen>();
             _saveLoadHandler = GameObject.FindObjectOfType<SaveLoadHandler>();
             _gameplayScreen.ShowScore(_gameController.ScoreController.GetPoints());

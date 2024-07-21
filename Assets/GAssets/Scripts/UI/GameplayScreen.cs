@@ -2,25 +2,30 @@ using Michsky.MUIP;
 using TMPro;
 using UnityEngine;
 using Zenject;
+using Core.EventBus;
 
-public class GameplayScreen : UIStateBase
+namespace Core.UI
 {
-    [Inject] EventBus _eventBus;
-    public ButtonManager PauseButton;
-    [SerializeField] private TextMeshProUGUI _score;
-
-    public void ShowScore(int score)
+    public class GameplayScreen : UIStateBase
     {
-        _score.text = score.ToString();
-    }
-    public override void OnStart(params ButtonManager[] buttonManagers)
-    {
-        base.OnStart(PauseButton);
-    }
+        [Inject] EventBus.EventBus _eventBus;
+        public ButtonManager PauseButton;
+        [SerializeField] private TextMeshProUGUI _score;
+
+        public void ShowScore(int score)
+        {
+            _score.text = score.ToString();
+        }
+
+        public override void OnStart(params ButtonManager[] buttonManagers)
+        {
+            base.OnStart(PauseButton);
+        }
 
 
-    public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
-    {
-        base.OnExit(isHide, PauseButton);
+        public override void OnExit(bool isHide = true, params ButtonManager[] buttonManagers)
+        {
+            base.OnExit(isHide, PauseButton);
+        }
     }
 }

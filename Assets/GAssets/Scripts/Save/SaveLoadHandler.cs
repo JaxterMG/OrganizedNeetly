@@ -3,63 +3,70 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class SaveLoadHandler : MonoBehaviour
+namespace Core.Save
 {
-    private List<ISavable> _savables = new List<ISavable>();
-    private string SaveFilePath = Application.streamingAssetsPath + "/savefile.json";
-
-    private bool _isSave = true;
-
-    public void RegisterSavable(ISavable savable)
+    public class SaveLoadHandler : MonoBehaviour
     {
-        if(!_savables.Contains(savable))
-            _savables.Add(savable);
-    }
-    private void OnApplicationQuit()
-    {
-        if(!_isSave) return;
-        SaveAll();
-    }
+        private List<ISavable> _savables = new List<ISavable>();
+        private string SaveFilePath = Application.streamingAssetsPath + "/savefile.json";
 
-    /// <summary>
-    /// Asks all ISavable 's to send data
-    /// </summary>
-    public void SaveAll()
-    {
-        var saveData = new Dictionary<string, string>();
-        foreach (var savableObject in _savables)
+        private bool _isSave = true;
+
+        public void RegisterSavable(ISavable savable)
         {
-            saveData[savableObject.GetType().Name] = savableObject.Save();
+            if (!_savables.Contains(savable))
+                _savables.Add(savable);
         }
 
-        File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(saveData));
-    }
-
-    public void LoadAll()
-    {
-        if (!File.Exists(SaveFilePath)) return;
-       
-        var saveData = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(SaveFilePath));
-        foreach (var savableObject in _savables)
+        private void OnApplicationQuit()
         {
-            var typeName = savableObject.GetType().Name;
-            if (saveData.TryGetValue(typeName, out var jsonData))
+            if (!_isSave) return;
+            SaveAll();
+        }
+
+        /// <summary>
+        /// Asks all ISavable 's to send data
+        /// </summary>
+        public void SaveAll()
+        {
+            var saveData = new Dictionary<string, string>();
+            foreach (var savableObject in _savables)
             {
-                savableObject.Load(jsonData);
+                saveData[savableObject.GetType().Name] = savableObject.Save();
             }
-        }
-        _isSave = true;
-    }
-    public void DeleteSaveFile()
-    {
-        if (!File.Exists(SaveFilePath)) return;
-        File.Delete(SaveFilePath);
 
-        _isSave = false;
-    }
-    public bool HasSaveFile()
-    {
-        return File.Exists(SaveFilePath);
+            File.WriteAllText(SaveFilePath, JsonConvert.SerializeObject(saveData));
+        }
+
+        public void LoadAll()
+        {
+            if (!File.Exists(SaveFilePath)) return;
+
+            var saveData = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(SaveFilePath));
+            foreach (var savableObject in _savables)
+            {
+                var typeName = savableObject.GetType().Name;
+                if (saveData.TryGetValue(typeName, out var jsonData))
+                {
+                    savableObject.Load(jsonData);
+                }
+            }
+
+            _isSave = true;
+        }
+
+        public void DeleteSaveFile()
+        {
+            if (!File.Exists(SaveFilePath)) return;
+            File.Delete(SaveFilePath);
+
+            _isSave = false;
+        }
+
+        public bool HasSaveFile()
+        {
+            return File.Exists(SaveFilePath);
+        }
     }
 }
 

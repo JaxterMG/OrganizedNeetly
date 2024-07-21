@@ -1,13 +1,14 @@
 using Core.Controllers;
-using Core.StateMachine.Menu;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Loading
+namespace Core.StateMachine
 {
     public class ShopState : State
     {
         private ShopScreen _shopScreen;
-        public ShopState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public ShopState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _shopScreen = GameObject.FindAnyObjectByType<ShopScreen>();
         }

@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 
-public class MoneyView : MonoBehaviour
+namespace Core.Shop.MoneyManager
 {
-    [SerializeField] TextMeshProUGUI _moneyText;
-
-    public void UpdateView(int moneyCount)
+    public class MoneyView : MonoBehaviour
     {
-        _moneyText.text = moneyCount.ToString();
+        [SerializeField] TextMeshProUGUI _moneyText;
+
+        public void UpdateView(int moneyCount)
+        {
+            _moneyText.text = moneyCount.ToString();
+        }
     }
 }

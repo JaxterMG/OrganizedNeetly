@@ -1,4 +1,7 @@
-public static class UIAnimations
+namespace Core.UI.UIAnimations
 {
-    
+	public static class UIAnimations
+	{
+
+	}
 }

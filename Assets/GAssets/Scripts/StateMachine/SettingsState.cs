@@ -1,13 +1,14 @@
 using Core.Controllers;
-using Core.StateMachine.Menu;
+using Core.UI;
 using UnityEngine;
+using Core.EventBus;
 
-namespace Core.StateMachine.Loading
+namespace Core.StateMachine
 {
     public class SettingsState : State
     {
         private SettingsScreen _settingsScreen;
-        public SettingsState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public SettingsState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _settingsScreen = GameObject.FindAnyObjectByType<SettingsScreen>();
         }

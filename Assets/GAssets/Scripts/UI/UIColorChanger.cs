@@ -1,30 +1,37 @@
 using System.Collections.Generic;
+using Core.EventBus;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Core.EventBus;
 
-public class UIColorChanger : MonoBehaviour
+namespace Core.UI
 {
-    [Inject] private EventBus _eventBus;
-    [SerializeField] private string _uiElementName;
-    [SerializeField] private Image[] _uiImages;
-    private void OnEnable()
+    public class UIColorChanger : MonoBehaviour
     {
-        _eventBus.Subscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
-    }
-    void OnDisable()
-    {
-        _eventBus.Unsubscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
-    }
+        [Inject] private EventBus.EventBus _eventBus;
+        [SerializeField] private string _uiElementName;
+        [SerializeField] private Image[] _uiImages;
 
-    private void ChangeUIColor(Dictionary<string, Color> uiColors)
-    {
-        if(!uiColors.ContainsKey(_uiElementName)) return;
-        
-        foreach (var uiImage in _uiImages)
+        private void OnEnable()
         {
-            uiImage.color = uiColors[_uiElementName];
+            _eventBus.Subscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
         }
-    }
 
+        void OnDisable()
+        {
+            _eventBus.Unsubscribe<Dictionary<string, Color>>(BusEventType.ChangeUIColor, ChangeUIColor);
+        }
+
+        private void ChangeUIColor(Dictionary<string, Color> uiColors)
+        {
+            if (!uiColors.ContainsKey(_uiElementName)) return;
+
+            foreach (var uiImage in _uiImages)
+            {
+                uiImage.color = uiColors[_uiElementName];
+            }
+        }
+
+    }
 }

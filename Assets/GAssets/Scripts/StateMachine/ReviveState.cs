@@ -1,17 +1,20 @@
 using System.Threading.Tasks;
 using Core.Controllers;
-using UI;
+using Core.EventBus;
+using Core.Save;
+using Core.Score;
+using Core.UI;
 using UnityEngine;
-using Zenject.SpaceFighter;
+using Core.EventBus;
 
-namespace Core.StateMachine.Game
+namespace Core.StateMachine
 {
     public class ReviveState : State, ISavable
     {
         private IScoreController _scoreController;
         private ReviveScreen _reviveScreen;
         private float _reviveOptionTime = 5;
-        public ReviveState(EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
+        public ReviveState(EventBus.EventBus eventBus, GameController gameController, bool isAdditiveState = false) : base(eventBus, gameController, isAdditiveState)
         {
             _reviveScreen = GameObject.FindAnyObjectByType<ReviveScreen>();
         }

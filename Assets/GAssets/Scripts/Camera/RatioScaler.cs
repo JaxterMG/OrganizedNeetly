@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class RatioScaler : MonoBehaviour
+namespace Core.Camera
 {
-    private const float MOBILEFOV = 4.7f;
-    private const float TABLETFOV = 3.8f;
-    void OnEnable()
+    public class RatioScaler : MonoBehaviour
     {
-        Camera camera = GetComponent<Camera>();
-        camera.orthographicSize = IsTablet()? TABLETFOV : MOBILEFOV;
-    }
-    bool IsTablet()
-    {
-        // Получаем размеры экрана
-        float screenWidth = Screen.width / Screen.dpi;
-        float screenHeight = Screen.height / Screen.dpi;
-        float size = Mathf.Sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
+        private const float MOBILEFOV = 4.7f;
+        private const float TABLETFOV = 3.8f;
+        void OnEnable()
+        {
+            UnityEngine.Camera camera = GetComponent<UnityEngine.Camera>();
+            camera.orthographicSize = IsTablet()? TABLETFOV : MOBILEFOV;
+        }
+        bool IsTablet()
+        {
+            // Получаем размеры экрана
+            float screenWidth = Screen.width / Screen.dpi;
+            float screenHeight = Screen.height / Screen.dpi;
+            float size = Mathf.Sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
 
-        // Предположим, что устройства с диагональю больше 6.5 дюймов - это планшеты
-        return size >= 6.5f;
+            // Предположим, что устройства с диагональю больше 6.5 дюймов - это планшеты
+            return size >= 6.5f;
+        }
     }
 }

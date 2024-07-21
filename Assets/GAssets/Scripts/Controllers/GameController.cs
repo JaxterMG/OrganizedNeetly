@@ -1,18 +1,17 @@
 using Core.StateMachine;
-using Core.StateMachine.Game;
 using UnityEngine;
-using Core.Localization;
-using Core.StateMachine.Loading;
 using System.Collections.Generic;
+using Core.Score;
+using Core.Translator;
 using Zenject;
-using UnityEngine.SocialPlatforms;
+using Core.EventBus;
 
 namespace Core.Controllers
 {
     public class GameController : MonoBehaviour
     {
         [Inject] public IScoreController ScoreController;
-        [Inject] EventBus _eventBus;
+        [Inject] EventBus.EventBus _eventBus;
         private State _currentState;
         private List<State> _additiveStates = new List<State>();
 

@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using Core.EventBus;
+using Core.Grid;
+using Core.Shop;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
